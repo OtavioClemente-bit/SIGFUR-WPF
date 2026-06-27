@@ -1,0 +1,75 @@
+# Build .NET / WPF
+bin/
+obj/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+*.user
+*.suo
+*.rsuser
+*.cache
+*.pdb
+
+# Visual Studio
+.vs/
+.vscode/
+.idea/
+
+# Publicação/local
+PUBLICADO/
+publish/
+tmp/
+temp/
+logs/
+*.log
+
+# Python bridge
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Bancos e dados reais
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+*.backup
+data/
+backup/
+backups/
+
+# Documentos sensíveis / arquivos internos
+*.pdf
+*.doc
+*.docx
+*.odt
+*.xls
+*.xlsx
+*.xlsm
+*.zip
+*.rar
+*.7z
+contracheques/
+boletins/
+downloads/
+documentos/
+Documentos/
+
+# Credenciais
+.env
+*.env
+secrets.json
+appsettings.Development.json
+credentials.json
+token.json
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
