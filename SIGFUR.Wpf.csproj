@@ -7,11 +7,15 @@
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+<<<<<<< HEAD
     <ApplicationIcon Condition="Exists('Assets\\sigfur.ico')">Assets\sigfur.ico</ApplicationIcon>
+=======
+>>>>>>> fe87652a80759e6a4d263311d4dd24acdef100ba
     <AssemblyName>SIGFUR</AssemblyName>
     <RootNamespace>SIGFUR.Wpf</RootNamespace>
     <Version>6.1.22</Version>
     <Authors>Otavio Clemente</Authors>
+<<<<<<< HEAD
     <Product>SIGFUR — Sistema Integrado de Gestão do Furriel</Product>
     <LangVersion>latest</LangVersion>
     <CodePage>65001</CodePage>
@@ -57,6 +61,12 @@
     <Page Remove="**\* - Copy.xaml" />
   </ItemGroup>
 
+=======
+    <Product>SIGFUR WPF</Product>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+>>>>>>> fe87652a80759e6a4d263311d4dd24acdef100ba
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.9" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="3.5.1" />
@@ -64,6 +74,7 @@
     <PackageReference Include="Selenium.WebDriver" Version="4.44.0" />
     <PackageReference Include="Selenium.Support" Version="4.44.0" />
   </ItemGroup>
+<<<<<<< HEAD
 
   <ItemGroup>
     <Resource Include="Assets\sigfur.png" />
@@ -75,4 +86,6 @@
     <None Update="Resources\Boletim\boletins_padrao.json" CopyToOutputDirectory="PreserveNewest" />
     <None Update="Resources\Boletim\codom_catalogo.json" CopyToOutputDirectory="PreserveNewest" />
 </ItemGroup>
+=======
+>>>>>>> fe87652a80759e6a4d263311d4dd24acdef100ba
 </Project>

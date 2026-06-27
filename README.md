@@ -160,7 +160,15 @@ Foram removidos ou devem permanecer fora do GitHub:
 
 ## Autor
 
+<<<<<<< HEAD
 Desenvolvido por **Otavio Clemente**.
 
 - GitHub: [@OtavioClemente-bit](https://github.com/OtavioClemente-bit)
 - LinkedIn: [Otavio Clemente](https://www.linkedin.com/in/otavio-clemente-36056b2b5/)
+=======
+Desenvolvido por **Otavio Clemente**  
+Estudante de Ciência da Computação e desenvolvedor em formação.
+
+- GitHub: [@OtavioClemente-bit](https://github.com/OtavioClemente-bit)
+- LinkedIn: [Otavio Clemente](https://www.linkedin.com/in/otavio-clemente-36056b2b5/)
+>>>>>>> fe87652a80759e6a4d263311d4dd24acdef100ba
