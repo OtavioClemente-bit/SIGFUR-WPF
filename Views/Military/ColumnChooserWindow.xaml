@@ -1,0 +1,31 @@
+<Window x:Class="SIGFUR.Wpf.Views.Military.ColumnChooserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SIGFUR — Colunas da tabela" Width="500" Height="650" MinWidth="420" MinHeight="520"
+        WindowStyle="SingleBorderWindow" ResizeMode="CanResize" WindowStartupLocation="CenterOwner"
+        Icon="/Assets/sigfur.ico" Background="{DynamicResource AppBackgroundBrush}">
+    <Grid Margin="16">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="COLUNAS DA TABELA" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+            <TextBlock Text="Marque os dados que devem aparecer. As colunas essenciais permanecem fixas." Style="{StaticResource SubtleTextStyle}" TextWrapping="Wrap" Margin="0,4,0,12"/>
+        </StackPanel>
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Padding="14">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="OptionsPanel"/>
+            </ScrollViewer>
+        </Border>
+        <Grid Grid.Row="2" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <WrapPanel HorizontalAlignment="Left">
+                <Button Style="{StaticResource SecondaryButtonStyle}" Content="Somente essenciais" Click="EssentialOnly_Click" Margin="0,0,8,0"/>
+                <Button Style="{StaticResource SecondaryButtonStyle}" Content="Restaurar padrão" Click="RestoreDefault_Click" Margin="0,0,8,0"/>
+                <Button Style="{StaticResource SecondaryButtonStyle}" Content="Mostrar todas" Click="ShowAll_Click"/>
+            </WrapPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Style="{StaticResource SecondaryButtonStyle}" Content="Cancelar" Click="Cancel_Click" Margin="0,0,8,0"/>
+                <Button Style="{StaticResource PrimaryButtonStyle}" Content="Aplicar" Click="Apply_Click" MinWidth="100"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,51 @@
+<Window x:Class="SIGFUR.Wpf.Views.Licensed.CpexPaystubDownloadWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Contracheques — CPEX/SIPPES" Width="940" Height="710" MinWidth="800" MinHeight="620"
+        WindowStartupLocation="CenterOwner" Background="{DynamicResource AppBackgroundBrush}" Icon="/Assets/sigfur.ico"
+        Loaded="Window_Loaded" Closing="Window_Closing">
+    <Grid Margin="18">
+        <Border Style="{StaticResource CardStyle}" Padding="22">
+            <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel><TextBlock Text="Baixar contracheques — SIPPES / SIAPPES" Style="{StaticResource PageTitleStyle}" FontSize="23"/><TextBlock Text="Escolha o sistema. O SIPPES usa IDT + CPF + PREC-CP e código da folha; o SIAPPES usa a Área Exclusiva da UA." Style="{StaticResource SubtleTextStyle}" Margin="0,3,0,14" TextWrapping="Wrap"/></StackPanel>
+                    <Border Grid.Column="1" Background="{DynamicResource SuccessSoftBrush}" CornerRadius="12" Padding="12,8" VerticalAlignment="Top"><TextBlock Text="SOMENTE CONTRACHEQUES" Foreground="{DynamicResource SuccessBrush}" FontWeight="Bold"/></Border>
+                </Grid>
+                <Grid Grid.Row="1" Margin="0,0,0,14"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="14"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                    <GroupBox Header="Sistema e referência da folha"><Grid Margin="14"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="10"/><ColumnDefinition/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                        <StackPanel><TextBlock Text="Sistema" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="SystemBox" SelectionChanged="SystemBox_SelectionChanged"><ComboBoxItem Content="SIPPES"/><ComboBoxItem Content="SIAPPES / Área UA"/></ComboBox></StackPanel>
+                        <StackPanel Grid.Column="2"><TextBlock Text="Código da folha (SIPPES)" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="SheetCodeBox"/></StackPanel>
+                        <StackPanel Grid.Row="1" Margin="0,10,0,0"><TextBlock Text="Mês" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="MonthBox" SelectionChanged="Competence_Changed"/></StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,10,0,0"><TextBlock Text="Ano" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="YearBox" IsEditable="True" SelectionChanged="Competence_Changed" LostKeyboardFocus="YearBox_LostKeyboardFocus"/></StackPanel>
+                        <StackPanel Grid.Row="2" Margin="0,10,0,0"><TextBlock Text="Processamento (SIAPPES)" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="ProcessingBox"><ComboBoxItem Content="Definitivo"/><ComboBoxItem Content="Prévia"/><ComboBoxItem Content="1ª Prévia"/><ComboBoxItem Content="2ª Prévia"/></ComboBox></StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,10,0,0"><TextBlock Text="Tipo de folha (SIAPPES)" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="PayrollBox"><ComboBoxItem Content="Normal"/><ComboBoxItem Content="13º"/><ComboBoxItem Content="Férias"/><ComboBoxItem Content="Especial"/><ComboBoxItem Content="Complementar"/></ComboBox></StackPanel>
+                    </Grid></GroupBox>
+                    <GroupBox Grid.Column="2" Header="Acesso e navegador"><Grid Margin="14"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="10"/><ColumnDefinition/></Grid.ColumnDefinitions><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                        <StackPanel><TextBlock Text="CPF/usuário do login" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="LoginBox"/></StackPanel>
+                        <StackPanel Grid.Column="2"><TextBlock Text="Senha" Style="{StaticResource CaptionTextStyle}"/><PasswordBox x:Name="PasswordBox"/></StackPanel>
+                        <StackPanel Grid.Row="1" Margin="0,10,0,0"><TextBlock Text="Navegador" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="BrowserBox"><ComboBoxItem Content="Edge"/><ComboBoxItem Content="Chrome"/></ComboBox></StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,10,0,0">
+                            <CheckBox x:Name="SavePasswordBox" Content="Salvar senha com proteção do Windows" Margin="0,2,0,7"/>
+                            <CheckBox x:Name="HeadlessBox" Content="Executar oculto" Margin="0,0,0,7"/>
+                            <CheckBox x:Name="OpenAfterBox" Content="Abrir pasta ao concluir"/>
+                        </StackPanel>
+                    </Grid></GroupBox>
+                </Grid>
+                <Grid Grid.Row="2"><Grid.ColumnDefinitions><ColumnDefinition Width="360"/><ColumnDefinition Width="14"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                    <GroupBox Header="Militares da operação"><DataGrid x:Name="PeopleGrid" Margin="8" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" HeadersVisibility="Column" SelectionMode="Extended"><DataGrid.Columns><DataGridTextColumn Header="P/G" Binding="{Binding Rank}" Width="70"/><DataGridTextColumn Header="Nome" Binding="{Binding Name}" Width="*"/><DataGridTextColumn Header="CPF" Binding="{Binding Cpf}" Width="120"/><DataGridTextColumn Header="IDT" Binding="{Binding MilitaryId}" Width="95"/><DataGridTextColumn Header="PREC-CP" Binding="{Binding PrecCp}" Width="105"/></DataGrid.Columns></DataGrid></GroupBox>
+                    <GroupBox Grid.Column="2" Header="Destino e andamento"><Grid Margin="14"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                        <TextBlock Text="Pasta base" Style="{StaticResource CaptionTextStyle}"/>
+                        <Grid Grid.Row="1" Margin="0,5,0,12"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><TextBox x:Name="OutputBox" IsReadOnly="True"/><Button Grid.Column="1" Content="Alterar..." Style="{StaticResource SecondaryButtonStyle}" Margin="8,0,0,0" Click="ChooseOutput_Click"/></Grid>
+                        <ProgressBar x:Name="ProgressBar" Grid.Row="2" Height="10" Minimum="0" Maximum="100"/>
+                        <TextBox x:Name="LogBox" Grid.Row="3" Margin="0,12,0,0" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+                    </Grid></GroupBox>
+                </Grid>
+                <Grid Grid.Row="3" Margin="0,16,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="10"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="10"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <TextBlock x:Name="StatusText" VerticalAlignment="Center" Style="{StaticResource SubtleTextStyle}" Text="Pronto para baixar."/>
+                    <Button Grid.Column="1" Content="Abrir pasta" Style="{StaticResource GhostButtonStyle}" Click="OpenFolder_Click"/>
+                    <Button Grid.Column="3" Content="Cancelar" Style="{StaticResource SecondaryButtonStyle}" Click="Cancel_Click"/>
+                    <Button x:Name="DownloadButton" Grid.Column="5" Content="Baixar contracheques" Style="{StaticResource PrimaryButtonStyle}" IsDefault="True" Click="Download_Click"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

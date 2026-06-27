@@ -1,0 +1,57 @@
+<Window x:Class="SIGFUR.Wpf.Views.AppearanceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Aparência do SIGFUR" Icon="/Assets/sigfur.ico"
+        Width="820" Height="590" MinWidth="720" MinHeight="520"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock Text="Aparência e identidade visual" Style="{StaticResource PageTitleStyle}"/>
+            <TextBlock Text="A troca é aplicada ao programa inteiro por recursos globais do WPF. Não é necessário alterar tela por tela."
+                       Style="{StaticResource PageSubtitleStyle}" Margin="0,5,0,18"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Padding="14">
+            <ListBox x:Name="ThemeList" BorderThickness="0" SelectionChanged="ThemeList_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="6" MinHeight="76">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="92"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Width="78" Height="52" CornerRadius="10" Background="{Binding PrimaryBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                                <Grid>
+                                    <Border Width="28" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8" CornerRadius="7" Background="{Binding DarkBrush}"/>
+                                    <Border Width="30" Height="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="8" CornerRadius="4" Background="{Binding SoftBrush}"/>
+                                </Grid>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding DisplayName}" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"/>
+                                <TextBlock Text="{Binding Description}" Foreground="{DynamicResource MutedBrush}" FontSize="11" TextWrapping="Wrap" Margin="0,4,12,0"/>
+                            </StackPanel>
+                            <TextBlock Grid.Column="2" Text="✓" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}" VerticalAlignment="Center"
+                                       Visibility="{Binding IsCurrent, Converter={StaticResource BoolToVisibility}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+
+        <Grid Grid.Row="2" Margin="0,18,0,0">
+            <TextBlock Text="A preferência será salva no AppData e aplicada já no próximo loading."
+                       Foreground="{DynamicResource SubtleTextBrush}" VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancelar" IsCancel="True" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0"/>
+                <Button Content="Aplicar tema" IsDefault="True" Style="{StaticResource PrimaryButtonStyle}" Click="Apply_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

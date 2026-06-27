@@ -1,0 +1,51 @@
+<Window x:Class="SIGFUR.Wpf.Views.Bulletin.SavedBulletinPickerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Selecionar BI ou ADT salvo" Width="980" Height="680" MinWidth="760" MinHeight="500"
+        WindowStartupLocation="CenterOwner" Background="{DynamicResource AppBackgroundBrush}" Icon="/Assets/sigfur.ico">
+    <Grid Margin="18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="2,0,2,14">
+            <TextBlock Text="PUBLICAÇÕES SALVAS" Style="{StaticResource SectionTitleStyle}"/>
+            <TextBlock Text="Escolha um Boletim Interno ou Aditamento do Furriel para preencher número, data e referência no modelo atual." Foreground="{DynamicResource MutedBrush}" TextWrapping="Wrap" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="0,0,0,12">
+            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="220"/></Grid.ColumnDefinitions>
+            <TextBox x:Name="SearchBox" TextChanged="SearchBox_TextChanged" ToolTip="Pesquisar por tipo, número, data ou arquivo"/>
+            <ComboBox x:Name="KindBox" Grid.Column="1" Margin="10,0,0,0" SelectionChanged="KindBox_SelectionChanged">
+                <ComboBoxItem Content="Todos" IsSelected="True"/>
+                <ComboBoxItem Content="Boletim Interno"/>
+                <ComboBoxItem Content="Aditamento do Furriel"/>
+            </ComboBox>
+        </Grid>
+
+        <Border Grid.Row="2" Style="{StaticResource CardStyle}" Padding="0">
+            <DataGrid x:Name="ItemsGrid" Margin="8" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
+                      SelectionMode="Single" SelectionUnit="FullRow" MouseDoubleClick="ItemsGrid_MouseDoubleClick">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Tipo" Binding="{Binding Kind}" Width="175"/>
+                    <DataGridTextColumn Header="Número" Binding="{Binding Number}" Width="110"/>
+                    <DataGridTextColumn Header="BAR" Binding="{Binding Bar}" Width="65"/>
+                    <DataGridTextColumn Header="Data" Binding="{Binding Date}" Width="105"/>
+                    <DataGridTextColumn Header="Título / arquivo" Binding="{Binding Title}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Grid Grid.Row="3" Margin="2,14,2,0">
+            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <TextBlock x:Name="CountText" VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="Cancelar" Style="{StaticResource GhostButtonStyle}" IsCancel="True" MinWidth="90"/>
+                <Button Content="Usar publicação" Style="{StaticResource PrimaryButtonStyle}" Click="Use_Click" Margin="8,0,0,0" MinWidth="125"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

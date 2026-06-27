@@ -1,0 +1,171 @@
+<Window x:Class="SIGFUR.Wpf.Views.Documents.MeasuresTakenWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:SIGFUR.Wpf.Controls"
+        Title="SIGFUR — Medidas Tomadas" Width="1500" Height="920" MinWidth="1160" MinHeight="720"
+        WindowStartupLocation="CenterOwner" Background="{DynamicResource AppBackgroundBrush}" Icon="/Assets/sigfur.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="86"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="42"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{DynamicResource PrimaryGradientBrush}" Padding="24,0">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="MEDIDAS TOMADAS" Foreground="White" FontWeight="Bold" FontSize="24"/>
+                    <TextBlock Text="Exame de Contracheque e Exame de Pagamento separados, cada um com sua própria ordem." Foreground="#DCEBFF" Margin="0,4,0,0"/>
+                </StackPanel>
+                <WrapPanel Grid.Column="1" VerticalAlignment="Center">
+                    <Button Content="Novo" Style="{StaticResource LightOnDarkButtonStyle}" Click="NewWork_Click" Margin="0,0,8,0"/>
+                    <Button Content="Abrir trabalho" Style="{StaticResource LightOnDarkButtonStyle}" Click="SavedWorks_Click" Margin="0,0,8,0"/>
+                    <Button Content="Salvar" Style="{StaticResource LightOnDarkButtonStyle}" Click="SaveWork_Click" Margin="0,0,8,0"/>
+                    <Button Content="Renomear" Style="{StaticResource LightOnDarkButtonStyle}" Click="RenameWork_Click" Margin="0,0,8,0"/>
+                    <Button Content="Excluir" Style="{StaticResource LightOnDarkButtonStyle}" Click="DeleteCurrentWork_Click" Margin="0,0,8,0"/>
+                    <Button Content="Recarregar" Style="{StaticResource LightOnDarkButtonStyle}" Click="ReloadPeople_Click" Margin="0,0,8,0"/>
+                    <Button Content="Importar PDF" Style="{StaticResource LightOnDarkButtonStyle}" Click="ImportPdf_Click"/>
+                </WrapPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="16,12,16,0" Padding="14">
+            <Grid>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="10"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="145"/><ColumnDefinition Width="10"/><ColumnDefinition Width="1.65*"/><ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel><TextBlock Text="Origem dos militares" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="SourceBox" SelectionChanged="SourceBox_SelectionChanged"><ComboBoxItem Content="Banco principal"/><ComboBoxItem Content="Transferidos"/><ComboBoxItem Content="Todos"/></ComboBox></StackPanel>
+                    <StackPanel Grid.Column="2" Visibility="Collapsed"><TextBlock Text="Pesquisar militar" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="SearchBox" TextChanged="SearchBox_TextChanged" ToolTip="Nome, nome de guerra, PREC-CP, CPF, identidade ou P/G"/></StackPanel>
+                    <StackPanel Grid.Column="2"><TextBlock Text="Origem do exame" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="OriginBox" SpellCheck.IsEnabled="True"/></StackPanel>
+                    <StackPanel Grid.Column="4"><TextBlock Text="Organização militar" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="OrganizationBox"/></StackPanel>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="10"/><ColumnDefinition Width="110"/><ColumnDefinition Width="10"/><ColumnDefinition Width="1.35*"/><ColumnDefinition Width="10"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel><TextBlock Text="Comandante" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="CommanderBox"/></StackPanel>
+                    <StackPanel Grid.Column="2"><TextBlock Text="P/G" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="CommanderRankBox"/></StackPanel>
+                    <StackPanel Grid.Column="4"><TextBlock Text="Função para assinatura" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="SignatureRoleBox"/></StackPanel>
+                    <Button Grid.Column="6" Content="Salvar comandante e OM como padrão" Style="{StaticResource SecondaryButtonStyle}" Click="SaveCommanderDefaults_Click" VerticalAlignment="Bottom" MinWidth="225"/>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <TabControl x:Name="MainTabs" Grid.Row="2" Margin="16,12,16,10" SelectionChanged="MainTabs_SelectionChanged">
+            <TabItem Header="Exame de Contracheque">
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="1*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="0.8*"/></Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource CardStyle}" Padding="14">
+                        <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="150"/></Grid.ColumnDefinitions><TextBlock Text="MILITARES DISPONÍVEIS" Style="{StaticResource SectionTitleStyle}"/><ComboBox x:Name="PaystubSortBox" Grid.Column="1" SelectedIndex="0" SelectionChanged="AvailableSortBox_SelectionChanged"><ComboBoxItem Content="Hierarquia"/><ComboBoxItem Content="Nome"/><ComboBoxItem Content="PREC-CP"/></ComboBox></Grid>
+                            <TextBlock Grid.Row="1" Text="Duplo clique inclui diretamente nesta aba." Foreground="{DynamicResource MutedBrush}" Margin="0,7,0,7"/>
+                            <TextBox x:Name="PaystubSearchBox" Grid.Row="2" Margin="0,0,0,9" ToolTip="Pesquisar nome, nome de guerra, CPF, PREC-CP ou P/G" TextChanged="LocalSearchBox_TextChanged"/>
+                            <DataGrid x:Name="PaystubAvailableGrid" Grid.Row="3" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Extended" MouseDoubleClick="AddPaystubSelected_Click">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="P/G" Binding="{Binding Rank}" Width="82"/>
+                                    <DataGridTemplateColumn Header="Nome" Width="*"><DataGridTemplateColumn.CellTemplate><DataTemplate><controls:HighlightedNameTextBlock FullName="{Binding Name}" WarName="{Binding WarName}" TextWrapping="Wrap"/></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="PREC-CP" Binding="{Binding PrecCp}" Width="105"/>
+                                    <DataGridTextColumn Header="Origem" Binding="{Binding Source}" Width="105"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <WrapPanel Grid.Row="4" Margin="0,10,0,0"><Button Content="Adicionar selecionados →" Style="{StaticResource PrimaryButtonStyle}" Click="AddPaystubSelected_Click" Margin="0,0,8,0"/><Button Content="Adicionar filtrados" Style="{StaticResource SecondaryButtonStyle}" Click="AddPaystubFiltered_Click"/></WrapPanel>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="14">
+                        <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><TextBlock Text="ORDEM — EXAME DE CONTRACHEQUE" Style="{StaticResource SectionTitleStyle}"/><TextBlock x:Name="PaystubCountText" Grid.Column="1" Foreground="{DynamicResource MutedBrush}"/></Grid>
+                            <DataGrid x:Name="PaystubSelectedGrid" Grid.Row="1" Margin="0,10,0,10" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Extended" SelectionUnit="FullRow" SelectionChanged="SelectedGrid_SelectionChanged" PreviewMouseLeftButtonDown="SelectedGrid_PreviewMouseLeftButtonDown" MouseMove="SelectedGrid_MouseMove" Drop="SelectedGrid_Drop" AllowDrop="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="#" Binding="{Binding Order}" Width="45" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="P/G" Binding="{Binding Rank}" Width="82" IsReadOnly="True"/>
+                                    <DataGridTemplateColumn Header="Nome" Width="*"><DataGridTemplateColumn.CellTemplate><DataTemplate><controls:HighlightedNameTextBlock FullName="{Binding Name}" WarName="{Binding WarName}" TextWrapping="Wrap"/></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="PREC-CP" Binding="{Binding PrecCp}" Width="105" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Medida" Binding="{Binding MeasureStatus}" Width="120" IsReadOnly="True"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <WrapPanel Grid.Row="2"><Button Content="↑" Style="{StaticResource SecondaryButtonStyle}" Click="MovePaystubUp_Click" Margin="0,0,6,6"/><Button Content="↓" Style="{StaticResource SecondaryButtonStyle}" Click="MovePaystubDown_Click" Margin="0,0,10,6"/><Button Content="Remover" Style="{StaticResource DangerButtonStyle}" Click="RemovePaystub_Click" Margin="0,0,8,6"/><Button Content="Limpar aba" Style="{StaticResource GhostButtonStyle}" Click="ClearPaystub_Click" Margin="0,0,0,6"/></WrapPanel>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="4" Style="{StaticResource CardStyle}" Padding="14">
+                        <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="1*"/><RowDefinition Height="Auto"/><RowDefinition Height="0.8*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <TextBlock Text="MEDIDAS — CONTRACHEQUE" Style="{StaticResource SectionTitleStyle}"/>
+                            <TextBlock Grid.Row="1" Text="Medida padrão desta aba" Style="{StaticResource CaptionTextStyle}" Margin="0,10,0,4"/>
+                            <TextBox x:Name="PaystubDefaultMeasureBox" Grid.Row="2" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" SpellCheck.IsEnabled="True" TextChanged="DefaultMeasureBox_TextChanged"/>
+                            <TextBlock Grid.Row="3" Text="Medida individual" Style="{StaticResource CaptionTextStyle}" Margin="0,10,0,4"/>
+                            <TextBox x:Name="PaystubIndividualMeasureBox" Grid.Row="4" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" SpellCheck.IsEnabled="True" TextChanged="IndividualMeasureBox_TextChanged"/>
+                            <WrapPanel Grid.Row="5" Margin="0,10,0,0"><Button Content="Aplicar aos selecionados" Style="{StaticResource PrimaryButtonStyle}" Click="ApplyIndividualToSelected_Click" Margin="0,0,7,7"/><Button Content="Usar padrão" Style="{StaticResource GhostButtonStyle}" Click="ClearIndividual_Click" Margin="0,0,7,7"/><Button Content="Carteira" Style="{StaticResource SecondaryButtonStyle}" Click="OpenWallet_Click" Margin="0,0,7,7"/><Button Content="Escolher contracheque" Style="{StaticResource SecondaryButtonStyle}" Click="OpenPaystubs_Click" Margin="0,0,7,7"/><Button Content="Foto" Style="{StaticResource GhostButtonStyle}" Click="OpenPhoto_Click" Margin="0,0,0,7"/></WrapPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Exame de Pagamento">
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="1*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="1.2*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="0.8*"/></Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource CardStyle}" Padding="14">
+                        <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="150"/></Grid.ColumnDefinitions><TextBlock Text="MILITARES DISPONÍVEIS" Style="{StaticResource SectionTitleStyle}"/><ComboBox x:Name="PaymentSortBox" Grid.Column="1" SelectedIndex="0" SelectionChanged="AvailableSortBox_SelectionChanged"><ComboBoxItem Content="Hierarquia"/><ComboBoxItem Content="Nome"/><ComboBoxItem Content="PREC-CP"/></ComboBox></Grid>
+                            <TextBlock Grid.Row="1" Text="A ordem abaixo será a ordem da relação nominal." Foreground="{DynamicResource MutedBrush}" Margin="0,7,0,7"/>
+                            <TextBox x:Name="PaymentSearchBox" Grid.Row="2" Margin="0,0,0,9" ToolTip="Pesquisar nome, nome de guerra, CPF, PREC-CP ou P/G" TextChanged="LocalSearchBox_TextChanged"/>
+                            <DataGrid x:Name="PaymentAvailableGrid" Grid.Row="3" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Extended" MouseDoubleClick="AddPaymentSelected_Click">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="P/G" Binding="{Binding Rank}" Width="82"/>
+                                    <DataGridTemplateColumn Header="Nome" Width="*"><DataGridTemplateColumn.CellTemplate><DataTemplate><controls:HighlightedNameTextBlock FullName="{Binding Name}" WarName="{Binding WarName}" TextWrapping="Wrap"/></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="PREC-CP" Binding="{Binding PrecCp}" Width="105"/>
+                                    <DataGridTextColumn Header="Origem" Binding="{Binding Source}" Width="105"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <WrapPanel Grid.Row="4" Margin="0,10,0,0"><Button Content="Adicionar selecionados →" Style="{StaticResource PrimaryButtonStyle}" Click="AddPaymentSelected_Click" Margin="0,0,8,0"/><Button Content="Adicionar filtrados" Style="{StaticResource SecondaryButtonStyle}" Click="AddPaymentFiltered_Click"/></WrapPanel>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="14">
+                        <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><TextBlock Text="ORDEM — EXAME DE PAGAMENTO" Style="{StaticResource SectionTitleStyle}"/><TextBlock x:Name="PaymentCountText" Grid.Column="1" Foreground="{DynamicResource MutedBrush}"/></Grid>
+                            <DataGrid x:Name="PaymentSelectedGrid" Grid.Row="1" Margin="0,10,0,10" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Extended" SelectionUnit="FullRow" SelectionChanged="SelectedGrid_SelectionChanged" PreviewMouseLeftButtonDown="SelectedGrid_PreviewMouseLeftButtonDown" MouseMove="SelectedGrid_MouseMove" Drop="SelectedGrid_Drop" AllowDrop="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="#" Binding="{Binding Order}" Width="45" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="P/G" Binding="{Binding Rank}" Width="82" IsReadOnly="True"/>
+                                    <DataGridTemplateColumn Header="Nome" Width="*"><DataGridTemplateColumn.CellTemplate><DataTemplate><controls:HighlightedNameTextBlock FullName="{Binding Name}" WarName="{Binding WarName}" TextWrapping="Wrap"/></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="PREC-CP" Binding="{Binding PrecCp}" Width="105" IsReadOnly="True"/>
+                                    <DataGridTextColumn Header="Medida" Binding="{Binding MeasureStatus}" Width="120" IsReadOnly="True"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <WrapPanel Grid.Row="2"><Button Content="↑" Style="{StaticResource SecondaryButtonStyle}" Click="MovePaymentUp_Click" Margin="0,0,6,6"/><Button Content="↓" Style="{StaticResource SecondaryButtonStyle}" Click="MovePaymentDown_Click" Margin="0,0,10,6"/><Button Content="Remover" Style="{StaticResource DangerButtonStyle}" Click="RemovePayment_Click" Margin="0,0,8,6"/><Button Content="Limpar aba" Style="{StaticResource GhostButtonStyle}" Click="ClearPayment_Click" Margin="0,0,0,6"/></WrapPanel>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="4" Style="{StaticResource CardStyle}" Padding="14">
+                        <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="1*"/><RowDefinition Height="Auto"/><RowDefinition Height="0.8*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <TextBlock Text="MEDIDAS — PAGAMENTO" Style="{StaticResource SectionTitleStyle}"/>
+                            <TextBlock Grid.Row="1" Text="Medida padrão desta aba" Style="{StaticResource CaptionTextStyle}" Margin="0,10,0,4"/>
+                            <TextBox x:Name="PaymentDefaultMeasureBox" Grid.Row="2" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" SpellCheck.IsEnabled="True" TextChanged="DefaultMeasureBox_TextChanged"/>
+                            <TextBlock Grid.Row="3" Text="Medida individual" Style="{StaticResource CaptionTextStyle}" Margin="0,10,0,4"/>
+                            <TextBox x:Name="PaymentIndividualMeasureBox" Grid.Row="4" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" SpellCheck.IsEnabled="True" TextChanged="IndividualMeasureBox_TextChanged"/>
+                            <WrapPanel Grid.Row="5" Margin="0,10,0,0"><Button Content="Aplicar aos selecionados" Style="{StaticResource PrimaryButtonStyle}" Click="ApplyIndividualToSelected_Click" Margin="0,0,7,7"/><Button Content="Usar padrão" Style="{StaticResource GhostButtonStyle}" Click="ClearIndividual_Click" Margin="0,0,7,7"/><Button Content="Carteira" Style="{StaticResource SecondaryButtonStyle}" Click="OpenWallet_Click" Margin="0,0,7,7"/><Button Content="Escolher contracheque" Style="{StaticResource SecondaryButtonStyle}" Click="OpenPaystubs_Click" Margin="0,0,7,7"/><Button Content="Foto" Style="{StaticResource GhostButtonStyle}" Click="OpenPhoto_Click" Margin="0,0,0,7"/></WrapPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Prévia e exportação">
+                <Grid Margin="0,10,0,0"><Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                    <Border Style="{StaticResource CardStyle}" Padding="14"><TextBox x:Name="PreviewBox" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" FontFamily="Arial" FontSize="13" VerticalContentAlignment="Top"/></Border>
+                    <Grid Grid.Row="1" Margin="0,10,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <TextBlock x:Name="PreviewStatusText" VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}"/>
+                        <WrapPanel Grid.Column="1"><Button Content="Atualizar prévia" Style="{StaticResource SecondaryButtonStyle}" Click="RefreshPreview_Click" Margin="0,0,8,0"/><Button Content="Relação nominal Excel" Style="{StaticResource PrimaryButtonStyle}" Click="ExportPaymentExcel_Click" Margin="0,0,8,0"/><Button Content="Word" Style="{StaticResource PrimaryButtonStyle}" Click="ExportDocx_Click" Margin="0,0,8,0"/><Button Content="ODT" Style="{StaticResource SecondaryButtonStyle}" Click="ExportOdt_Click" Margin="0,0,8,0"/><Button Content="PDF" Style="{StaticResource SecondaryButtonStyle}" Click="ExportPdf_Click"/></WrapPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Border Grid.Row="3" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource DividerBrush}" BorderThickness="0,1,0,0" Padding="16,0">
+            <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><TextBlock x:Name="StatusText" VerticalAlignment="Center"/><ProgressBar x:Name="BusyBar" Grid.Column="1" Width="180" Height="5" IsIndeterminate="True" Visibility="Collapsed"/></Grid>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,724 @@
+<Window x:Class="SIGFUR.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:SIGFUR.Wpf.Controls"
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+        Title="SIGFUR — Sistema Integrado de Gestão do Furriel"
+        Icon="/Assets/sigfur.ico"
+        Width="1280" Height="850" MinWidth="1020" MinHeight="660"
+        WindowStyle="None" ResizeMode="CanResize"
+        StateChanged="Window_StateChanged"
+        Background="{DynamicResource AppBackgroundBrush}">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome CaptionHeight="48" ResizeBorderThickness="7" CornerRadius="0"
+                                  GlassFrameThickness="0" UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <Style x:Key="KpiCardStyle" TargetType="Border" BasedOn="{StaticResource CardStyle}">
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="Margin" Value="0,0,12,0"/>
+            <Setter Property="MinHeight" Value="108"/>
+        </Style>
+        <Style x:Key="TopUtilityButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="38"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="2,0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryDarkBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="UtilityBorder" Background="{TemplateBinding Background}" CornerRadius="7" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="UtilityBorder" Property="Background" Value="{DynamicResource PrimarySoftBrush}"/></Trigger>
+                            <Trigger Property="IsPressed" Value="True"><Setter TargetName="UtilityBorder" Property="Opacity" Value="0.72"/></Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid x:Name="RootGrid" UseLayoutRounding="True" SnapsToDevicePixels="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="32"/>
+        </Grid.RowDefinitions>
+
+        <!-- Barra de título -->
+        <Border Grid.Row="0" Background="{DynamicResource SurfaceBrush}"
+                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1"
+                MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" Margin="15,0,12,0" VerticalAlignment="Center">
+                    <Border Width="30" Height="30" CornerRadius="8" Background="{DynamicResource PrimarySoftBrush}">
+                        <Image Source="/Assets/sigfur.png" Width="26" Height="26" Stretch="Uniform"
+                               SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Border>
+                    <StackPanel Margin="9,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="SIGFUR" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryDarkBrush}"/>
+                        <TextBlock Text="Gestão do Furriel" FontSize="9" Foreground="{DynamicResource SubtleTextBrush}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Grid Grid.Column="1"/>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Button Tag="refresh_dashboard" Click="ButtonAction_Click" Style="{StaticResource TopUtilityButtonStyle}" ToolTip="Atualizar" shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                        <TextBlock Text="" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="15"/>
+                    </Button>
+                    <Button Tag="appearance" Click="ButtonAction_Click" Style="{StaticResource TopUtilityButtonStyle}" ToolTip="Aparência" shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                        <TextBlock Text="" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="15"/>
+                    </Button>
+                    <Button Tag="profile_sync" Click="ButtonAction_Click" Style="{StaticResource TopUtilityButtonStyle}" ToolTip="Perfil, Backup e Sincronizacao" Content="SYNC" FontSize="9" shell:WindowChrome.IsHitTestVisibleInChrome="True"/>
+                    <Button Tag="font_up" Click="ButtonAction_Click" Style="{StaticResource TopUtilityButtonStyle}" ToolTip="Aumentar fonte" Content="A+" shell:WindowChrome.IsHitTestVisibleInChrome="True"/>
+                    <Button Tag="font_reset" Click="ButtonAction_Click" Style="{StaticResource TopUtilityButtonStyle}" ToolTip="Fonte padrão" Content="A" shell:WindowChrome.IsHitTestVisibleInChrome="True"/>
+                    <Button Tag="font_down" Click="ButtonAction_Click" Style="{StaticResource TopUtilityButtonStyle}" ToolTip="Diminuir fonte" Content="A−" shell:WindowChrome.IsHitTestVisibleInChrome="True" Margin="2,0,8,0"/>
+                    <Border Width="1" Height="22" Background="{DynamicResource DividerBrush}" Margin="2,0,4,0"/>
+                    <Button x:Name="MinimizeControlButton" Style="{StaticResource WindowControlButtonStyle}"
+                            Click="Minimize_Click" ToolTip="Minimizar" Focusable="False"
+                            shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Grid Width="16" Height="16">
+                            <Border Width="11" Height="1.5" Background="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                    HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,3"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="MaximizeControlButton" Style="{StaticResource WindowControlButtonStyle}"
+                            Click="Maximize_Click" ToolTip="Maximizar" Focusable="False"
+                            shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Grid Width="16" Height="16">
+                            <Border x:Name="MaximizeSingleIcon" Width="10" Height="9" BorderThickness="1.4"
+                                    BorderBrush="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Grid x:Name="MaximizeRestoreIcon" Visibility="Collapsed" Width="13" Height="12"
+                                  HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Border Width="9" Height="8" BorderThickness="1.3" Margin="0,0,0,0"
+                                        BorderBrush="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                        HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                                <Border Width="9" Height="8" BorderThickness="1.3" Margin="0,0,0,0" Background="{DynamicResource SurfaceElevatedBrush}"
+                                        BorderBrush="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                        HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            </Grid>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="CloseControlButton" Style="{StaticResource CloseWindowControlButtonStyle}"
+                            Click="Close_Click" ToolTip="Fechar" Focusable="False"
+                            shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Grid Width="16" Height="16">
+                            <Line X1="3" Y1="3" X2="13" Y2="13" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeThickness="1.4"/>
+                            <Line X1="13" Y1="3" X2="3" Y2="13" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeThickness="1.4"/>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Cabeçalho institucional -->
+        <Border Grid.Row="1" Background="{DynamicResource PrimaryGradientBrush}" ClipToBounds="True">
+            <Grid>
+                <Ellipse Width="440" Height="440" Fill="#0EFFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-210,-270,0,0"/>
+                <Ellipse Width="360" Height="360" Fill="#0AFFFFFF" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-130,-230"/>
+                <Grid Margin="28,18">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Width="86" Height="86" CornerRadius="22" Background="#22FFFFFF" BorderBrush="#38FFFFFF" BorderThickness="1">
+                            <Grid>
+                                <Image x:Name="HeroLogoImage" Width="66" Height="66" Stretch="Uniform" Visibility="Collapsed"/>
+                                <Image x:Name="HeroFallbackLogo" Source="/Assets/sigfur-mark.png" Width="72" Height="72" Stretch="Uniform"
+                                       SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            </Grid>
+                        </Border>
+                        <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Greeting}" Foreground="White" FontSize="25" FontWeight="SemiBold"/>
+                            <TextBlock Text="{Binding ProfileSubtitle}" Foreground="{DynamicResource TextOnPrimaryMutedBrush}" FontSize="13" Margin="0,4,0,0"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                                <Border Background="#1FFFFFFF" CornerRadius="8" Padding="10,5" Margin="0,0,8,0">
+                                    <TextBlock Text="{Binding CurrentDate}" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                </Border>
+                                <Border Background="#1FFFFFFF" CornerRadius="8" Padding="10,5">
+                                    <TextBlock Text="{Binding Dashboard.Version}" Foreground="White" FontSize="10" FontWeight="SemiBold"/>
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Click="PaymentReminderHeader_Click" Style="{StaticResource LightOnDarkButtonStyle}" Padding="14,8" Margin="0,0,10,0" MinWidth="255" ToolTip="Abrir e editar a corrida de pagamento">
+                            <StackPanel>
+                                <TextBlock Text="CORRIDA DE PAGAMENTO" Foreground="#DCEBFF" FontSize="9" FontWeight="SemiBold" HorizontalAlignment="Left"/>
+                                <TextBlock x:Name="PaymentReferenceText" Text="Pagamento não definido" Foreground="White" FontSize="12" FontWeight="Bold" HorizontalAlignment="Left" Margin="0,2,0,0"/>
+                                <TextBlock x:Name="FirstPaymentRunText" Text="1ª corrida: não definida" Foreground="White" FontSize="11" FontWeight="SemiBold" HorizontalAlignment="Left"/>
+                                <TextBlock x:Name="SecondPaymentRunText" Text="2ª corrida: não definida" Foreground="White" FontSize="11" FontWeight="SemiBold" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Click="About_Click" Style="{StaticResource LightOnDarkButtonStyle}" Width="44" Height="44" Padding="0" Margin="0,0,8,0" ToolTip="Ajuda do SIGFUR">
+                            <TextBlock Text="?" FontFamily="Segoe UI" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/>
+                        </Button>
+                        <Button Tag="perfil" Click="ButtonAction_Click" Style="{StaticResource LightOnDarkButtonStyle}" Width="44" Height="44" Padding="0" Margin="0,0,10,0" ToolTip="Perfil, nome, OM e foto">
+                            <TextBlock Text="" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="18" HorizontalAlignment="Center"/>
+                        </Button>
+                        <Button Content="{Binding SisbolText}" Command="{Binding PrepareSisbolCommand}" Style="{StaticResource PrimaryButtonStyle}"
+                                MinWidth="178" Padding="18,11"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!-- Área principal -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Navegação -->
+            <Border Grid.Column="0" Background="{DynamicResource SidebarBrush}" BorderBrush="{DynamicResource SidebarHoverBrush}" BorderThickness="0,0,1,0">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Width" Value="306"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsNavigationCollapsed}" Value="True"><Setter Property="Width" Value="74"/></DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Margin="12,12,12,8">
+                        <TextBlock Text="NAVEGAÇÃO" Foreground="{DynamicResource SidebarMutedBrush}" FontSize="9" FontWeight="SemiBold"
+                                   VerticalAlignment="Center" Visibility="{Binding IsNavigationCollapsed, Converter={StaticResource InverseBoolToVisibility}}"/>
+                        <Button HorizontalAlignment="Right" Command="{Binding ToggleNavigationCommand}" Style="{StaticResource NavActionButtonStyle}"
+                                Width="42" Height="36" Padding="0" ToolTip="Recolher ou expandir menu">
+                            <TextBlock Text="" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="14" HorizontalAlignment="Center"/>
+                        </Button>
+                    </Grid>
+
+                    <TextBox Grid.Row="1" Text="{Binding NavigationSearch, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="12,0,12,10" ToolTip="Pesquisar módulo"
+                             Visibility="{Binding IsNavigationCollapsed, Converter={StaticResource InverseBoolToVisibility}}"/>
+
+                    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <Grid>
+                            <ItemsControl ItemsSource="{Binding NavigationGroups}"
+                                          Visibility="{Binding IsNavigationCollapsed, Converter={StaticResource InverseBoolToVisibility}}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="0,0,0,8">
+                                            <TextBlock Text="{Binding Title}" Foreground="{DynamicResource SidebarMutedBrush}" FontSize="9" FontWeight="SemiBold" Margin="18,9,12,4"/>
+                                            <ItemsControl ItemsSource="{Binding Actions}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Button Style="{StaticResource NavActionButtonStyle}"
+                                                                Command="{Binding DataContext.ExecuteActionCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                CommandParameter="{Binding}">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions><ColumnDefinition Width="34"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                                <TextBlock Text="{Binding Icon}" FontFamily="Segoe UI Emoji" FontSize="16" VerticalAlignment="Center"/>
+                                                                <StackPanel Grid.Column="1">
+                                                                    <TextBlock Text="{Binding Title}" Foreground="{DynamicResource SidebarTextBrush}" FontSize="11" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
+                                                                    <TextBlock Text="{Binding Description}" Foreground="{DynamicResource SidebarMutedBrush}" FontSize="9" TextTrimming="CharacterEllipsis"/>
+                                                                </StackPanel>
+                                                                <TextBlock Grid.Column="2" Text="{Binding HotKey}" Foreground="{DynamicResource SidebarMutedBrush}" FontSize="8" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                                                            </Grid>
+                                                        </Button>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <ItemsControl ItemsSource="{Binding AllActions}"
+                                          Visibility="{Binding IsNavigationCollapsed, Converter={StaticResource BoolToVisibility}}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Style="{StaticResource NavActionButtonStyle}" Width="58" Height="48" Padding="0"
+                                                ToolTip="{Binding Title}"
+                                                Command="{Binding DataContext.ExecuteActionCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                CommandParameter="{Binding}">
+                                            <TextBlock Text="{Binding Icon}" FontFamily="Segoe UI Emoji" FontSize="18" HorizontalAlignment="Center"/>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </ScrollViewer>
+
+                    <Border Grid.Row="3" Background="#12FFFFFF" BorderBrush="#1FFFFFFF" BorderThickness="0,1,0,0" Padding="12,10">
+                        <StackPanel Visibility="{Binding IsNavigationCollapsed, Converter={StaticResource InverseBoolToVisibility}}">
+                            <TextBlock Text="{Binding OperatorName}" Foreground="{DynamicResource SidebarTextBrush}" FontWeight="SemiBold"/>
+                            <TextBlock Text="Operador conectado" Foreground="{DynamicResource SidebarMutedBrush}" FontSize="9"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- Dashboard -->
+            <Border Grid.Column="1" Background="{DynamicResource AppBackgroundBrush}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                              IsDeferredScrollingEnabled="True" PanningMode="VerticalOnly"
+                              UseLayoutRounding="True" SnapsToDevicePixels="True">
+                    <StackPanel Margin="22,20,22,24">
+                        <Grid Margin="0,0,0,16">
+                            <StackPanel>
+                                <TextBlock Text="Visão geral" Style="{StaticResource PageTitleStyle}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Lembretes operacionais -->
+                        <Grid Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="1*"/><ColumnDefinition Width="1*"/></Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0" Style="{StaticResource CardStyle}" Margin="0,0,8,0">
+                                <StackPanel>
+                                    <Grid>
+                                        <TextBlock Text="Lembretes" Style="{StaticResource SectionTitleStyle}"/>
+                                        <Border HorizontalAlignment="Right" Background="{DynamicResource WarningSoftBrush}" CornerRadius="12" Padding="10,4"><TextBlock Text="{Binding Dashboard.ReminderTotal}" Foreground="{DynamicResource WarningBrush}" FontWeight="SemiBold"/></Border>
+                                    </Grid>
+                                    <DataGrid x:Name="DashboardRemindersGrid" ItemsSource="{Binding Dashboard.Reminders}" Height="290" Margin="0,12,0,10" MouseDoubleClick="DashboardRemindersGrid_MouseDoubleClick">
+                                        <DataGrid.RowStyle><Style TargetType="DataGridRow"><Style.Triggers><DataTrigger Binding="{Binding Status}" Value="Atrasado"><Setter Property="Background" Value="{DynamicResource DangerSoftBrush}"/><Setter Property="Foreground" Value="{DynamicResource DangerBrush}"/><Setter Property="FontWeight" Value="SemiBold"/></DataTrigger><DataTrigger Binding="{Binding Status}" Value="Hoje"><Setter Property="Background" Value="{DynamicResource WarningSoftBrush}"/><Setter Property="FontWeight" Value="SemiBold"/></DataTrigger></Style.Triggers></Style></DataGrid.RowStyle>
+                                        <DataGrid.Columns><DataGridTextColumn Header="Título" Binding="{Binding Title}" Width="*"/><DataGridTextColumn Header="Data" Binding="{Binding Date}" Width="82"/><DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="90"/><DataGridTextColumn Header="Prioridade" Binding="{Binding Priority}" Width="105"/></DataGrid.Columns>
+                                    </DataGrid>
+                                    <StackPanel Orientation="Horizontal"><Button Content="Novo lembrete" Style="{StaticResource PrimaryButtonStyle}" Click="NewReminder_Click" Margin="0,0,8,0"/><Button Content="Abrir lembretes" Tag="lembretes" Click="ButtonAction_Click" Style="{StaticResource SecondaryButtonStyle}"/></StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="8,0">
+                                <StackPanel>
+                                    <Grid>
+                                        <TextBlock Text="Lembretes de pagamento" Style="{StaticResource SectionTitleStyle}"/>
+                                        <Border HorizontalAlignment="Right" Background="{DynamicResource DangerSoftBrush}" CornerRadius="12" Padding="10,4"><TextBlock Text="{Binding Dashboard.FinancialAlerts.Count}" Foreground="{DynamicResource DangerBrush}" FontWeight="SemiBold"/></Border>
+                                    </Grid>
+                                    <DataGrid x:Name="PaymentAlertsGrid" ItemsSource="{Binding Dashboard.FinancialAlerts}" Height="290" Margin="0,12,0,10" MouseDoubleClick="PaymentAlertsGrid_MouseDoubleClick">
+                                        <DataGrid.RowStyle>
+                                            <Style TargetType="DataGridRow">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Status}" Value="HOJE"><Setter Property="Background" Value="{DynamicResource WarningSoftBrush}"/><Setter Property="FontWeight" Value="SemiBold"/></DataTrigger>
+                                                    <DataTrigger Binding="{Binding Status}" Value="ATENÇÃO"><Setter Property="Background" Value="{DynamicResource InfoSoftBrush}"/><Setter Property="Foreground" Value="{DynamicResource InfoBrush}"/></DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGrid.RowStyle>
+                                        <DataGrid.Columns><DataGridTextColumn Header="Referência" Binding="{Binding Deadline}" Width="92"/><DataGridTextColumn Header="Controle" Binding="{Binding Type}" Width="150"/><DataGridTextColumn Header="O que conferir" Binding="{Binding Detail}" Width="*"/><DataGridTextColumn Header="Situação" Binding="{Binding Status}" Width="88"/></DataGrid.Columns>
+                                    </DataGrid>
+                                    <StackPanel Orientation="Horizontal"><Button Content="Gerenciar lembretes" Click="OpenPaymentReminders_Click" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0"/></StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                        </Grid>
+
+                        <!-- KPIs -->
+                        <UniformGrid Columns="4" Margin="0,0,0,16">
+                            <Border Style="{StaticResource KpiCardStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="50"/></Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="MILITARES ATIVOS" Foreground="{DynamicResource MutedBrush}" FontSize="9" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding Dashboard.ActiveMilitaryCount}" Foreground="{DynamicResource PrimaryDarkBrush}" FontSize="30" FontWeight="SemiBold" Margin="0,5,0,1"/>
+                                        <TextBlock Text="Cadastro principal" Foreground="{DynamicResource SubtleTextBrush}" FontSize="10"/>
+                                    </StackPanel>
+                                    <Border Grid.Column="1" Width="44" Height="44" CornerRadius="12" Background="{DynamicResource PrimarySoftBrush}" VerticalAlignment="Top">
+                                        <TextBlock Text="" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="20" Foreground="{DynamicResource PrimaryDarkBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Border Style="{StaticResource KpiCardStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="50"/></Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="LICENCIADOS / TRANSFERIDOS" Foreground="{DynamicResource MutedBrush}" FontSize="9" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding Dashboard.LicensedTransferredCount}" Foreground="{DynamicResource PrimaryDarkBrush}" FontSize="30" FontWeight="SemiBold" Margin="0,5,0,1"/>
+                                        <TextBlock Text="Registros visíveis" Foreground="{DynamicResource SubtleTextBrush}" FontSize="10"/>
+                                    </StackPanel>
+                                    <Border Grid.Column="1" Width="44" Height="44" CornerRadius="12" Background="{DynamicResource InfoSoftBrush}" VerticalAlignment="Top">
+                                        <TextBlock Text="" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="20" Foreground="{DynamicResource InfoBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Border Style="{StaticResource KpiCardStyle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="50"/></Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="LEMBRETES PENDENTES" Foreground="{DynamicResource MutedBrush}" FontSize="9" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding Dashboard.ReminderTotal}" Foreground="{DynamicResource PrimaryDarkBrush}" FontSize="30" FontWeight="SemiBold" Margin="0,5,0,1"/>
+                                        <TextBlock Foreground="{DynamicResource DangerBrush}" FontSize="10">
+                                            <Run Text="{Binding Dashboard.ReminderOverdue, Mode=OneWay}"/><Run Text=" atrasado(s)"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <Border Grid.Column="1" Width="44" Height="44" CornerRadius="12" Background="{DynamicResource WarningSoftBrush}" VerticalAlignment="Top">
+                                        <TextBlock Text="" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="20" Foreground="{DynamicResource WarningBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Border Style="{StaticResource CardStyle}" Padding="16" MinHeight="108">
+                                <Grid>
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="50"/></Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="ANIVERSARIANTES DO MÊS" Foreground="{DynamicResource MutedBrush}" FontSize="9" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding Dashboard.Birthdays.Count}" Foreground="{DynamicResource PrimaryDarkBrush}" FontSize="30" FontWeight="SemiBold" Margin="0,5,0,1"/>
+                                        <TextBlock Text="Conferência mensal" Foreground="{DynamicResource SubtleTextBrush}" FontSize="10"/>
+                                    </StackPanel>
+                                    <Border Grid.Column="1" Width="44" Height="44" CornerRadius="12" Background="{DynamicResource SuccessSoftBrush}" VerticalAlignment="Top">
+                                        <TextBlock Text="" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="20" Foreground="{DynamicResource SuccessBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </UniformGrid>
+
+                        <!-- Calendário, aniversariantes e efetivo -->
+                        <Grid Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="1.38*"/><ColumnDefinition Width="1*"/><ColumnDefinition Width="1*"/></Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Style="{StaticResource CardStyle}" Margin="0,0,8,0">
+                                <StackPanel>
+                                    <Grid>
+                                        <StackPanel>
+                                            <TextBlock Text="Calendário operacional" Style="{StaticResource SectionTitleStyle}"/>
+                                            <TextBlock Text="{Binding Dashboard.CalendarSummary}" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                            <Button Content="Novo lembrete" Click="NewReminder_Click" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0"/>
+                                            <Button Content="Corrida" Tag="corrida_pagamento" Click="ButtonAction_Click" Style="{StaticResource SecondaryButtonStyle}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Border Margin="0,12,0,0" Background="{DynamicResource HoverBrush}" CornerRadius="14" Padding="12">
+                                        <StackPanel>
+                                            <DockPanel LastChildFill="False">
+                                                <TextBlock Text="{Binding Dashboard.CalendarMonthTitle}" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryDarkBrush}" DockPanel.Dock="Left"/>
+                                                <WrapPanel DockPanel.Dock="Right" HorizontalAlignment="Right">
+                                                    <Border Background="{DynamicResource WarningSoftBrush}" CornerRadius="10" Padding="10,4" Margin="0,0,8,6">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Ellipse Width="8" Height="8" Fill="{DynamicResource WarningBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                                            <TextBlock Text="Lembrete" Foreground="{DynamicResource MutedBrush}" FontSize="10" FontWeight="SemiBold"/>
+                                                        </StackPanel>
+                                                    </Border>
+                                                    <Border Background="{DynamicResource InfoSoftBrush}" CornerRadius="10" Padding="10,4" Margin="0,0,8,6">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Ellipse Width="8" Height="8" Fill="{DynamicResource InfoBrush}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                                            <TextBlock Text="Pagamento / corrida" Foreground="{DynamicResource MutedBrush}" FontSize="10" FontWeight="SemiBold"/>
+                                                        </StackPanel>
+                                                    </Border>
+                                                    <Border Background="#F1E8FF" CornerRadius="10" Padding="10,4" Margin="0,0,8,6">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Ellipse Width="8" Height="8" Fill="#8B5CF6" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                                            <TextBlock Text="Serviço" Foreground="{DynamicResource MutedBrush}" FontSize="10" FontWeight="SemiBold"/>
+                                                        </StackPanel>
+                                                    </Border>
+                                                    <Border Background="#E9F7EF" CornerRadius="10" Padding="10,4" Margin="0,0,0,6">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Ellipse Width="8" Height="8" Fill="#23A26D" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                                            <TextBlock Text="Evento" Foreground="{DynamicResource MutedBrush}" FontSize="10" FontWeight="SemiBold"/>
+                                                        </StackPanel>
+                                                    </Border>
+                                                </WrapPanel>
+                                            </DockPanel>
+                                            <UniformGrid Columns="7" Margin="0,10,0,8">
+                                                <Border Margin="2" Padding="4"><TextBlock Text="SEG" HorizontalAlignment="Center" Foreground="{DynamicResource MutedBrush}" FontSize="10" FontWeight="SemiBold"/></Border>
+                                                <Border Margin="2" Padding="4"><TextBlock Text="TER" HorizontalAlignment="Center" Foreground="{DynamicResource MutedBrush}" FontSize="10" FontWeight="SemiBold"/></Border>
+                                                <Border Margin="2" Padding="4"><TextBlock Text="QUA" HorizontalAlignment="Center" Foreground="{DynamicResource MutedBrush}" FontSize="10" FontWeight="SemiBold"/></Border>
+                                                <Border Margin="2" Padding="4"><TextBlock Text="QUI" HorizontalAlignment="Center" Foreground="{DynamicResource MutedBrush}" FontSize="10" FontWeight="SemiBold"/></Border>
+                                                <Border Margin="2" Padding="4"><TextBlock Text="SEX" HorizontalAlignment="Center" Foreground="{DynamicResource MutedBrush}" FontSize="10" FontWeight="SemiBold"/></Border>
+                                                <Border Margin="2" Padding="4"><TextBlock Text="SÁB" HorizontalAlignment="Center" Foreground="{DynamicResource MutedBrush}" FontSize="10" FontWeight="SemiBold"/></Border>
+                                                <Border Margin="2" Padding="4"><TextBlock Text="DOM" HorizontalAlignment="Center" Foreground="{DynamicResource MutedBrush}" FontSize="10" FontWeight="SemiBold"/></Border>
+                                            </UniformGrid>
+                                            <ItemsControl ItemsSource="{Binding Dashboard.ReminderCalendarDays}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <UniformGrid Columns="7"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Border Margin="2" CornerRadius="12" Padding="8" ToolTip="{Binding Tooltip}" BorderThickness="1" Cursor="Hand" MouseLeftButtonUp="CalendarDayBorder_MouseLeftButtonUp">
+                                                            <Border.Style>
+                                                                <Style TargetType="Border">
+                                                                    <Setter Property="Background" Value="White"/>
+                                                                    <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsCurrentMonth}" Value="False">
+                                                                            <Setter Property="Background" Value="{DynamicResource SubtleBackgroundBrush}"/>
+                                                                            <Setter Property="Opacity" Value="0.58"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding IsToday}" Value="True">
+                                                                            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+                                                                            <Setter Property="BorderThickness" Value="1.6"/>
+                                                                            <Setter Property="Background" Value="{DynamicResource PrimarySoftBrush}"/>
+                                                                            <Setter Property="Opacity" Value="1"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+                                                            <Grid MinHeight="56">
+                                                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                                                                <TextBlock Text="{Binding DayNumber}" FontWeight="SemiBold" HorizontalAlignment="Right">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="TextBlock">
+                                                                            <Setter Property="Foreground" Value="{DynamicResource PrimaryDarkBrush}"/>
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding IsWeekend}" Value="True">
+                                                                                    <Setter Property="Foreground" Value="{DynamicResource MutedBrush}"/>
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding IsToday}" Value="True">
+                                                                                    <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
+                                                                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,12,0,0" VerticalAlignment="Bottom">
+                                                                    <Border Background="{DynamicResource WarningSoftBrush}" CornerRadius="10" Padding="6,2" Margin="0,0,4,0">
+                                                                        <Border.Style>
+                                                                            <Style TargetType="Border">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding HasReminder}" Value="True">
+                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Border.Style>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <Ellipse Width="7" Height="7" Fill="{DynamicResource WarningBrush}" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                                                                            <TextBlock Text="{Binding ReminderCount}" FontSize="10" FontWeight="SemiBold" Foreground="{DynamicResource WarningBrush}"/>
+                                                                        </StackPanel>
+                                                                    </Border>
+                                                                    <Border Background="{DynamicResource InfoSoftBrush}" CornerRadius="10" Padding="6,2" Margin="0,0,4,0">
+                                                                        <Border.Style>
+                                                                            <Style TargetType="Border">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding HasPaymentReminder}" Value="True">
+                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Border.Style>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <Ellipse Width="7" Height="7" Fill="{DynamicResource InfoBrush}" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                                                                            <TextBlock Text="{Binding PaymentReminderCount}" FontSize="10" FontWeight="SemiBold" Foreground="{DynamicResource InfoBrush}"/>
+                                                                        </StackPanel>
+                                                                    </Border>
+                                                                    <Border Background="#F1E8FF" CornerRadius="10" Padding="6,2" Margin="0,0,4,0">
+                                                                        <Border.Style>
+                                                                            <Style TargetType="Border">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding HasService}" Value="True">
+                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Border.Style>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <Ellipse Width="7" Height="7" Fill="#8B5CF6" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                                                                            <TextBlock Text="{Binding ServiceCount}" FontSize="10" FontWeight="SemiBold" Foreground="#6D28D9"/>
+                                                                        </StackPanel>
+                                                                    </Border>
+                                                                    <Border Background="#E9F7EF" CornerRadius="10" Padding="6,2">
+                                                                        <Border.Style>
+                                                                            <Style TargetType="Border">
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding HasCustomEvent}" Value="True">
+                                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Border.Style>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <Ellipse Width="7" Height="7" Fill="#23A26D" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                                                                            <TextBlock Text="{Binding CustomEventCount}" FontSize="10" FontWeight="SemiBold" Foreground="#1E7A55"/>
+                                                                        </StackPanel>
+                                                                    </Border>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="8,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid>
+                                        <StackPanel>
+                                            <TextBlock Text="Aniversariantes do mês" Style="{StaticResource SectionTitleStyle}"/>
+                                            <TextBlock Text="Conferência mensal e atualização de PHPM" Style="{StaticResource CaptionTextStyle}"/>
+                                        </StackPanel>
+                                        <Border HorizontalAlignment="Right" Background="{DynamicResource SuccessSoftBrush}" CornerRadius="12" Padding="10,4">
+                                            <TextBlock Text="{Binding Dashboard.Birthdays.Count}" Foreground="{DynamicResource SuccessBrush}" FontWeight="SemiBold"/>
+                                        </Border>
+                                    </Grid>
+                                    <DataGrid x:Name="DashboardBirthdaysGrid" Grid.Row="1" ItemsSource="{Binding Dashboard.Birthdays}" MinHeight="510" Margin="0,12,0,10">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Dia" Binding="{Binding Day}" Width="50"/>
+                                            <DataGridTextColumn Header="P/G" Binding="{Binding Rank}" Width="78"/>
+                                            <DataGridTemplateColumn Header="Nome completo" Width="*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <controls:HighlightedNameTextBlock FullName="{Binding Name}" WarName="{Binding WarName}" TextWrapping="Wrap"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTextColumn Header="Idade" Binding="{Binding Age}" Width="50"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                    <WrapPanel Grid.Row="2">
+                                        <Button Content="Abrir conferência" Tag="aniversariantes" Click="ButtonAction_Click" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,6"/>
+                                        <Button Content="Gerar boletim" Click="OpenBirthdayBulletin_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,0,6"/>
+                                    </WrapPanel>
+                                </Grid>
+                            </Border>
+
+                            <Border Grid.Column="2" Style="{StaticResource CardStyle}" Margin="8,0,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="Efetivo por posto/graduação" Style="{StaticResource SectionTitleStyle}"/>
+                                        <TextBlock Text="Selecione uma graduação para detalhar os anos de formação." Style="{StaticResource CaptionTextStyle}"/>
+                                    </StackPanel>
+                                    <Grid Grid.Row="1" Margin="0,12,0,0">
+                                        <Grid.ColumnDefinitions><ColumnDefinition Width="1*"/><ColumnDefinition Width="0.92*"/></Grid.ColumnDefinitions>
+                                        <ListBox ItemsSource="{Binding Dashboard.RankSummary}" SelectedItem="{Binding SelectedRank}" MinHeight="510">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Margin="5">
+                                                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Rank}" FontWeight="SemiBold"/>
+                                                        <Border Grid.Column="1" Background="{DynamicResource PrimarySoftBrush}" CornerRadius="10" Padding="8,2"><TextBlock Text="{Binding Count}" Foreground="{DynamicResource PrimaryDarkBrush}" FontWeight="SemiBold"/></Border>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                        <DataGrid x:Name="RankYearsGrid" Grid.Column="1" ItemsSource="{Binding SelectedRank.Years}" MinHeight="510" Margin="10,0,0,0">
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Ano" Binding="{Binding Year}" Width="*"/>
+                                                <DataGridTextColumn Header="Qtd." Binding="{Binding Count}" Width="58"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <!-- Sistema -->
+                        <Border Style="{StaticResource CardStyle}">
+                            <StackPanel>
+                                <TextBlock Text="Informações e segurança do sistema" Style="{StaticResource SectionTitleStyle}"/>
+                                <TextBlock Text="Banco, versão e arquivos locais" Style="{StaticResource CaptionTextStyle}"/>
+                                <UniformGrid Columns="4" Margin="0,14,0,0">
+                                    <Border Style="{StaticResource InsetCardStyle}" Margin="0,0,10,0">
+                                        <StackPanel><TextBlock Text="VERSÃO" Style="{StaticResource SubtleTextStyle}"/><TextBlock Text="{Binding Dashboard.Version}" FontSize="15" FontWeight="SemiBold" Margin="0,5,0,0"/></StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource InsetCardStyle}" Margin="0,0,10,0">
+                                        <StackPanel><TextBlock Text="BANCO OFICIAL" Style="{StaticResource SubtleTextStyle}"/><TextBlock Text="{Binding Dashboard.DatabaseSize}" FontSize="15" FontWeight="SemiBold" Margin="0,5,0,0"/><TextBlock Text="{Binding Dashboard.DatabaseStatus}" Foreground="{DynamicResource SuccessBrush}" FontSize="10" TextWrapping="Wrap" Margin="0,3,0,0"/><TextBlock Text="{Binding Dashboard.DatabasePath}" Foreground="{DynamicResource SubtleTextBrush}" FontSize="9" TextTrimming="CharacterEllipsis" ToolTip="{Binding Dashboard.DatabasePath}"/></StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource InsetCardStyle}" Margin="0,0,10,0">
+                                        <StackPanel><TextBlock Text="ÚLTIMO BACKUP" Style="{StaticResource SubtleTextStyle}"/><TextBlock Text="{Binding Dashboard.LastBackup}" FontSize="15" FontWeight="SemiBold" Margin="0,5,0,0"/><TextBlock Foreground="{DynamicResource SubtleTextBrush}" FontSize="10"><Run Text="{Binding Dashboard.BackupCount, Mode=OneWay}"/><Run Text=" arquivo(s)"/></TextBlock></StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource InsetCardStyle}">
+                                        <StackPanel><TextBlock Text="PASTA DE DADOS" Style="{StaticResource SubtleTextStyle}"/><TextBlock Text="{Binding DataDirectory}" FontSize="11" FontWeight="SemiBold" Margin="0,5,0,7" TextTrimming="CharacterEllipsis" ToolTip="{Binding DataDirectory}"/><Button Content="Abrir pasta" Tag="abrir_dados" Click="ButtonAction_Click" Style="{StaticResource SecondaryButtonStyle}" HorizontalAlignment="Left"/></StackPanel>
+                                    </Border>
+                                </UniformGrid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <!-- Barra de status -->
+        <Border Grid.Row="3" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0">
+            <Grid Margin="14,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Ellipse Width="7" Height="7" Fill="{DynamicResource SuccessBrush}" Margin="0,0,7,0"/>
+                    <TextBlock Text="{Binding StatusText}" Foreground="{DynamicResource MutedBrush}" FontSize="10" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock Text="Tema: " Foreground="{DynamicResource SubtleTextBrush}" FontSize="9"/>
+                    <TextBlock Text="SIGFUR" Foreground="{DynamicResource PrimaryDarkBrush}" FontSize="9" FontWeight="SemiBold"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+
+        <!-- Atalho flutuante para o Assistente SIGFUR -->
+        <Button Grid.RowSpan="4" Panel.ZIndex="95" Width="64" Height="64"
+                HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,28,52"
+                Click="AssistantChat_Click" ToolTip="Abrir assistente do SIGFUR"
+                Background="{DynamicResource PrimaryBrush}" Foreground="White" BorderThickness="0" Cursor="Hand">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bubble" CornerRadius="32" Background="{TemplateBinding Background}" BorderBrush="#44FFFFFF" BorderThickness="1">
+                        <Grid>
+                            <TextBlock Text="💬" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Bubble" Property="Opacity" Value="0.88"/></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <!-- Overlay profissional -->
+        <Border Grid.RowSpan="4" Background="{DynamicResource OverlayBrush}"
+                Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibility}}" Panel.ZIndex="100">
+            <Border Width="450" Style="{StaticResource CardStyle}" Padding="24" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="62"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                    <Grid Width="48" Height="48">
+                        <Ellipse Stroke="{DynamicResource DividerBrush}" StrokeThickness="4"/>
+                        <Ellipse Stroke="{DynamicResource PrimaryBrush}" StrokeThickness="4" StrokeDashArray="2,4" StrokeStartLineCap="Round">
+                            <Ellipse.RenderTransform><RotateTransform x:Name="BusyRotate" CenterX="24" CenterY="24"/></Ellipse.RenderTransform>
+                            <Ellipse.Triggers>
+                                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                    <BeginStoryboard><Storyboard><DoubleAnimation Storyboard.TargetName="BusyRotate" Storyboard.TargetProperty="Angle" From="0" To="360" Duration="0:0:1.2" RepeatBehavior="Forever"/></Storyboard></BeginStoryboard>
+                                </EventTrigger>
+                            </Ellipse.Triggers>
+                        </Ellipse>
+                    </Grid>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Processando" FontSize="18" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryDarkBrush}"/>
+                        <TextBlock Text="{Binding BusyMessage}" Style="{StaticResource CaptionTextStyle}" Margin="0,5,0,12"/>
+                        <ProgressBar IsIndeterminate="True" Height="8"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Border>
+    </Grid>
+</Window>

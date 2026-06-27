@@ -1,0 +1,78 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon Condition="Exists('Assets\\sigfur.ico')">Assets\sigfur.ico</ApplicationIcon>
+    <AssemblyName>SIGFUR</AssemblyName>
+    <RootNamespace>SIGFUR.Wpf</RootNamespace>
+    <Version>6.1.22</Version>
+    <Authors>Otavio Clemente</Authors>
+    <Product>SIGFUR — Sistema Integrado de Gestão do Furriel</Product>
+    <LangVersion>latest</LangVersion>
+    <CodePage>65001</CodePage>
+    <Utf8Output>true</Utf8Output>
+    <PublishSingleFile>false</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <!-- Impede que um PythonBridgeService.cs antigo, deixado por extração sobre versões anteriores,
+       volte a entrar na compilação. A auditoria e os leitores de PDF desta versão são nativos em C#. -->
+  <ItemGroup>
+    <Compile Remove="Services\PythonBridgeService.cs" />
+    <Compile Remove="tmp\**\*.cs" />
+
+    <!-- Proteção contra arquivos antigos deixados ao extrair ZIP por cima da pasta existente.
+         Esses backups já causaram duplicação de classes parciais do WPF e ViewModels. -->
+    <Compile Remove="**\*-Otavio.cs" />
+    <Compile Remove="**\*_Otavio.cs" />
+    <Compile Remove="**\*Otavio*.cs" />
+    <Compile Remove="**\*-old.cs" />
+    <Compile Remove="**\*_old.cs" />
+    <Compile Remove="**\*.old.cs" />
+    <Compile Remove="**\*-backup.cs" />
+    <Compile Remove="**\*_backup.cs" />
+    <Compile Remove="**\*.backup.cs" />
+    <Compile Remove="**\*-bak.cs" />
+    <Compile Remove="**\*_bak.cs" />
+    <Compile Remove="**\*.bak.cs" />
+    <Compile Remove="**\* - Copia.cs" />
+    <Compile Remove="**\* - Cópia.cs" />
+    <Compile Remove="**\* - Copy.cs" />
+    <Compile Remove="**\*.orig.cs" />
+    <Compile Remove="**\*.tmp.cs" />
+    <Compile Remove="**\*.disabled.cs" />
+    <Compile Remove="bin\**\*.cs" />
+    <Compile Remove="obj\**\*.cs" />
+    <Page Remove="**\*-Otavio.xaml" />
+    <Page Remove="**\*_Otavio.xaml" />
+    <Page Remove="**\*Otavio*.xaml" />
+    <Page Remove="**\* - Copia.xaml" />
+    <Page Remove="**\* - Cópia.xaml" />
+    <Page Remove="**\* - Copy.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.9" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.5.1" />
+    <PackageReference Include="UglyToad.PdfPig" Version="1.7.0-custom-5" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.44.0" />
+    <PackageReference Include="Selenium.Support" Version="4.44.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\sigfur.png" />
+    <Resource Include="Assets\sigfur-mark.png" />
+    <Resource Include="Assets\sigfur-full.png" />
+    <Resource Include="Assets\sigfur.ico" />
+    <Resource Include="Assets\sigfur-loading.png" />
+    <Resource Include="Assets\sigfur-loading.ico" />
+    <None Update="Resources\Boletim\boletins_padrao.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Resources\Boletim\codom_catalogo.json" CopyToOutputDirectory="PreserveNewest" />
+</ItemGroup>
+</Project>

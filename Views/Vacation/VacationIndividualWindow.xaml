@@ -1,0 +1,55 @@
+<Window x:Class="SIGFUR.Wpf.Views.Vacation.VacationIndividualWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SIGFUR — Carteira de Férias" Width="1080" Height="760" MinWidth="900" MinHeight="620"
+        WindowStartupLocation="CenterOwner" Tag="UiState.BoundsOnly" Background="{DynamicResource AppBackgroundBrush}" Icon="/Assets/sigfur.ico">
+    <Grid>
+        <Grid.RowDefinitions><RowDefinition Height="90"/><RowDefinition Height="*"/><RowDefinition Height="46"/></Grid.RowDefinitions>
+        <Border Background="{DynamicResource PrimaryGradientBrush}" Padding="24,0">
+            <Grid><StackPanel VerticalAlignment="Center"><TextBlock x:Name="MilitaryTitle" Foreground="White" FontSize="23" FontWeight="Bold"/><TextBlock x:Name="MilitarySubtitle" Foreground="#DCEBFF" Margin="0,5,0,0"/></StackPanel><Border HorizontalAlignment="Right" VerticalAlignment="Center" Background="#20FFFFFF" CornerRadius="12" Padding="14,8"><TextBlock x:Name="AnnualSummaryText" Foreground="White" FontWeight="SemiBold"/></Border></Grid>
+        </Border>
+        <TabControl Grid.Row="1" Margin="16,12">
+            <TabItem Header="Plano individual">
+                <Grid Margin="0,10,0,0">
+                    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                    <Border Style="{StaticResource CardStyle}" Padding="14">
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="1.7*"/><ColumnDefinition Width="10"/><ColumnDefinition Width="100"/><ColumnDefinition Width="10"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <StackPanel><TextBlock Text="Período" Style="{StaticResource SubtleTextStyle}"/><ComboBox x:Name="PeriodBox" DisplayMemberPath="FullLabel"/></StackPanel>
+                            <StackPanel Grid.Column="2"><TextBlock Text="Dias" Style="{StaticResource SubtleTextStyle}"/><ComboBox x:Name="DaysBox" SelectedIndex="2"><ComboBoxItem Content="10"/><ComboBoxItem Content="15"/><ComboBoxItem Content="30"/></ComboBox></StackPanel>
+                            <Button Grid.Column="4" Content="Incluir neste período" Style="{StaticResource PrimaryButtonStyle}" Click="AddPlan_Click" Margin="0,17,0,0"/>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="0,10" Padding="12">
+                        <DataGrid x:Name="PlansGrid" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single">
+                            <DataGrid.Columns><DataGridTextColumn Header="Período" Binding="{Binding PeriodLabel}" Width="*"/><DataGridTextColumn Header="Dias" Binding="{Binding Allocation.Days}" Width="80"/><DataGridTextColumn Header="Pagamento" Binding="{Binding Allocation.PaidText}" Width="110"/><DataGridTextColumn Header="Registrado em" Binding="{Binding Allocation.PaidAtText}" Width="150"/></DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                    <WrapPanel Grid.Row="2" HorizontalAlignment="Right"><Button Content="Mover / alterar dias" Style="{StaticResource SecondaryButtonStyle}" Click="MovePlan_Click" Margin="0,0,8,0"/><Button Content="Marcar ano pago" Style="{StaticResource SecondaryButtonStyle}" Click="PaidYear_Click" Margin="0,0,8,0"/><Button Content="Marcar ano pendente" Style="{StaticResource SecondaryButtonStyle}" Click="UnpaidYear_Click" Margin="0,0,8,0"/><Button Content="Excluir plano" Style="{StaticResource DangerButtonStyle}" Click="DeletePlan_Click"/></WrapPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Férias atrasadas / financeiro">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="0,10,0,0">
+                    <Border Style="{StaticResource CardStyle}" Padding="18">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <TextBlock Text="CÁLCULO DO ADICIONAL DE FÉRIAS ATRASADO" Style="{StaticResource SectionTitleStyle}"/>
+                            <Grid Grid.Row="1" Margin="0,16,0,0">
+                                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="10"/><ColumnDefinition/><ColumnDefinition Width="10"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                                <StackPanel><TextBlock Text="Tipo" Style="{StaticResource SubtleTextStyle}"/><ComboBox x:Name="TypeBox"><ComboBoxItem Content="Temporário"/><ComboBoxItem Content="Carreira"/></ComboBox></StackPanel>
+                                <StackPanel Grid.Column="2"><TextBlock Text="% Habilitação" Style="{StaticResource SubtleTextStyle}"/><TextBox x:Name="QualificationBox"/></StackPanel>
+                                <StackPanel Grid.Column="4"><TextBlock Text="% Adicional militar" Style="{StaticResource SubtleTextStyle}"/><TextBox x:Name="MilitaryAdditionalBox"/></StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="2" Margin="0,12,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="10"/><ColumnDefinition/></Grid.ColumnDefinitions><StackPanel><TextBlock Text="% Disponibilidade militar" Style="{StaticResource SubtleTextStyle}"/><TextBox x:Name="AvailabilityBox"/></StackPanel><StackPanel Grid.Column="2"><TextBlock Text="Soldo do banco" Style="{StaticResource SubtleTextStyle}"/><TextBlock x:Name="SalaryText" FontSize="17" FontWeight="SemiBold" Margin="0,7,0,0"/></StackPanel></Grid>
+                            <Grid Grid.Row="3" Margin="0,18,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><Border Background="{DynamicResource PrimarySoftBrush}" CornerRadius="12" Padding="16"><StackPanel><TextBlock Text="VALOR CALCULADO" Style="{StaticResource SubtleTextStyle}"/><TextBlock x:Name="FinancialResultText" Foreground="{DynamicResource PrimaryDarkBrush}" FontSize="22" FontWeight="Bold" Margin="0,4,0,0"/><TextBlock x:Name="FinancialWordsText" Foreground="{DynamicResource MutedBrush}" TextWrapping="Wrap" Margin="0,4,0,0"/></StackPanel></Border><StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="12,0,0,0"><Button Content="Restaurar padrões" Style="{StaticResource SecondaryButtonStyle}" Click="ResetFinancial_Click" Margin="0,0,8,0"/><Button Content="Salvar e calcular" Style="{StaticResource PrimaryButtonStyle}" Click="SaveFinancial_Click"/></StackPanel></Grid>
+                        </Grid>
+                    </Border>
+                </StackPanel></ScrollViewer>
+            </TabItem>
+            <TabItem Header="Contracheques salvos">
+                <Grid Margin="0,10,0,0"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions><TextBlock Text="Contracheques encontrados para este militar" Style="{StaticResource SectionTitleStyle}"/><DataGrid x:Name="PaystubsGrid" Grid.Row="1" Margin="0,10" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" MouseDoubleClick="PaystubsGrid_MouseDoubleClick"><DataGrid.Columns><DataGridTextColumn Header="Referência" Binding="{Binding Reference}" Width="120"/><DataGridTextColumn Header="Arquivo" Binding="{Binding FileName}" Width="*"/><DataGridTextColumn Header="Alterado" Binding="{Binding ModifiedAt, StringFormat=dd/MM/yyyy HH:mm}" Width="150"/><DataGridTextColumn Header="Tamanho" Binding="{Binding SizeText}" Width="100"/></DataGrid.Columns></DataGrid><StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right"><Button Content="Atualizar lista" Style="{StaticResource SecondaryButtonStyle}" Click="RefreshPaystubs_Click" Margin="0,0,8,0"/><Button Content="Abrir selecionado" Style="{StaticResource PrimaryButtonStyle}" Click="OpenPaystub_Click"/></StackPanel></Grid>
+            </TabItem>
+        </TabControl>
+        <Border Grid.Row="2" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="16,0"><Grid><TextBlock x:Name="StatusText" VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}"/><Button Content="Fechar" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource SecondaryButtonStyle}" Click="Close_Click"/></Grid></Border>
+    </Grid>
+</Window>

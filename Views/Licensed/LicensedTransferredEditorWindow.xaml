@@ -1,0 +1,81 @@
+<Window x:Class="SIGFUR.Wpf.Views.Licensed.LicensedTransferredEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Cadastro — Licenciado/Transferido" Width="980" Height="790" MinWidth="820" MinHeight="640"
+        WindowStartupLocation="CenterOwner" Background="{DynamicResource AppBackgroundBrush}" Icon="/Assets/sigfur.ico"
+        Loaded="Window_Loaded">
+    <Grid Margin="18">
+        <Border Style="{StaticResource CardStyle}" Padding="22">
+            <Grid>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                <StackPanel>
+                    <TextBlock x:Name="TitleText" Text="Licenciado / Transferido" Style="{StaticResource PageTitleStyle}" FontSize="23"/>
+                    <TextBlock Text="Cadastro completo preservando identificação, contato, dados bancários, benefícios e motivo do desligamento." Style="{StaticResource SubtleTextStyle}" Margin="0,3,0,16"/>
+                </StackPanel>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="0,0,8,0">
+                        <GroupBox Header="Identificação" Margin="0,0,0,12">
+                            <Grid Margin="14">
+                                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="16"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                                <StackPanel><TextBlock Text="Posto/Graduação" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="RankBox" IsEditable="True"/></StackPanel>
+                                <StackPanel Grid.Column="2"><TextBlock Text="Nome completo" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="NameBox"/></StackPanel>
+                                <StackPanel Grid.Row="1" Margin="0,10,0,0"><TextBlock Text="Nome de Guerra" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="WarNameBox"/></StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,10,0,0"><TextBlock Text="CPF" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="CpfBox"/></StackPanel>
+                                <StackPanel Grid.Row="2" Margin="0,10,0,0"><TextBlock Text="PREC-CP" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="PrecBox"/></StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,10,0,0"><TextBlock Text="IDT" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="IdtBox"/></StackPanel>
+                                <StackPanel Grid.Row="3" Margin="0,10,0,0"><TextBlock Text="Ano de formação" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="YearBox"/></StackPanel>
+                                <StackPanel Grid.Row="3" Grid.Column="2" Margin="0,10,0,0"><TextBlock Text="Status na lista" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="VisibleBox" SelectedIndex="0"><ComboBoxItem Content="Visível" Tag="1"/><ComboBoxItem Content="Arquivado" Tag="0"/></ComboBox></StackPanel>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Contato e endereço" Margin="0,0,0,12">
+                            <Grid Margin="14">
+                                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="16"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                                <StackPanel><TextBlock Text="Telefone" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="PhoneBox"/></StackPanel>
+                                <StackPanel Grid.Column="2"><TextBlock Text="E-mail" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="EmailBox"/></StackPanel>
+                                <StackPanel Grid.Row="1" Margin="0,10,0,0"><TextBlock Text="Escolaridade" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="EducationBox"/></StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,10,0,0"><TextBlock Text="CEP" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="ZipBox"/></StackPanel>
+                                <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Margin="0,10,0,0"><TextBlock Text="Endereço" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="AddressBox"/></StackPanel>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Datas, banco e foto" Margin="0,0,0,12">
+                            <Grid Margin="14">
+                                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="16"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                                <StackPanel><TextBlock Text="Data de nascimento" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="BirthBox" ToolTip="dd/mm/aaaa"/></StackPanel>
+                                <StackPanel Grid.Column="2"><TextBlock Text="Data de praça" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="EnlistmentBox" ToolTip="dd/mm/aaaa"/></StackPanel>
+                                <StackPanel Grid.Row="1" Margin="0,10,0,0"><TextBlock Text="Banco" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="BankBox"/></StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,10,0,0"><TextBlock Text="Agência" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="AgencyBox"/></StackPanel>
+                                <StackPanel Grid.Row="2" Margin="0,10,0,0"><TextBlock Text="Conta" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="AccountBox"/></StackPanel>
+                                <Grid Grid.Row="2" Grid.Column="2" Margin="0,10,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><StackPanel><TextBlock Text="Foto" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="PhotoBox" IsReadOnly="True"/></StackPanel><Button Grid.Column="1" Content="Escolher..." Style="{StaticResource SecondaryButtonStyle}" Margin="8,18,0,0" Click="ChoosePhoto_Click"/></Grid>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Situação e benefícios">
+                            <Grid Margin="14">
+                                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="16"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                                <StackPanel><TextBlock Text="Motivo" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="ReasonBox" IsEditable="True"><ComboBoxItem Content="Licenciamento"/><ComboBoxItem Content="Transferência"/><ComboBoxItem Content="Reserva"/><ComboBoxItem Content="Outro"/></ComboBox></StackPanel>
+                                <StackPanel Grid.Column="2"><TextBlock Text="Destino / OM" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="DestinationBox"/></StackPanel>
+                                <StackPanel Grid.Row="1" Margin="0,10,0,0"><TextBlock Text="Recebe pré-escolar" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="PreSchoolBox"><ComboBoxItem Content="Não"/><ComboBoxItem Content="Sim"/></ComboBox></StackPanel>
+                                <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,10,0,0"><TextBlock Text="Valor pré-escolar" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="PreSchoolValueBox"/></StackPanel>
+                                <StackPanel Grid.Row="2" Margin="0,10,0,0"><TextBlock Text="Recebe Auxílio-Transporte" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="TransportBox"><ComboBoxItem Content="Não"/><ComboBoxItem Content="Sim"/></ComboBox></StackPanel>
+                                <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,10,0,0"><TextBlock Text="Último valor do AT" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="TransportValueBox"/></StackPanel>
+                                <StackPanel Grid.Row="3" Margin="0,10,0,0"><TextBlock Text="PNR" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="PnrBox"><ComboBoxItem Content="Não"/><ComboBoxItem Content="Sim"/></ComboBox></StackPanel>
+                                <Grid Grid.Row="3" Grid.Column="2" Margin="0,10,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="12"/><ColumnDefinition/></Grid.ColumnDefinitions><StackPanel><TextBlock Text="Pensão alimentícia" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="AlimonyBox"><ComboBoxItem Content="Não"/><ComboBoxItem Content="Sim"/></ComboBox></StackPanel><StackPanel Grid.Column="2"><TextBlock Text="Valor/observação" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="AlimonyValueBox"/></StackPanel></Grid>
+                            </Grid>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+                <Grid Grid.Row="2" Margin="0,18,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="10"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <TextBlock x:Name="StatusText" VerticalAlignment="Center" Style="{StaticResource SubtleTextStyle}"/>
+                    <Button Grid.Column="1" Content="Cancelar" Style="{StaticResource SecondaryButtonStyle}" IsCancel="True"/>
+                    <Button Grid.Column="3" Content="Salvar cadastro" Style="{StaticResource PrimaryButtonStyle}" IsDefault="True" Click="Save_Click"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

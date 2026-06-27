@@ -1,0 +1,119 @@
+<Window x:Class="SIGFUR.Wpf.Views.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SIGFUR — Sobre e ajuda"
+        Width="930" Height="700" MinWidth="780" MinHeight="570"
+        WindowStartupLocation="CenterOwner" Icon="/Assets/sigfur.ico"
+        Background="{DynamicResource AppBackgroundBrush}">
+    <Grid>
+        <Grid.RowDefinitions><RowDefinition Height="108"/><RowDefinition Height="*"/><RowDefinition Height="54"/></Grid.RowDefinitions>
+        <Border Background="{DynamicResource PrimaryGradientBrush}" Padding="26,0">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <Border Width="64" Height="64" CornerRadius="16" Background="#24FFFFFF" VerticalAlignment="Center">
+                    <Image Source="/Assets/sigfur.png" Width="48" Height="48" Stretch="Uniform"/>
+                </Border>
+                <StackPanel Grid.Column="1" Margin="18,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="SIGFUR" Foreground="White" FontSize="25" FontWeight="Bold"/>
+                    <TextBlock Text="Sistema Integrado de Gestão do Furriel" Foreground="{DynamicResource TextOnPrimaryMutedBrush}" FontSize="13" Margin="0,3,0,0"/>
+                    <TextBlock Text="Desenvolvido por 3º Sgt Otávio — 4ª Cia PE" Foreground="White" FontWeight="SemiBold" Margin="0,8,0,0"/>
+                </StackPanel>
+                <Border Grid.Column="2" Background="#22FFFFFF" CornerRadius="11" Padding="14,8" VerticalAlignment="Center">
+                    <TextBlock Text="Versão 6.1.7" Foreground="White" FontWeight="SemiBold"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <TabControl Grid.Row="1" Margin="16">
+            <TabItem Header="Visão geral">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="18">
+                        <TextBlock Text="Finalidade" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="O SIGFUR reúne cadastro de militares, boletins, documentos administrativos, cálculos financeiros, contracheques, férias, lembretes e rotinas de conferência da seção." TextWrapping="Wrap" Margin="0,8,0,16"/>
+                        <UniformGrid Columns="2">
+                            <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,8,8">
+                                <StackPanel><TextBlock Text="Cadastro e efetivo" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="Militares ativos, licenciados, transferidos, carteiras, documentos, fotos e dados bancários." TextWrapping="Wrap" Foreground="{DynamicResource SubtleTextBrush}" Margin="0,5,0,0"/></StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource CardStyle}" Padding="16" Margin="8,0,0,8">
+                                <StackPanel><TextBlock Text="Boletins" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="Modelos, chaves, Word, pesquisa de menções, Furriel e integração controlada com o SisBol." TextWrapping="Wrap" Foreground="{DynamicResource SubtleTextBrush}" Margin="0,5,0,0"/></StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,8,8,0">
+                                <StackPanel><TextBlock Text="Financeiro" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="Soldos, gratificações, ajustes, férias, exercício anterior, inconsistências e corrida de pagamento." TextWrapping="Wrap" Foreground="{DynamicResource SubtleTextBrush}" Margin="0,5,0,0"/></StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource CardStyle}" Padding="16" Margin="8,8,0,0">
+                                <StackPanel><TextBlock Text="Documentos" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="Relação Pessoal, Medidas Tomadas, relatórios, planilhas e documentos com dados do banco oficial." TextWrapping="Wrap" Foreground="{DynamicResource SubtleTextBrush}" Margin="0,5,0,0"/></StackPanel>
+                            </Border>
+                        </UniformGrid>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="SisBol">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="18">
+                        <TextBlock Text="Sessão controlada" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="Prepare a sessão no cabeçalho da janela principal. Após o login e o captcha, os módulos reutilizam a mesma sessão enquanto ela permanecer válida." TextWrapping="Wrap" Margin="0,8,0,16"/>
+                        <Border Style="{StaticResource CardStyle}" Padding="16">
+                            <StackPanel>
+                                <TextBlock Text="Conferência antes do lançamento" FontWeight="SemiBold"/>
+                                <TextBlock Text="O SIGFUR valida os campos e o conteúdo antes de acionar a inclusão. Quando a página exigir nova autenticação, o navegador é apresentado novamente." TextWrapping="Wrap" Foreground="{DynamicResource SubtleTextBrush}" Margin="0,5,0,12"/>
+                                <TextBlock Text="Captcha" FontWeight="SemiBold"/>
+                                <TextBlock Text="O captcha permanece manual. A sessão não é encerrada quando o navegador é ocultado." TextWrapping="Wrap" Foreground="{DynamicResource SubtleTextBrush}" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Dados e segurança">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="18">
+                        <TextBlock Text="Banco oficial" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="Os dados do programa ficam em AppData\Local\SIGFUR. O caminho e o estado do banco aparecem na tela inicial." TextWrapping="Wrap" Margin="0,8,0,16"/>
+                        <TextBlock Text="Credenciais" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="Senhas salvas pelos módulos C# são protegidas pelo usuário atual do Windows. Elas não são gravadas como texto aberto." TextWrapping="Wrap" Margin="0,8,0,16"/>
+                        <TextBlock Text="Persistência" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="Posições de janelas, tamanhos, colunas, filtros, modelos e preferências são restaurados automaticamente quando possível." TextWrapping="Wrap" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+
+            <TabItem Header="Operação 6.0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="18">
+                        <TextBlock Text="Trabalho simultâneo" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="Os módulos operacionais abrem em janelas independentes. Você pode manter Listar Militares, Auxílio-Transporte, Férias, Plano de Chamada e outros módulos abertos ao mesmo tempo e mover cada um para um monitor diferente." TextWrapping="Wrap" Margin="0,8,0,16"/>
+                        <TextBlock Text="Escala do Sargento de Dia" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="O efetivo concorrente é configurável. A conferência mostra serviços, dias vermelhos, último serviço, quantidade de dias de folga e o próximo provável, respeitando o descanso mínimo de 48 horas." TextWrapping="Wrap" Margin="0,8,0,16"/>
+                        <TextBlock Text="Plano de Chamada" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="Todo militar do Listar aparece no Plano. A importação identifica a pessoa, grava telefone e endereço no banco próprio do Plano, permite completar telefone ausente e apenas compara o endereço, sem alterar o cadastro oficial." TextWrapping="Wrap" Margin="0,8,0,16"/>
+                        <TextBlock Text="Cores e alertas" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="O Listar usa cores discretas por posto/graduação e por turma dos soldados. Aniversariantes do dia geram aviso ao iniciar, e os modelos de boletim podem ser editados e salvos." TextWrapping="Wrap" Margin="0,8,0,0"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Controles">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="18">
+                        <TextBlock Text="Barra superior" Style="{StaticResource SectionTitleStyle}"/>
+                        <UniformGrid Columns="2" Margin="0,12,0,0">
+                            <Border Style="{StaticResource CardStyle}" Padding="14" Margin="0,0,8,8"><StackPanel><TextBlock Text="Atualizar" FontWeight="Bold"/><TextBlock Text="Recarrega os dados do painel." Foreground="{DynamicResource SubtleTextBrush}"/></StackPanel></Border>
+                            <Border Style="{StaticResource CardStyle}" Padding="14" Margin="8,0,0,8"><StackPanel><TextBlock Text="Aparência" FontWeight="Bold"/><TextBlock Text="Altera tema e cores." Foreground="{DynamicResource SubtleTextBrush}"/></StackPanel></Border>
+                            <Border Style="{StaticResource CardStyle}" Padding="14" Margin="0,8,8,0"><StackPanel><TextBlock Text="A+ / A / A−" FontWeight="Bold"/><TextBlock Text="Aumenta, restaura ou reduz a interface." Foreground="{DynamicResource SubtleTextBrush}"/></StackPanel></Border>
+                            <Border Style="{StaticResource CardStyle}" Padding="14" Margin="8,8,0,0"><StackPanel><TextBlock Text="Perfil" FontWeight="Bold"/><TextBlock Text="Posto/graduação, operador, função, OM e símbolo institucional." Foreground="{DynamicResource SubtleTextBrush}"/></StackPanel></Border>
+                        </UniformGrid>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+        <Border Grid.Row="2" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource DividerBrush}" BorderThickness="0,1,0,0" Padding="16,0">
+            <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <TextBlock Text="3º Sgt Otávio • 4ª Companhia de Polícia do Exército" VerticalAlignment="Center" Foreground="{DynamicResource SubtleTextBrush}"/>
+                <Button Grid.Column="1" Content="Fechar" Style="{StaticResource PrimaryButtonStyle}" Click="Close_Click" MinWidth="100" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

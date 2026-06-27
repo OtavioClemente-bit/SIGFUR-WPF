@@ -1,0 +1,61 @@
+<Window x:Class="SIGFUR.Wpf.Views.ProfileSyncSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Perfil, Backup e Sincronização" Width="820" Height="720" MinWidth="660" MinHeight="520" WindowStartupLocation="CenterOwner" ResizeMode="CanResize" Background="#F4F7FB" Tag="UiState.BoundsOnly">
+    <Window.Resources>
+        <Style TargetType="TextBox"><Setter Property="MinHeight" Value="34"/><Setter Property="Padding" Value="8,5"/><Setter Property="Margin" Value="0,3,0,8"/></Style>
+        <Style TargetType="Button"><Setter Property="MinHeight" Value="36"/><Setter Property="Padding" Value="12,7"/><Setter Property="Margin" Value="0,4,8,4"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="ContentTemplate"><Setter.Value><DataTemplate><TextBlock Text="{Binding}" TextWrapping="Wrap" TextAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/></DataTemplate></Setter.Value></Setter></Style>
+    </Window.Resources>
+    <Grid Margin="22">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel Margin="0,0,0,16">
+            <TextBlock Text="Perfil, Backup e Sincronização" FontSize="24" FontWeight="Bold" Foreground="#143D66"/>
+            <TextBlock Text="Gerencie o Perfil SIGFUR ativo, crie backup manual e teste a integridade do pacote salvo." Foreground="#546579" TextWrapping="Wrap" Margin="0,6,0,0"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Background="White" CornerRadius="14" Padding="18" BorderBrush="#D8E2EF" BorderThickness="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock Text="Perfil atual" FontWeight="SemiBold" Foreground="#26384D"/>
+                    <TextBox x:Name="ProfileNameTextBox" IsReadOnly="True"/>
+
+                    <TextBlock Text="Pasta local dos dados" FontWeight="SemiBold" Foreground="#26384D"/>
+                    <Grid Margin="0,3,0,8">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <TextBox x:Name="LocalPathTextBox" Margin="0" IsReadOnly="True"/>
+                        <Button Grid.Column="1" Content="Abrir" Click="OpenLocal_Click"/>
+                    </Grid>
+
+                    <TextBlock Text="Pasta de sincronização" FontWeight="SemiBold" Foreground="#26384D"/>
+                    <Grid Margin="0,3,0,8">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <TextBox x:Name="SyncPathTextBox" Margin="0"/>
+                        <Button Grid.Column="1" Content="Escolher" Click="ChooseSync_Click"/>
+                        <Button Grid.Column="2" Content="Abrir" Click="OpenSync_Click"/>
+                    </Grid>
+
+                    <TextBlock x:Name="LastBackupTextBlock" Foreground="#546579" TextWrapping="Wrap" Margin="0,4,0,10"/>
+                    <CheckBox x:Name="BackupOnCloseCheckBox" Content="Backup ao fechar: Sim" Margin="0,4,0,4"/>
+                    <CheckBox x:Name="SafetyBackupCheckBox" Content="Criar backup de segurança antes de restaurar" Margin="0,4,0,12"/>
+
+                    <WrapPanel>
+                        <Button Content="Salvar meus dados agora" Click="SaveNow_Click" Background="#143D66" Foreground="White"/>
+                        <Button Content="Restaurar último backup" Click="Restore_Click" Background="#0F6B4F" Foreground="White"/>
+                        <Button Content="Criar backup de segurança" Click="SafetyBackup_Click" Background="#EAF2FB" Foreground="#143D66"/>
+                        <Button Content="Testar integridade" Click="Integrity_Click" Background="#EAF2FB" Foreground="#143D66"/>
+                        <Button Content="Desativar backup ao fechar" Click="DisableBackupOnClose_Click" Background="#F8EDEE" Foreground="#9F1D2D"/>
+                    </WrapPanel>
+
+                    <Border Background="#EAF2FB" CornerRadius="10" Padding="12" Margin="0,14,0,0">
+                        <TextBlock x:Name="StatusTextBlock" Foreground="#143D66" TextWrapping="Wrap"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="Salvar configurações" Click="SaveSettings_Click" Background="#143D66" Foreground="White"/>
+            <Button Content="Fechar" Click="Close_Click" Background="#F0F4F9" Foreground="#143D66"/>
+        </StackPanel>
+    </Grid>
+</Window>

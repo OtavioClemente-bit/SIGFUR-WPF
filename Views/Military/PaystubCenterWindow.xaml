@@ -1,0 +1,283 @@
+<Window x:Class="SIGFUR.Wpf.Views.Military.PaystubCenterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:SIGFUR.Wpf.Controls"
+        Title="SIGFUR — Central de contracheques"
+        Width="1220" Height="820" MinWidth="980" MinHeight="680"
+        WindowStyle="SingleBorderWindow" ResizeMode="CanResize"
+        WindowStartupLocation="CenterOwner" Icon="/Assets/sigfur.ico"
+        Background="{DynamicResource AppBackgroundBrush}"
+        Loaded="Window_Loaded" Closing="Window_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="58"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="54"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" Padding="18,0">
+            <Grid>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="CENTRAL DE CONTRACHEQUES" FontSize="17" FontWeight="Bold" Foreground="{DynamicResource TextBrush}"/>
+                    <TextBlock Text="SIPPES, pessoas de fora e auditoria de contracheques" Foreground="{DynamicResource MutedBrush}" Margin="0,2,0,0"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock x:Name="ScopeText" Text="Escopo: carregando…" Foreground="{DynamicResource MutedBrush}" FontSize="10" HorizontalAlignment="Right" Margin="0,0,2,4"/>
+                    <Border Background="{DynamicResource PrimarySoftBrush}" CornerRadius="10" Padding="12,7">
+                        <TextBlock x:Name="AutomationStatusText" Text="Automação nativa C#…" Foreground="{DynamicResource PrimaryDarkBrush}" FontWeight="SemiBold"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="16,14,16,0" Padding="12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="175"/>
+                    <ColumnDefinition Width="8"/>
+                    <ColumnDefinition Width="175"/>
+                    <ColumnDefinition Width="8"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center" MaxWidth="310">
+                    <TextBlock Text="LOGIN SIPPES" Style="{StaticResource MetricCaptionStyle}"/>
+                    <TextBlock x:Name="CredentialStatusText" Text="Nenhuma credencial verificada" Style="{StaticResource SubtleTextStyle}" FontSize="10" TextTrimming="CharacterEllipsis"/>
+                    <TextBlock x:Name="AutomationDetailText" Text="" Style="{StaticResource SubtleTextStyle}" FontSize="9" TextTrimming="CharacterEllipsis" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Usuário / CPF" Style="{StaticResource CaptionTextStyle}"/>
+                    <TextBox x:Name="UserBox" Margin="0,4,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="4">
+                    <TextBlock Text="Senha" Style="{StaticResource CaptionTextStyle}"/>
+                    <PasswordBox x:Name="PasswordBox" Margin="0,4,0,0"/>
+                </StackPanel>
+                <Border Grid.Column="6" Background="{DynamicResource SurfaceAltBrush}" CornerRadius="12" Padding="10" VerticalAlignment="Bottom">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Style="{StaticResource PrimaryButtonStyle}" Content="Salvar login protegido" Click="SaveCredentials_Click" Margin="0,0,8,6" MinWidth="150"/>
+                            <Button Style="{StaticResource SecondaryButtonStyle}" Content="Remover login" Click="ClearCredentials_Click" Margin="0,0,0,6" MinWidth="120"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button x:Name="InstallAutomationButton" Style="{StaticResource GhostButtonStyle}" Content="Verificar automação C#" Click="InstallAutomation_Click" Margin="0,0,8,0" MinWidth="145"/>
+                            <Button Style="{StaticResource SecondaryButtonStyle}" Content="Abrir portal visível" Click="OpenLogin_Click" Margin="0,0,8,0" MinWidth="135"/>
+                            <Button Style="{StaticResource PrimaryButtonStyle}" Content="Preparar sessão oculta" Click="ConfirmSession_Click" MinWidth="165"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <TabControl x:Name="MainTabs" Grid.Row="2" Margin="16,12,16,12">
+            <TabItem Header="Individual">
+                <Grid Margin="12">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="360"/><ColumnDefinition Width="14"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource CardStyle}" Padding="12">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                            <TextBlock Text="Militar" Style="{StaticResource SectionTitleStyle}"/>
+                            <TextBlock Grid.Row="1" Text="Escolha o militar para baixar ou abrir os arquivos salvos." Style="{StaticResource SubtleTextStyle}" Margin="0,4,0,10"/>
+                            <ListBox x:Name="IndividualMilitaryList" Grid.Row="2" SelectionMode="Single">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="2,3">
+                                            <TextBlock Text="{Binding ShortRank}" FontWeight="SemiBold" Margin="0,0,7,0"/>
+                                            <controls:HighlightedNameTextBlock FullName="{Binding Name}" WarName="{Binding WarName}" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
+                    </Border>
+                    <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12">
+                                <StackPanel>
+                                    <TextBlock Text="Competência e destino" Style="{StaticResource SectionTitleStyle}"/>
+                                    <Grid Margin="0,12,0,0">
+                                        <Grid.ColumnDefinitions><ColumnDefinition Width="120"/><ColumnDefinition Width="12"/><ColumnDefinition Width="150"/><ColumnDefinition Width="12"/><ColumnDefinition Width="150"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                        <StackPanel><TextBlock Text="Ano" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="IndividualYearCombo" SelectionChanged="Competence_Changed" Margin="0,4,0,0"/></StackPanel>
+                                        <StackPanel Grid.Column="2"><TextBlock Text="Mês" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="IndividualMonthCombo" SelectionChanged="Competence_Changed" Margin="0,4,0,0"/></StackPanel>
+                                        <StackPanel Grid.Column="4"><TextBlock Text="Código da folha" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="IndividualCodeBox" Margin="0,4,0,0"/></StackPanel>
+                                    </Grid>
+                                    <TextBlock Text="Pasta raiz dos documentos financeiros" Style="{StaticResource CaptionTextStyle}" Margin="0,12,0,4"/>
+                                    <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="8"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                        <TextBox x:Name="OutputFolderBox" IsReadOnly="True"/>
+                                        <Button Grid.Column="2" Style="{StaticResource SecondaryButtonStyle}" Content="Escolher" Click="ChooseOutput_Click"/>
+                                    </Grid>
+                                    <CheckBox x:Name="OverwriteIndividualCheck" Content="Substituir o PDF se esta competência já existir" IsChecked="True" Margin="0,10,0,0"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource CardStyle}" Padding="16">
+                                <StackPanel>
+                                    <TextBlock Text="Ações individuais" Style="{StaticResource SectionTitleStyle}"/>
+                                    <TextBlock Text="A Central baixa contracheque ou ficha financeira direto na pasta individual do militar, sem abrir a Carteira. A Carteira fica apenas para consultar arquivos já salvos." TextWrapping="Wrap" Style="{StaticResource SubtleTextStyle}" Margin="0,4,0,14"/>
+                                    <UniformGrid Columns="2">
+                                        <Button x:Name="DownloadIndividualButton" Style="{StaticResource PrimaryButtonStyle}" Content="Baixar contracheque" Click="DownloadIndividual_Click" Margin="0,0,8,8" MinHeight="46"/>
+                                        <Button Style="{StaticResource PrimaryButtonStyle}" Content="Baixar ficha financeira" Click="DownloadFinancialStatementIndividual_Click" Margin="8,0,0,8" MinHeight="46"/>
+                                        <Button Style="{StaticResource SecondaryButtonStyle}" Content="Abrir último contracheque" Click="OpenLatest_Click" Margin="0,0,8,8" MinHeight="46"/>
+                                        <Button Style="{StaticResource SecondaryButtonStyle}" Content="Abrir contracheques salvos" Click="OpenSaved_Click" Margin="8,0,0,8" MinHeight="46"/>
+                                        <Button Style="{StaticResource SecondaryButtonStyle}" Content="Abrir fichas salvas" Click="OpenSavedFinancialStatements_Click" Margin="0,0,8,0" MinHeight="46"/>
+                                        <Button Style="{StaticResource GhostButtonStyle}" Content="Abrir pasta raiz" Click="OpenOutputFolder_Click" Margin="8,0,0,0" MinHeight="46"/>
+                                    </UniformGrid>
+                                    <TextBox x:Name="IndividualResultBox" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="96" Margin="0,14,0,0" VerticalScrollBarVisibility="Auto"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Lote do mês">
+                <Grid Margin="12">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="430"/><ColumnDefinition Width="14"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource CardStyle}" Padding="12">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                            <Grid><TextBlock Text="Fila do lote" Style="{StaticResource SectionTitleStyle}"/><StackPanel Orientation="Horizontal" HorizontalAlignment="Right"><Button Style="{StaticResource GhostButtonStyle}" Content="Marcar todos" Click="SelectAllBatch_Click" Margin="0,0,6,0"/><Button Style="{StaticResource GhostButtonStyle}" Content="Desmarcar" Click="ClearBatchSelection_Click"/></StackPanel></Grid>
+                            <TextBlock Grid.Row="1" x:Name="BatchCountText" Style="{StaticResource SubtleTextStyle}" Margin="0,5,0,10"/>
+                            <ListBox x:Name="BatchMilitaryList" Grid.Row="2" SelectionMode="Extended">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="2,3"><TextBlock Text="{Binding ShortRank}" FontWeight="SemiBold" Margin="0,0,7,0"/><controls:HighlightedNameTextBlock FullName="{Binding Name}" WarName="{Binding WarName}" TextWrapping="Wrap"/></StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
+                    </Border>
+                    <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12">
+                                <StackPanel>
+                                    <TextBlock Text="Baixar todos do mês em segundo plano" Style="{StaticResource SectionTitleStyle}"/>
+                                    <TextBlock Text="A central baixa contracheques e fichas financeiras direto, sem abrir Carteira nem gerenciador clássico. O navegador oculto é reutilizado e, se a sessão expirar, o login é refeito automaticamente." TextWrapping="Wrap" Style="{StaticResource SubtleTextStyle}" Margin="0,4,0,12"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions><ColumnDefinition Width="120"/><ColumnDefinition Width="12"/><ColumnDefinition Width="150"/><ColumnDefinition Width="12"/><ColumnDefinition Width="150"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                        <StackPanel><TextBlock Text="Ano" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="BatchYearCombo" SelectionChanged="Competence_Changed" Margin="0,4,0,0"/></StackPanel>
+                                        <StackPanel Grid.Column="2"><TextBlock Text="Mês" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="BatchMonthCombo" SelectionChanged="Competence_Changed" Margin="0,4,0,0"/></StackPanel>
+                                        <StackPanel Grid.Column="4"><TextBlock Text="Código da folha" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="BatchCodeBox" Margin="0,4,0,0"/></StackPanel>
+                                    </Grid>
+                                    <TextBlock Text="Antes de iniciar, a Central verifica as pastas individuais e pergunta se deve substituir ou ignorar PDFs já existentes. A ficha financeira é salva dentro da subpasta 'Ficha Financeira' de cada militar." Style="{StaticResource SubtleTextStyle}" TextWrapping="Wrap" Margin="0,12,0,0"/>
+                                    <WrapPanel Margin="0,14,0,0">
+                                        <Button x:Name="DownloadBatchButton" Style="{StaticResource PrimaryButtonStyle}" Content="Baixar contracheques em lote" Click="DownloadBatch_Click" MinWidth="230" MinHeight="46" Margin="0,0,8,0"/>
+                                        <Button x:Name="DownloadFinancialBatchButton" Style="{StaticResource PrimaryButtonStyle}" Content="Baixar ficha financeira em lote" Click="DownloadFinancialBatch_Click" MinWidth="245" MinHeight="46" Margin="0,0,8,0"/>
+                                        <Button Style="{StaticResource SecondaryButtonStyle}" Content="Abrir pasta raiz" Click="OpenBatchManager_Click" MinHeight="46"/>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Border>
+                            <Border Style="{StaticResource CardStyle}" Padding="16">
+                                <StackPanel>
+                                    <TextBlock Text="Resultado do lote" Style="{StaticResource SectionTitleStyle}"/>
+                                    <TextBox x:Name="BatchResultBox" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="190" Margin="0,10,0,0" VerticalScrollBarVisibility="Auto"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Pessoas fora">
+                <Grid Margin="12">
+                    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                    <Border Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,12">
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="140"/><ColumnDefinition Width="12"/><ColumnDefinition Width="200"/><ColumnDefinition Width="12"/><ColumnDefinition Width="160"/><ColumnDefinition Width="12"/><ColumnDefinition Width="160"/><ColumnDefinition Width="12"/><ColumnDefinition Width="120"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                            <StackPanel><TextBlock Text="Sistema" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="ExternalSystemCombo" SelectionChanged="ExternalSystem_Changed" Margin="0,4,0,0"><ComboBoxItem Content="SIPPES" IsSelected="True"/><ComboBoxItem Content="SIAPPES"/></ComboBox></StackPanel>
+                            <StackPanel Grid.Column="2"><TextBlock Text="Processamento" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="ProcessingCombo" Margin="0,4,0,0"><ComboBoxItem Content="Definitivo" IsSelected="True"/><ComboBoxItem Content="1ª Prévia"/><ComboBoxItem Content="2ª Prévia"/></ComboBox></StackPanel>
+                            <StackPanel Grid.Column="4"><TextBlock Text="Tipo de folha" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="PayrollTypeCombo" Margin="0,4,0,0"><ComboBoxItem Content="Normal" IsSelected="True"/><ComboBoxItem Content="Extra"/><ComboBoxItem Content="Complementar"/></ComboBox></StackPanel>
+                            <StackPanel Grid.Column="6"><TextBlock Text="Navegador oculto" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="BrowserCombo" Margin="0,4,0,0"><ComboBoxItem Content="Edge" IsSelected="True"/><ComboBoxItem Content="Chrome"/></ComboBox></StackPanel>
+                            <StackPanel Grid.Column="8"><TextBlock Text="Ano / mês" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="ExternalCompetenceText" FontWeight="SemiBold" Margin="0,9,0,0"/></StackPanel>
+                            <TextBlock Grid.Column="9" Text="SIPPES usa CPF; SIAPPES usa PREC-CP. Pessoas de fora possuem credencial própria da Área Exclusiva da UA." Style="{StaticResource SubtleTextStyle}" TextWrapping="Wrap" VerticalAlignment="Center" Margin="12,0,0,0"/>
+                        </Grid>
+                    </Border>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="14"/><ColumnDefinition Width="360"/></Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource CardStyle}" Padding="12">
+                            <Grid>
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                                <TextBlock Text="Lista de pessoas fora da relação" Style="{StaticResource SectionTitleStyle}"/>
+                                <Grid Grid.Row="1" Margin="0,10,0,10"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="8"/><ColumnDefinition Width="180"/><ColumnDefinition Width="8"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                    <TextBox x:Name="ExternalNameBox" ToolTip="Nome completo"/>
+                                    <TextBox x:Name="ExternalDocumentBox" Grid.Column="2" ToolTip="CPF ou PREC-CP"/>
+                                    <Button Grid.Column="4" Style="{StaticResource PrimaryButtonStyle}" Content="+ Adicionar" Click="AddExternal_Click"/>
+                                </Grid>
+                                <DataGrid x:Name="ExternalPeopleGrid" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Extended">
+                                    <DataGrid.Columns><DataGridTextColumn Header="Nome" Binding="{Binding Name}" Width="*"/><DataGridTextColumn Header="CPF" Binding="{Binding Cpf}" Width="135"/><DataGridTextColumn Header="PREC-CP" Binding="{Binding Prec}" Width="120"/></DataGrid.Columns>
+                                </DataGrid>
+                                <WrapPanel Grid.Row="3" Margin="0,10,0,0">
+                                    <Button Style="{StaticResource SecondaryButtonStyle}" Content="Colar lista" Click="PasteExternal_Click" Margin="0,0,7,7"/>
+                                    <Button Style="{StaticResource SecondaryButtonStyle}" Content="Importar TXT/CSV" Click="ImportExternal_Click" Margin="0,0,7,7"/>
+                                    <Button Style="{StaticResource SecondaryButtonStyle}" Content="Exportar lista" Click="ExportExternal_Click" Margin="0,0,7,7"/>
+                                    <Button Style="{StaticResource GhostButtonStyle}" Content="Selecionar todos" Click="SelectAllExternal_Click" Margin="0,0,7,7"/>
+                                    <Button Style="{StaticResource GhostButtonStyle}" Content="Limpar seleção" Click="ClearExternalSelection_Click" Margin="0,0,7,7"/>
+                                    <Button Style="{StaticResource SecondaryButtonStyle}" Content="Remover selecionados" Click="RemoveExternal_Click" Margin="0,0,7,7"/>
+                                    <Button Style="{StaticResource GhostButtonStyle}" Content="Limpar lista" Click="ClearExternal_Click" Margin="0,0,0,7"/>
+                                </WrapPanel>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="16">
+                            <StackPanel>
+                                <TextBlock Text="Download oculto pelo CPEx" Style="{StaticResource SectionTitleStyle}"/>
+                                <TextBlock Text="O Selenium entra na Área Exclusiva, gera um PDF por pessoa e salva em Pessoas_de_Fora, com uma pasta individual por nome e CPF/PREC. Se você marcar linhas na tabela, baixa somente as marcadas; sem marcação, baixa a lista inteira." TextWrapping="Wrap" Style="{StaticResource SubtleTextStyle}" Margin="0,4,0,14"/>
+                                <TextBlock Text="Competência" Style="{StaticResource CaptionTextStyle}"/>
+                                <Grid Margin="0,4,0,0"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="8"/><ColumnDefinition/></Grid.ColumnDefinitions><ComboBox x:Name="ExternalYearCombo" SelectionChanged="Competence_Changed"/><ComboBox x:Name="ExternalMonthCombo" Grid.Column="2" SelectionChanged="Competence_Changed"/></Grid>
+                                <Border Background="{DynamicResource PrimarySoftBrush}" CornerRadius="10" Padding="12" Margin="0,14,0,0">
+                                    <StackPanel>
+                                        <TextBlock Text="LOGIN DA ÁREA EXCLUSIVA DA UA" FontWeight="Bold" Foreground="{DynamicResource PrimaryDarkBrush}"/>
+                                        <TextBlock x:Name="ExternalCredentialStatusText" Text="Credencial própria ainda não verificada" Style="{StaticResource SubtleTextStyle}" FontSize="10" Margin="0,2,0,8" TextWrapping="Wrap"/>
+                                        <TextBlock Text="Usuário / CPF" Style="{StaticResource CaptionTextStyle}"/>
+                                        <TextBox x:Name="ExternalUserBox" Margin="0,4,0,8"/>
+                                        <TextBlock Text="Senha" Style="{StaticResource CaptionTextStyle}"/>
+                                        <PasswordBox x:Name="ExternalPasswordBox" Margin="0,4,0,8"/>
+                                        <WrapPanel>
+                                            <Button Style="{StaticResource SecondaryButtonStyle}" Content="Salvar login da Área Exclusiva" Click="SaveExternalCredentials_Click" Margin="0,0,7,0"/>
+                                            <Button Style="{StaticResource GhostButtonStyle}" Content="Remover" Click="ClearExternalCredentials_Click"/>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </Border>
+                                <Button x:Name="ExternalDownloadButton" Style="{StaticResource PrimaryButtonStyle}" Content="Baixar lista SIPPES" Click="DownloadExternal_Click" MinHeight="48" Margin="0,16,0,0"/>
+                                <Button Style="{StaticResource SecondaryButtonStyle}" Content="Abrir pasta de destino" Click="OpenOutputFolder_Click" Margin="0,8,0,0"/>
+                                <TextBox x:Name="ExternalResultBox" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="150" Margin="0,14,0,0" VerticalScrollBarVisibility="Auto"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Salvos e auditoria">
+                <Grid Margin="12">
+                    <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="14"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource CardStyle}" Padding="18">
+                        <StackPanel>
+                            <TextBlock Text="Arquivos salvos" Style="{StaticResource SectionTitleStyle}"/>
+                            <TextBlock Text="Abra a carteira do militar, exporte a competência ou force uma nova varredura das pastas." TextWrapping="Wrap" Style="{StaticResource SubtleTextStyle}" Margin="0,4,0,14"/>
+                            <Button Style="{StaticResource PrimaryButtonStyle}" Content="Abrir último contracheque do militar" Click="OpenLatest_Click" Margin="0,0,0,8"/>
+                            <Button Style="{StaticResource SecondaryButtonStyle}" Content="Abrir todos os contracheques salvos" Click="OpenSaved_Click" Margin="0,0,0,8"/>
+                            <Button Style="{StaticResource SecondaryButtonStyle}" Content="Exportar contracheque do mês" Click="ExportMonth_Click" Margin="0,0,0,8"/>
+                            <Button Style="{StaticResource SecondaryButtonStyle}" Content="Atualizar pesquisa de PDFs" Click="RefreshSaved_Click"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="18">
+                        <StackPanel>
+                            <TextBlock Text="Auditoria" Style="{StaticResource SectionTitleStyle}"/>
+                            <TextBlock Text="Auditoria totalmente em C# para conferir rubricas, competências, ausências e divergências, com filtros, colunas, CSV, Word e ações rápidas." TextWrapping="Wrap" Style="{StaticResource SubtleTextStyle}" Margin="0,4,0,14"/>
+                            <Button Style="{StaticResource PrimaryButtonStyle}" Content="Abrir auditoria" Click="OpenAudit_Click"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Border Grid.Row="3" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="16,0">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="180"/><ColumnDefinition Width="12"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <TextBlock x:Name="StatusText" Text="Pronto." Foreground="{DynamicResource MutedBrush}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                <ProgressBar x:Name="BusyProgress" Grid.Column="1" IsIndeterminate="True" Height="8" Visibility="Collapsed" VerticalAlignment="Center"/>
+                <Button Grid.Column="3" Content="Fechar" Style="{StaticResource SecondaryButtonStyle}" Click="Close_Click" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

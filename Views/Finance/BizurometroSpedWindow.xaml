@@ -1,0 +1,63 @@
+<Window x:Class="SIGFUR.Wpf.Views.Finance.BizurometroSpedWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Bizurômetro SPED — 4ª Cia PE" Width="1320" Height="850" MinWidth="1040" MinHeight="680"
+        WindowStartupLocation="CenterOwner" Background="{DynamicResource AppBackgroundBrush}" Icon="/Assets/sigfur.ico">
+    <Grid>
+        <Grid.RowDefinitions><RowDefinition Height="96"/><RowDefinition Height="*"/><RowDefinition Height="46"/></Grid.RowDefinitions>
+        <Border Background="{DynamicResource PrimaryGradientBrush}" Padding="24,0">
+            <Grid>
+                <StackPanel VerticalAlignment="Center"><TextBlock Text="BIZURÔMETRO SPED" Foreground="White" FontSize="24" FontWeight="Bold"/><TextBlock Text="Fluxo guiado para Depósitos de Terceiros — DIEx, relação, anexos, conferência e despacho" Foreground="#DCEBFF" Margin="0,4,0,0"/></StackPanel>
+                <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Center"><Button Content="Gerar DIEx/despacho" Style="{StaticResource LightOnDarkButtonStyle}" Click="GenerateTexts_Click" Margin="0,0,8,0"/><Button Content="Salvar preenchimento" Style="{StaticResource LightOnDarkButtonStyle}" Click="SaveState_Click" Margin="0,0,8,0"/><Button Content="Exportar resumo" Style="{StaticResource LightOnDarkButtonStyle}" Click="ExportSummary_Click" Margin="0,0,8,0"/><Button Content="Limpar" Style="{StaticResource LightOnDarkButtonStyle}" Click="Clear_Click"/></WrapPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="16">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="390"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Border Style="{StaticResource CardStyle}" Padding="15" Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="DADOS DO PROCESSO" Style="{StaticResource SectionTitleStyle}"/>
+                            <TextBlock Text="Tipo" Style="{StaticResource CaptionTextStyle}" Margin="0,12,0,4"/>
+                            <ComboBox x:Name="FlowBox" SelectionChanged="Form_Changed"><ComboBoxItem Content="Inconsistência Bancária"/><ComboBoxItem Content="Bloqueio Bancário - TDBLOQ"/><ComboBoxItem Content="PP760 - CPEx"/></ComboBox>
+                            <TextBlock Text="Relatório gerador" Style="{StaticResource CaptionTextStyle}" Margin="0,10,0,4"/>
+                            <ComboBox x:Name="ReportBox" IsEditable="True" Text="TDINC" LostKeyboardFocus="Form_Changed"/>
+                            <TextBlock Text="Forma de beneficiário" Style="{StaticResource CaptionTextStyle}" Margin="0,10,0,4"/>
+                            <ComboBox x:Name="BeneficiaryModeBox" SelectionChanged="Form_Changed"><ComboBoxItem Content="Um militar"/><ComboBoxItem Content="Relação anexa"/></ComboBox>
+                            <TextBlock Text="Pesquisar no efetivo / LT" Style="{StaticResource CaptionTextStyle}" Margin="0,10,0,4"/>
+                            <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="8"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><ComboBox x:Name="MilitaryPickerBox" IsEditable="True" IsTextSearchEnabled="False" DisplayMemberPath="Display" KeyUp="MilitaryPickerBox_KeyUp"/><Button Grid.Column="2" Content="Usar" Style="{StaticResource SecondaryButtonStyle}" Click="UseMilitary_Click"/></Grid>
+                            <TextBlock Text="Militar / identificação manual" Style="{StaticResource CaptionTextStyle}" Margin="0,10,0,4"/>
+                            <TextBox x:Name="MilitaryBox" TextChanged="Form_Changed"/>
+                            <Button Content="＋ Adicionar à relação anexa" Style="{StaticResource SecondaryButtonStyle}" Click="AddRelation_Click" Margin="0,7,0,0"/>
+                            <TextBlock Text="Valor" Style="{StaticResource CaptionTextStyle}" Margin="0,10,0,4"/><TextBox x:Name="ValueBox" TextChanged="Form_Changed"/>
+                            <TextBlock Text="Boletim / data" Style="{StaticResource CaptionTextStyle}" Margin="0,10,0,4"/>
+                            <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="8"/><ColumnDefinition/></Grid.ColumnDefinitions><TextBox x:Name="BulletinBox" TextChanged="Form_Changed"/><DatePicker x:Name="BulletinDatePicker" Grid.Column="2" SelectedDateChanged="Form_Changed"/></Grid>
+                            <TextBlock Text="PF" Style="{StaticResource CaptionTextStyle}" Margin="0,10,0,4"/><TextBox x:Name="PfBox" TextChanged="Form_Changed"/>
+                            <TextBlock Text="Observação" Style="{StaticResource CaptionTextStyle}" Margin="0,10,0,4"/><TextBox x:Name="ObservationBox" Height="70" AcceptsReturn="True" TextWrapping="Wrap" TextChanged="Form_Changed"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource CardStyle}" Padding="15">
+                        <StackPanel>
+                            <TextBlock Text="ANEXOS" Style="{StaticResource SectionTitleStyle}"/>
+                            <Button Content="Selecionar DIEx" Style="{StaticResource SecondaryButtonStyle}" Click="PickDiex_Click" Margin="0,10,0,5"/><TextBlock x:Name="DiexFileText" Text="Não selecionado" Style="{StaticResource SubtleTextStyle}" TextTrimming="CharacterEllipsis"/>
+                            <Button Content="Selecionar boletim" Style="{StaticResource SecondaryButtonStyle}" Click="PickBulletin_Click" Margin="0,10,0,5"/><TextBlock x:Name="BulletinFileText" Text="Não selecionado" Style="{StaticResource SubtleTextStyle}" TextTrimming="CharacterEllipsis"/>
+                            <Button Content="Selecionar relatório" Style="{StaticResource SecondaryButtonStyle}" Click="PickReport_Click" Margin="0,10,0,5"/><TextBlock x:Name="ReportFileText" Text="Não selecionado" Style="{StaticResource SubtleTextStyle}" TextTrimming="CharacterEllipsis"/>
+                            <Button Content="Selecionar PF / consulta" Style="{StaticResource SecondaryButtonStyle}" Click="PickPf_Click" Margin="0,10,0,5"/><TextBlock x:Name="PfFileText" Text="Não selecionado" Style="{StaticResource SubtleTextStyle}" TextTrimming="CharacterEllipsis"/>
+                            <Button Content="Selecionar outros documentos" Style="{StaticResource SecondaryButtonStyle}" Click="PickOther_Click" Margin="0,10,0,5"/><TextBlock x:Name="OtherFileText" Text="Não selecionado" Style="{StaticResource SubtleTextStyle}" TextTrimming="CharacterEllipsis"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <TabControl Grid.Column="2">
+                <TabItem Header="Orientação"><ScrollViewer><StackPanel Margin="16"><Border x:Name="StatusCard" Style="{StaticResource CardStyle}" Padding="18"><StackPanel><TextBlock x:Name="StatusTitle" Text="AGUARDANDO" FontSize="20" FontWeight="Bold"/><TextBlock x:Name="StatusText" TextWrapping="Wrap" Margin="0,6,0,0"/></StackPanel></Border><TextBlock Text="PASSOS DO PROCESSO" Style="{StaticResource SectionTitleStyle}" Margin="0,16,0,8"/><ItemsControl x:Name="StepsList"/></StackPanel></ScrollViewer></TabItem>
+                <TabItem Header="Relação anexa"><Grid Margin="14"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions><TextBlock Text="BENEFICIÁRIOS DA RELAÇÃO" Style="{StaticResource SectionTitleStyle}"/><DataGrid x:Name="RelationGrid" Grid.Row="1" Margin="0,10" IsReadOnly="True" AutoGenerateColumns="False" SelectionMode="Extended"><DataGrid.Columns><DataGridTextColumn Header="P/G" Binding="{Binding Rank}" Width="90"/><DataGridTextColumn Header="Nome" Binding="{Binding Name}" Width="*"/><DataGridTextColumn Header="CPF" Binding="{Binding Cpf}" Width="135"/><DataGridTextColumn Header="PREC-CP" Binding="{Binding PrecCp}" Width="115"/><DataGridTextColumn Header="Origem" Binding="{Binding Source}" Width="120"/></DataGrid.Columns></DataGrid><WrapPanel Grid.Row="2" HorizontalAlignment="Right"><Button Content="Remover selecionados" Style="{StaticResource DangerButtonStyle}" Click="RemoveRelation_Click" Margin="0,0,8,0"/><Button Content="Limpar relação" Style="{StaticResource SecondaryButtonStyle}" Click="ClearRelation_Click"/></WrapPanel></Grid></TabItem>
+                <TabItem Header="DIEx"><Grid Margin="14"><Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions><TextBox x:Name="DiexText" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" FontFamily="Arial" FontSize="13"/><Button Grid.Row="1" Content="Copiar DIEx" HorizontalAlignment="Right" Style="{StaticResource PrimaryButtonStyle}" Click="CopyDiex_Click" Margin="0,10,0,0"/></Grid></TabItem>
+                <TabItem Header="Checklist"><Grid Margin="14"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions><WrapPanel><Button Content="Marcar tudo" Style="{StaticResource SecondaryButtonStyle}" Click="MarkAll_Click" Margin="0,0,8,0"/><Button Content="Desmarcar tudo" Style="{StaticResource GhostButtonStyle}" Click="UnmarkAll_Click"/></WrapPanel><ListBox x:Name="ChecklistList" Grid.Row="1" Margin="0,10,0,0"><ListBox.ItemTemplate><DataTemplate><CheckBox Content="{Binding Text}" IsChecked="{Binding Checked}" Margin="5" Click="Checklist_Changed"/></DataTemplate></ListBox.ItemTemplate></ListBox><Button Grid.Row="2" Content="Copiar checklist" HorizontalAlignment="Right" Style="{StaticResource PrimaryButtonStyle}" Click="CopyChecklist_Click" Margin="0,10,0,0"/></Grid></TabItem>
+                <TabItem Header="Despacho"><Grid Margin="14"><Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions><TextBox x:Name="DispatchText" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" FontFamily="Arial" FontSize="13"/><Button Grid.Row="1" Content="Copiar despacho" HorizontalAlignment="Right" Style="{StaticResource PrimaryButtonStyle}" Click="CopyDispatch_Click" Margin="0,10,0,0"/></Grid></TabItem>
+            </TabControl>
+        </Grid>
+        <Border Grid.Row="2" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="16,0"><TextBlock Text="Regra de ouro: o valor do DIEx, do boletim e do relatório gerador deve ser exatamente o mesmo." VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}"/></Border>
+    </Grid>
+</Window>

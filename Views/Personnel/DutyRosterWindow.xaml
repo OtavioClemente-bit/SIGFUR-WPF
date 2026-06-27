@@ -1,0 +1,165 @@
+<Window x:Class="SIGFUR.Wpf.Views.Personnel.DutyRosterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Escala do Sargento de Dia" Width="1640" Height="930" MinWidth="1160" MinHeight="700"
+        WindowStartupLocation="CenterScreen" Background="{DynamicResource AppBackgroundBrush}" Icon="/Assets/sigfur.ico">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Margin="0,0,0,12">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="ESCALA DO SARGENTO DE DIA" Style="{StaticResource PageTitleStyle}"/>
+                <TextBlock Text="Efetivo configurável, descanso mínimo de 48 horas e contagem separada para dias normais e vermelhos." Style="{StaticResource PageSubtitleStyle}"/>
+            </StackPanel>
+            <WrapPanel Grid.Column="1" VerticalAlignment="Center">
+                <Button Content="? Como funciona" Style="{StaticResource GhostButtonStyle}" Click="Help_Click" Margin="0,0,10,0"/>
+                <Button Content="◀" Style="{StaticResource SecondaryButtonStyle}" Click="PreviousMonth_Click" Margin="0,0,6,0"/>
+                <Button x:Name="MonthButton" Content="Mês" Style="{StaticResource PrimaryButtonStyle}" Click="Today_Click" MinWidth="170" ToolTip="Voltar ao mês atual"/>
+                <Button Content="▶" Style="{StaticResource SecondaryButtonStyle}" Click="NextMonth_Click" Margin="6,0,0,0"/>
+            </WrapPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="330"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="0"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Style="{StaticResource CardStyle}" Padding="14">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="0.9*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="1.1*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="EFETIVO QUE CONCORRE" Style="{StaticResource SectionTitleStyle}"/>
+                            <TextBlock x:Name="SelectionSummaryText" Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,0"/>
+                        </StackPanel>
+                        <Border Grid.Column="1" Background="{DynamicResource PrimarySoftBrush}" CornerRadius="10" Padding="9,5" VerticalAlignment="Top">
+                            <TextBlock Text="CONFIGURÁVEL" Foreground="{DynamicResource PrimaryDarkBrush}" FontSize="10" FontWeight="Bold"/>
+                        </Border>
+                    </Grid>
+                    <WrapPanel Grid.Row="1" Margin="0,10,0,4">
+                        <Button Content="Somente 3º Sgt" Style="{StaticResource PrimaryButtonStyle}" Click="SelectThirdSergeants_Click" Margin="0,0,6,6" ToolTip="Substitui o efetivo pelos 3º Sargentos cadastrados."/>
+                        <Button Content="Todos os Sgt" Style="{StaticResource SecondaryButtonStyle}" Click="SelectAllSergeants_Click" Margin="0,0,6,6"/>
+                        <Button Content="Limpar" Style="{StaticResource GhostButtonStyle}" Click="ClearSelection_Click" Margin="0,0,0,6"/>
+                    </WrapPanel>
+                    <TextBox x:Name="PeopleSearchBox" Grid.Row="2" Margin="0,4,0,10" TextChanged="PeopleSearchBox_TextChanged" ToolTip="Pesquisar por posto, nome completo ou nome de guerra"/>
+
+                    <GroupBox Grid.Row="3" Header="Concorrem neste serviço" Padding="6">
+                        <ListBox x:Name="SelectedPeopleList" DisplayMemberPath="Display" SelectionMode="Extended"/>
+                    </GroupBox>
+                    <WrapPanel Grid.Row="4" Margin="0,8,0,8">
+                        <Button Content="Adicionar ↑" Style="{StaticResource PrimaryButtonStyle}" Click="AddPerson_Click" Margin="0,0,6,0"/>
+                        <Button Content="Remover ↓" Style="{StaticResource DangerButtonStyle}" Click="RemovePerson_Click" Margin="0,0,6,0"/>
+                        <Button Content="Subir" Style="{StaticResource GhostButtonStyle}" Click="MoveUp_Click" Margin="0,0,6,0"/>
+                        <Button Content="Descer" Style="{StaticResource GhostButtonStyle}" Click="MoveDown_Click"/>
+                    </WrapPanel>
+                    <GroupBox Grid.Row="5" Header="Disponíveis para adicionar" Padding="6">
+                        <ListBox x:Name="AvailablePeopleList" DisplayMemberPath="Display" SelectionMode="Extended" MouseDoubleClick="AvailablePeopleList_MouseDoubleClick"/>
+                    </GroupBox>
+                    <Button Grid.Row="6" Content="＋ Pessoa externa" Style="{StaticResource SecondaryButtonStyle}" Click="AddExtra_Click" Margin="0,10,0,0" HorizontalAlignment="Left"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="0">
+                <Grid>
+                    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                    <Border Background="{DynamicResource SurfaceAltBrush}" Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <WrapPanel>
+                                <Button Content="Preencher automaticamente" Style="{StaticResource PrimaryButtonStyle}" Click="AutoFill_Click" Margin="0,0,8,0" ToolTip="Usa a contagem histórica, os dias de folga, os impedimentos e o descanso mínimo."/>
+                                <Button Content="Desfazer" Style="{StaticResource SecondaryButtonStyle}" Click="Undo_Click" Margin="0,0,8,0"/>
+                                <Button Content="Limpar mês" Style="{StaticResource DangerButtonStyle}" Click="ClearMonth_Click" Margin="0,0,8,0"/>
+                                <TextBlock Text="Clique para escalar • a contagem da categoria zera em 0 no serviço • botão direito para impedimentos" VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}"/>
+                            </WrapPanel>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="Histórico:" VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}" Margin="10,0,6,0"/>
+                                <ComboBox x:Name="CounterMonthsBox" Width="105" SelectionChanged="CounterMonthsBox_SelectionChanged" ToolTip="Período usado na contagem que define a prioridade">
+                                    <ComboBoxItem Tag="3" Content="3 meses"/>
+                                    <ComboBoxItem Tag="6" Content="6 meses"/>
+                                    <ComboBoxItem Tag="12" Content="12 meses"/>
+                                    <ComboBoxItem Tag="24" Content="24 meses"/>
+                                    <ComboBoxItem Tag="36" Content="36 meses"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <Grid x:Name="RosterHost" Margin="8"/>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="4" Style="{StaticResource CardStyle}" Padding="14" Visibility="Collapsed">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="CONFERÊNCIA E PRIORIDADE" Style="{StaticResource SectionTitleStyle}"/>
+                    <Border Grid.Row="1" Background="{DynamicResource PrimarySoftBrush}" BorderBrush="{DynamicResource PrimaryBrush}" BorderThickness="1" CornerRadius="12" Padding="13" Margin="0,10,0,10">
+                        <StackPanel>
+                            <TextBlock Text="PRÓXIMO PROVÁVEL" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBlock x:Name="NextCandidateText" Text="—" FontSize="17" FontWeight="Bold" Foreground="{DynamicResource PrimaryDarkBrush}" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="NextCandidateDetailText" Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,0" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                    <TextBlock x:Name="MonthSummaryText" Grid.Row="2" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,0,0,10"/>
+                    <DataGrid x:Name="CounterGrid" Grid.Row="3" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" HorizontalScrollBarVisibility="Auto" ColumnWidth="SizeToHeader">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsNextCandidate}" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource SuccessSoftBrush}"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="#" Binding="{Binding PriorityText}" Width="38"/>
+                            <DataGridTextColumn Header="Militar" Binding="{Binding Person}" Width="*"/>
+                            <DataGridTextColumn Header="Esc." Binding="{Binding Total}" Width="45"/>
+                            <DataGridTextColumn Header="Verm." Binding="{Binding RedDays}" Width="50"/>
+                            <DataGridTextColumn Header="Folga" Binding="{Binding DaysOffText}" Width="62"/>
+                            <DataGridTextColumn Header="Último" Binding="{Binding LastDutyText}" Width="82"/>
+                            <DataGridTextColumn Header="48 h" Binding="{Binding EligibilityText}" Width="64"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Row="4" Margin="0,10,0,0">
+                        <TextBlock Text="LEGENDA DE IMPEDIMENTOS" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                        <WrapPanel x:Name="LegendHost"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,12,0,0">
+            <TextBlock x:Name="StatusText" Foreground="{DynamicResource MutedBrush}" VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Salvar" Style="{StaticResource PrimaryButtonStyle}" Click="Save_Click" Margin="0,0,8,0"/>
+                <Button Content="Fechar" Style="{StaticResource SecondaryButtonStyle}" Click="Close_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

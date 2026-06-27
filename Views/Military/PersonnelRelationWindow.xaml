@@ -1,0 +1,102 @@
+<Window x:Class="SIGFUR.Wpf.Views.Military.PersonnelRelationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:SIGFUR.Wpf.Controls"
+        Title="SIGFUR — Relação Pessoal" Width="1240" Height="820" MinWidth="940" MinHeight="650"
+        WindowStartupLocation="CenterOwner" Background="{DynamicResource AppBackgroundBrush}" Icon="/Assets/sigfur.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="96"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="74"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{DynamicResource PrimaryGradientBrush}" Padding="26,0">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="RELAÇÃO PESSOAL" Foreground="White" FontSize="24" FontWeight="Bold"/>
+                    <TextBlock Text="Organize a ordem, confira os dados e gere o Excel com o nome de guerra em negrito." Foreground="#DCEBFF" Margin="0,5,0,0"/>
+                </StackPanel>
+                <Border Grid.Column="1" Background="#1EFFFFFF" CornerRadius="18" Padding="14,8" VerticalAlignment="Center">
+                    <TextBlock x:Name="CountText" Foreground="White" FontWeight="SemiBold" Text="Carregando efetivo…"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" Padding="18,14">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="SearchBox" ToolTip="Pesquisar por nome, nome de guerra, CPF, PREC-CP ou P/G" TextChanged="SearchBox_TextChanged"/>
+                <ComboBox x:Name="SortModeBox" Grid.Column="2" SelectionChanged="SortModeBox_SelectionChanged">
+                    <ComboBoxItem Content="Hierarquia do Exército"/>
+                    <ComboBoxItem Content="Ordem salva em Listar Militares"/>
+                    <ComboBoxItem Content="Nome (A→Z)"/>
+                    <ComboBoxItem Content="Ordem personalizada desta relação"/>
+                </ComboBox>
+                <StackPanel Grid.Column="3" Orientation="Horizontal" Margin="12,0,0,0">
+                    <Button Content="Aplicar hierarquia" Style="{StaticResource PrimaryButtonStyle}" Click="ApplyHierarchy_Click" Margin="0,0,8,0" ToolTip="Reordena imediatamente por posto/graduação, com Subtenente antes dos Sargentos."/>
+                <Button Content="Salvar como ordem da lista" Style="{StaticResource SecondaryButtonStyle}" Click="SaveAsListOrder_Click" Margin="12,0,0,0"
+                        ToolTip="Usa esta ordem também em Listar Militares e na ordem inicial do Boletim."/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="2" Style="{StaticResource CardStyle}" Margin="18" Padding="0">
+            <Grid>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                <Grid Margin="16,14,16,10">
+                    <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="ORDEM DA RELAÇÃO" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="Arraste qualquer linha para a posição desejada. A ordem desta tela é salva automaticamente." Foreground="{DynamicResource MutedBrush}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Content="▲" Width="44" Style="{StaticResource GhostButtonStyle}" Click="MoveUp_Click"/>
+                        <Button Content="▼" Width="44" Style="{StaticResource GhostButtonStyle}" Click="MoveDown_Click" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+
+                <DataGrid x:Name="RelationGrid" Grid.Row="1" Margin="10,0" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                          SelectionMode="Extended" SelectionUnit="FullRow" AllowDrop="True"
+                          PreviewMouseLeftButtonDown="RelationGrid_PreviewMouseLeftButtonDown"
+                          PreviewMouseMove="RelationGrid_PreviewMouseMove" Drop="RelationGrid_Drop">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="NR" Binding="{Binding Position}" Width="64"/>
+                        <DataGridTextColumn Header="PREC-CP" Binding="{Binding Military.PrecCp}" Width="145"/>
+                        <DataGridTextColumn Header="P/G" Binding="{Binding Military.ShortRank}" Width="125"/>
+                        <DataGridTemplateColumn Header="NOME COMPLETO" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <controls:HighlightedNameTextBlock FullName="{Binding Military.Name}" WarName="{Binding Military.WarName}" TextTrimming="CharacterEllipsis"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="CPF" Binding="{Binding Military.FormattedCpf}" Width="160"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Border Grid.Row="2" Background="{DynamicResource PrimarySoftBrush}" CornerRadius="8" Padding="12" Margin="14,10,14,14">
+                    <TextBlock x:Name="StatusText" Foreground="{DynamicResource PrimaryDarkBrush}" Text="A relação será gerada com cabeçalho, filtros, linhas alternadas e nome de guerra em negrito real no Excel." TextWrapping="Wrap"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="3" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="20,0">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <CheckBox x:Name="OpenAfterGenerateCheck" Content="Abrir o Excel depois de gerar" VerticalAlignment="Center" IsChecked="True"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Content="Fechar" Style="{StaticResource SecondaryButtonStyle}" Click="Close_Click" Margin="0,0,8,0"/>
+                    <Button Content="Gerar Relação Pessoal" Style="{StaticResource PrimaryButtonStyle}" Click="Generate_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

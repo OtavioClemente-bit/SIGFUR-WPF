@@ -1,0 +1,138 @@
+<Window x:Class="SIGFUR.Wpf.Views.Finance.AdjustmentBulletinWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:SIGFUR.Wpf.Controls"
+        xmlns:services="clr-namespace:SIGFUR.Wpf.Services"
+        Title="Boletim — Ajuste de Contas" Width="1480" Height="880" MinWidth="1160" MinHeight="700"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="18">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="Boletim de Ajuste de Contas" Style="{StaticResource PageTitleStyle}"/>
+            <TextBlock Text="Geração individual ou em lote, com nomes do banco oficial em ordem hierárquica e nome de guerra em negrito real." Style="{StaticResource PageSubtitleStyle}" Margin="0,3,0,12"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="520"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+            <TabControl>
+                <TabItem Header="Dados do BI">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="0,12,6,0">
+                        <Border Style="{StaticResource CardStyle}" Padding="14" Margin="0,0,0,12">
+                            <Grid>
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="150"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                                <TextBlock Text="Organização militar" VerticalAlignment="Center" Margin="0,4"/><TextBox x:Name="OrganizationBox" Grid.Column="1" Margin="0,2"/>
+                                <TextBlock Grid.Row="1" Text="BI Nr" VerticalAlignment="Center" Margin="0,4"/><TextBox x:Name="BulletinNumberBox" Grid.Row="1" Grid.Column="1" Margin="0,2"/>
+                                <TextBlock Grid.Row="2" Text="Data do BI" VerticalAlignment="Center" Margin="0,4"/><TextBox x:Name="BulletinDateBox" Grid.Row="2" Grid.Column="1" Margin="0,2"/>
+                                <TextBlock Grid.Row="3" Text="Data de corte" VerticalAlignment="Center" Margin="0,4"/><TextBox x:Name="CutoffDateBox" Grid.Row="3" Grid.Column="1" Margin="0,2"/>
+                                <TextBlock Grid.Row="4" Text="Motivo" VerticalAlignment="Center" Margin="0,4"/><ComboBox x:Name="ReasonBox" Grid.Row="4" Grid.Column="1" IsEditable="True" SelectionChanged="ReasonBox_SelectionChanged" Margin="0,2"/>
+                            </Grid>
+                        </Border>
+                        <TextBlock Text="Abertura" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBox x:Name="IntroductionBox" Height="180" FontSize="15" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Margin="0,7,0,12"/>
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="10"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                            <StackPanel><TextBlock Text="Ano aquisitivo de férias"/><TextBox x:Name="VacationYearBox" Margin="0,5,0,0"/></StackPanel>
+                            <StackPanel Grid.Column="2"><TextBlock Text="Ano civil do 13º"/><TextBox x:Name="ChristmasYearBox" Margin="0,5,0,0"/></StackPanel>
+                        </Grid>
+                        <TextBlock Text="Observação final" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBox x:Name="FinalObservationBox" Height="100" FontSize="15" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Margin="0,7,0,12"/>
+                        <Border Style="{StaticResource CardStyle}" Padding="14">
+                            <StackPanel>
+                                <TextBlock Text="SisBol" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8"/>
+                                <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="10"/><ColumnDefinition Width="130"/></Grid.ColumnDefinitions>
+                                    <StackPanel><TextBlock Text="Assunto específico"/><TextBox x:Name="SisbolSubjectBox" Margin="0,5,0,0"/></StackPanel>
+                                    <StackPanel Grid.Column="2"><TextBlock Text="Código"/><TextBox x:Name="SisbolCodeBox" Margin="0,5,0,0"/></StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel></ScrollViewer>
+                </TabItem>
+
+                <TabItem Header="Militares">
+                    <Grid Margin="0,12,6,0">
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                        <Border Style="{StaticResource InsetCardStyle}" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Militares vinculados ao cálculo" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="MilitaryFilterText" TextWrapping="Wrap" Style="{StaticResource CaptionTextStyle}" Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <TextBox x:Name="MilitarySearchBox" TextChanged="MilitarySearchBox_TextChanged" ToolTip="Pesquisar por nome, nome de guerra, CPF ou PREC-CP"/>
+                            <Button Grid.Column="1" Content="Selecionar todos" Style="{StaticResource SecondaryButtonStyle}" Click="SelectAll_Click" Margin="8,0"/>
+                            <Button Grid.Column="2" Content="Limpar seleção" Style="{StaticResource GhostButtonStyle}" Click="SelectNone_Click"/>
+                        </Grid>
+                        <Border Grid.Row="2" Style="{StaticResource CardStyle}" Padding="0" Margin="0,10,0,0">
+                            <DataGrid x:Name="MilitaryGrid" ItemsSource="{Binding VisibleMilitary}" IsReadOnly="False" CanUserSortColumns="False" CanUserReorderColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridCheckBoxColumn Header="Gerar" Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="60"/>
+                                    <DataGridTextColumn Header="P/G" Binding="{Binding ShortRank}" Width="80" IsReadOnly="True"/>
+                                    <DataGridTemplateColumn Header="Nome completo" Width="*" IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <controls:HighlightedNameTextBlock FullName="{Binding Name}" WarName="{Binding WarName}" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="PREC-CP" Binding="{Binding PrecCp}" Width="110" IsReadOnly="True"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="Opções">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="0,12,6,0">
+                        <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12"><StackPanel>
+                            <TextBlock Text="Conteúdo" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8"/>
+                            <CheckBox x:Name="IncludeIntroductionCheck" Content="Incluir abertura" Margin="0,4"/>
+                            <CheckBox x:Name="IncludeEarningsCheck" Content="Incluir rendimentos" Margin="0,4"/>
+                            <CheckBox x:Name="IncludeDiscountsCheck" Content="Incluir descontos" Margin="0,4"/>
+                            <CheckBox x:Name="IncludeTotalsCheck" Content="Incluir totais no texto" Margin="0,4"/>
+                            <CheckBox x:Name="IncludeIdentificationCheck" Content="Incluir identificação (PREC-CP e CPF)" Margin="0,4"/>
+                            <CheckBox x:Name="IncludeSeparatorCheck" Content="Separador entre militares" Margin="0,4"/>
+                        </StackPanel></Border>
+                        <Border Style="{StaticResource CardStyle}" Padding="16"><StackPanel>
+                            <TextBlock Text="Apresentação" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8"/>
+                            <CheckBox x:Name="NumberBatchCheck" Content="Numerar militares no lote" Margin="0,4"/>
+                            <CheckBox x:Name="ShowCodesCheck" Content="Mostrar códigos das rubricas" Margin="0,4"/>
+                            <CheckBox x:Name="SimplifyDescriptionsCheck" Content="Usar descrições profissionais simplificadas" Margin="0,4"/>
+                            <CheckBox x:Name="HideZeroCheck" Content="Ocultar linhas zeradas" Margin="0,4"/>
+                        </StackPanel></Border>
+                    </StackPanel></ScrollViewer>
+                </TabItem>
+            </TabControl>
+
+            <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="0">
+                <Grid>
+                    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                    <Border Background="{DynamicResource SurfaceAltBrush}" Margin="1" Padding="12">
+                        <Grid>
+                            <TextBlock Text="Pré-visualização editável" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="Gerar / atualizar" Style="{StaticResource PrimaryButtonStyle}" Click="Build_Click" Margin="0,0,8,0"/>
+                                <Button Content="Limpar" Style="{StaticResource GhostButtonStyle}" Click="Clear_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <RichTextBox x:Name="PreviewBox" Grid.Row="1" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Padding="24" FontFamily="Times New Roman" FontSize="13.333"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,12,0,0">
+            <TextBlock x:Name="StatusText" Text="Selecione os militares e gere a prévia." VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}"/>
+            <WrapPanel HorizontalAlignment="Right">
+                <Button Content="Copiar para Word" Style="{StaticResource PrimaryButtonStyle}" Click="CopyWord_Click" Margin="0,0,8,0"/>
+                <Button Content="Salvar RTF" Style="{StaticResource SecondaryButtonStyle}" Click="SaveRtf_Click" Margin="0,0,8,0"/>
+                <Button Content="Salvar TXT" Style="{StaticResource SecondaryButtonStyle}" Click="SaveText_Click" Margin="0,0,8,0"/>
+                <CheckBox x:Name="IncludeConsequencesCheck" Content="Incluir consequência" IsChecked="True" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <TextBox x:Name="ConsequencesTextBox" Width="460" MinHeight="44" MaxHeight="86" Text="{x:Static services:SisbolTexts.AdjustmentAccountsConsequencesText}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" Padding="8,5" Margin="0,0,12,0" ToolTip="Texto editável enviado ao campo Texto de Fechamento do SisBol."/>
+                <Button Content="Abrir / preencher SisBol" Style="{StaticResource SecondaryButtonStyle}" Click="Sisbol_Click" Margin="0,0,8,0"/>
+                <Button Content="Fechar" IsCancel="True" Style="{StaticResource GhostButtonStyle}"/>
+            </WrapPanel>
+        </Grid>
+    </Grid>
+</Window>

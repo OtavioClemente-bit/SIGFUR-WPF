@@ -1,0 +1,109 @@
+<Window x:Class="SIGFUR.Wpf.Views.AssistantSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Configurar Assistente SIGFUR" Width="780" Height="720" MinWidth="700" MinHeight="620"
+        WindowStartupLocation="CenterOwner" Icon="/Assets/sigfur.ico">
+    <Grid Margin="18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Style="{StaticResource CardStyle}" Background="{DynamicResource PrimarySurfaceBrush}" Padding="20">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="CONFIGURAÇÃO DA OPENAI" Style="{StaticResource PageTitleStyle}" FontSize="21"/>
+                    <TextBlock Text="Chave protegida pelo Windows, modelo, limite interno de gasto e permissões do assistente." Style="{StaticResource PageSubtitleStyle}" Margin="0,5,0,0"/>
+                </StackPanel>
+                <Border Grid.Column="1" x:Name="ApiStatusBadge" CornerRadius="12" Padding="12,7" Background="{DynamicResource SurfaceAltBrush}" VerticalAlignment="Center">
+                    <TextBlock x:Name="ApiStatusText" Text="Verificando chave..." FontWeight="SemiBold"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" Margin="0,14,0,14" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+                    <StackPanel>
+                        <TextBlock Text="Chave da API" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="A chave não é gravada no arquivo de configuração. Ela fica no Gerenciador de Credenciais do Windows deste computador." Style="{StaticResource CaptionTextStyle}" Margin="0,4,0,12"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <PasswordBox x:Name="ApiKeyBox" Height="38" Padding="10,7" ToolTip="Cole uma nova chave para salvar ou testar"/>
+                            <Button Grid.Column="1" Content="Testar conexão" Style="{StaticResource SecondaryButtonStyle}" Margin="10,0,0,0" Click="Test_Click"/>
+                            <Button Grid.Column="2" Content="Remover chave" Style="{StaticResource DangerButtonStyle}" Margin="8,0,0,0" Click="DeleteKey_Click"/>
+                        </Grid>
+                        <TextBlock x:Name="TestStatusText" Style="{StaticResource CaptionTextStyle}" Margin="0,9,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="18"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Modelo" Style="{StaticResource CaptionTextStyle}"/>
+                            <ComboBox x:Name="ModelBox" IsEditable="True" Margin="0,4,0,12">
+                                <ComboBoxItem Content="gpt-5.4-mini"/>
+                                <ComboBoxItem Content="gpt-5.4-nano"/>
+                                <ComboBoxItem Content="gpt-5.4"/>
+                                <ComboBoxItem Content="gpt-5.5"/>
+                            </ComboBox>
+                            <TextBlock Text="Raciocínio" Style="{StaticResource CaptionTextStyle}"/>
+                            <ComboBox x:Name="ReasoningBox" Margin="0,4,0,12">
+                                <ComboBoxItem Content="none" Tag="none"/>
+                                <ComboBoxItem Content="low" Tag="low"/>
+                                <ComboBoxItem Content="medium" Tag="medium"/>
+                                <ComboBoxItem Content="high" Tag="high"/>
+                            </ComboBox>
+                            <TextBlock Text="Limite máximo da resposta (tokens)" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBox x:Name="MaxTokensBox" Margin="0,4,0,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Limite interno mensal (R$)" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBox x:Name="BudgetBox" Margin="0,4,0,12"/>
+                            <TextBlock Text="Cotação usada na estimativa (US$ → R$)" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBox x:Name="DollarRateBox" Margin="0,4,0,12"/>
+                            <TextBlock Text="Histórico enviado por conversa" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBox x:Name="HistoryLimitBox" Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+                    <StackPanel>
+                        <TextBlock Text="Permissões e privacidade" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,10"/>
+                        <CheckBox x:Name="LocalDataBox" Content="Permitir consultas de leitura aos dados locais do SIGFUR" Margin="0,0,0,9"/>
+                        <CheckBox x:Name="AttachmentsBox" Content="Permitir anexar documentos para análise" Margin="0,0,0,9"/>
+                        <CheckBox x:Name="RedactBox" Content="Ocultar dados pessoais por padrão e liberar somente os campos pedidos no chat" Margin="0,0,0,9"/>
+                        <CheckBox x:Name="SaveHistoryBox" Content="Salvar o histórico somente neste computador" Margin="0,0,0,9"/>
+                        <CheckBox x:Name="ConfirmActionsBox" Content="Exigir confirmação antes de impressão e ações operacionais" Margin="0,0,0,9"/>
+                        <CheckBox x:Name="HardBudgetBox" Content="Bloquear novas mensagens ao atingir o limite interno mensal"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+                    <StackPanel>
+                        <TextBlock Text="Configuração avançada" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="Por segurança, o Assistente SIGFUR usa exclusivamente o endereço oficial da OpenAI." Style="{StaticResource CaptionTextStyle}" Margin="0,4,0,10"/>
+                        <TextBlock Text="Endereço base da API" Style="{StaticResource CaptionTextStyle}"/>
+                        <TextBox x:Name="ApiBaseUrlBox" Margin="0,4,0,10" IsReadOnly="True" IsTabStop="False"/>
+                        <TextBlock Text="Instruções adicionais do operador" Style="{StaticResource CaptionTextStyle}"/>
+                        <TextBox x:Name="CustomInstructionsBox" Height="90" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Border Grid.Row="2" Background="{DynamicResource SurfaceAltBrush}" BorderBrush="{DynamicResource DividerBrush}" BorderThickness="1" CornerRadius="12" Padding="12">
+            <Grid>
+                <TextBlock Text="A estimativa do SIGFUR não substitui o painel de cobrança da OpenAI." Style="{StaticResource CaptionTextStyle}" VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Cancelar" Style="{StaticResource SecondaryButtonStyle}" Click="Cancel_Click" Margin="0,0,8,0"/>
+                    <Button x:Name="SaveButton" Content="Salvar configuração" Style="{StaticResource PrimaryButtonStyle}" Click="Save_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

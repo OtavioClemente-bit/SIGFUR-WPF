@@ -1,0 +1,14 @@
+Pasta genérica usada somente pela tela Listar Militares > Gerar documentos.
+
+Modelos que ficam aqui:
+- Auxílio-Transporte
+- Pecuniária
+- Correios / etiqueta
+- Cópia autêntica de pagamento
+- Adiantamento natalino
+
+Modelos de outros módulos ficam no próprio módulo:
+- Pensão Judicial: módulo Pensão Judicial
+- Grat Rep: módulo Gratificação de Representação
+- Requerimento/Informação de EA: módulo Exercício Anterior
+- Capa/Índice Remissivo: módulo PHPM

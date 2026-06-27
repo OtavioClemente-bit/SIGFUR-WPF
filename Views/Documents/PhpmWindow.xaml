@@ -1,0 +1,190 @@
+<Window x:Class="SIGFUR.Wpf.Views.Documents.PhpmWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:SIGFUR.Wpf.Controls"
+        Title="PHPM — Central de Documentos" Width="1450" Height="880" MinWidth="1120" MinHeight="700"
+        WindowStartupLocation="CenterOwner" Background="{DynamicResource AppBackgroundBrush}" KeyDown="Window_KeyDown">
+    <Grid Margin="18">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <Border Style="{StaticResource CardStyle}" Padding="20" Background="{DynamicResource PrimarySurfaceBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="PHPM — CENTRAL DE DOCUMENTOS" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource PrimaryDarkerBrush}"/>
+                    <TextBlock Text="Templates oficiais e personalizados, preenchimento automático pelo cadastro, campos editáveis, geração individual ou em lote e histórico completo." Margin="0,6,0,0" Foreground="{DynamicResource MutedBrush}" TextWrapping="Wrap"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Style="{StaticResource MetricCardStyle}" MinWidth="145"><StackPanel><TextBlock Text="TEMPLATES" Style="{StaticResource MetricCaptionStyle}"/><TextBlock x:Name="TemplateMetric" Text="0" Style="{StaticResource MetricValueStyle}"/></StackPanel></Border>
+                    <Border Style="{StaticResource MetricCardStyle}" MinWidth="145" Margin="8,0,0,0"><StackPanel><TextBlock Text="LOTE" Style="{StaticResource MetricCaptionStyle}"/><TextBlock x:Name="BatchMetric" Text="0" Style="{StaticResource MetricValueStyle}"/></StackPanel></Border>
+                    <Border Style="{StaticResource MetricCardStyle}" MinWidth="145" Margin="8,0,0,0"><StackPanel><TextBlock Text="GERADOS" Style="{StaticResource MetricCaptionStyle}"/><TextBlock x:Name="GeneratedMetric" Text="0" Style="{StaticResource MetricValueStyle}"/></StackPanel></Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="310"/><ColumnDefinition Width="8"/><ColumnDefinition Width="1.15*"/><ColumnDefinition Width="8"/><ColumnDefinition Width="0.95*"/></Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Style="{StaticResource CardStyle}" Padding="12">
+                <Grid>
+                    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <TextBlock Text="TEMPLATES" Style="{StaticResource SectionTitleStyle}"/>
+                        <Button Grid.Column="1" Content="＋" Width="34" Height="30" Style="{StaticResource PrimaryButtonStyle}" ToolTip="Adicionar template personalizado" Click="AddTemplate_Click"/>
+                    </Grid>
+                    <TextBox x:Name="TemplateSearchBox" Grid.Row="1" Margin="0,10" Height="34" VerticalContentAlignment="Center" Padding="8,0" TextChanged="TemplateSearchBox_TextChanged" ToolTip="Pesquisar template"/>
+                    <ListBox x:Name="TemplateList" Grid.Row="2" SelectionChanged="TemplateList_SelectionChanged" DisplayMemberPath="DisplayTitle">
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Vincular/substituir arquivo" Click="AttachTemplate_Click"/>
+                                <MenuItem Header="Reexaminar campos" Click="RescanTemplate_Click"/>
+                                <MenuItem Header="Abrir arquivo" Click="OpenTemplate_Click"/>
+                                <Separator/>
+                                <MenuItem Header="Remover personalizado" Click="RemoveTemplate_Click"/>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
+                    </ListBox>
+                    <StackPanel Grid.Row="3" Margin="0,10,0,0">
+                        <Button Content="Vincular arquivo ao template" Style="{StaticResource SecondaryButtonStyle}" Click="AttachTemplate_Click"/>
+                        <Button Content="Gerenciar pasta de templates" Style="{StaticResource GhostButtonStyle}" Margin="0,8,0,0" Click="OpenTemplatesFolder_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <GridSplitter Grid.Column="1" Width="8" HorizontalAlignment="Stretch" Background="Transparent"/>
+
+            <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="12">
+                <Grid>
+                    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="0.9*"/><RowDefinition Height="Auto"/><RowDefinition Height="1.1*"/></Grid.RowDefinitions>
+                    <StackPanel>
+                        <TextBlock x:Name="TemplateTitleText" Text="Selecione um template" FontSize="19" FontWeight="Bold"/>
+                        <TextBlock x:Name="TemplateDescriptionText" Margin="0,4,0,0" Foreground="{DynamicResource MutedBrush}" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="TemplateStatusText" Margin="0,5,0,0" Foreground="{DynamicResource PrimaryBrush}" FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <Grid Grid.Row="1" Margin="0,12,0,8">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <TextBox x:Name="MilitarySearchBox" Height="36" VerticalContentAlignment="Center" Padding="9,0" TextChanged="MilitarySearchBox_TextChanged" ToolTip="Buscar por nome, CPF, PREC-CP ou posto"/>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="8,0,0,0">
+                            <Button Content="Adicionar selecionado ao lote" Style="{StaticResource SecondaryButtonStyle}" Click="AddSelectedToBatch_Click"/>
+                            <Button Content="Adicionar filtrados" Style="{StaticResource GhostButtonStyle}" Margin="8,0,0,0" Click="AddFilteredToBatch_Click"/>
+                        </StackPanel>
+                    </Grid>
+                    <DataGrid x:Name="MilitaryGrid" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single" SelectionChanged="MilitaryGrid_SelectionChanged" MouseDoubleClick="MilitaryGrid_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="P/G" Binding="{Binding ShortRank}" Width="85"/>
+                            <DataGridTemplateColumn Header="Nome completo" Width="*"><DataGridTemplateColumn.CellTemplate><DataTemplate><controls:HighlightedNameTextBlock FullName="{Binding Name}" WarName="{Binding WarName}" TextWrapping="Wrap"/></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+                            <DataGridTextColumn Header="PREC-CP" Binding="{Binding PrecCp}" Width="105"/>
+                            <DataGridTextColumn Header="CPF" Binding="{Binding FormattedCpf}" Width="125"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid Grid.Row="3" Margin="0,10,0,8">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <TextBlock Text="CAMPOS DO DOCUMENTO" Style="{StaticResource SectionTitleStyle}"/>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <Button Content="Preencher pelo cadastro" Style="{StaticResource GhostButtonStyle}" Click="Autofill_Click"/>
+                            <Button Content="Salvar valores deste template" Style="{StaticResource GhostButtonStyle}" Margin="8,0,0,0" Click="SaveTemplateValues_Click"/>
+                        </StackPanel>
+                    </Grid>
+                    <DataGrid x:Name="FieldsGrid" Grid.Row="4" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" CellEditEnding="FieldsGrid_CellEditEnding">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Copiar valor" Click="CopyFieldValue_Click"/>
+                                <MenuItem Header="Limpar valor" Click="ClearFieldValue_Click"/>
+                                <MenuItem Header="Preencher pelo cadastro" Click="Autofill_Click"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Campo" Binding="{Binding Label}" IsReadOnly="True" Width="1.1*"/>
+                            <DataGridTextColumn Header="Chave" Binding="{Binding Key}" IsReadOnly="True" Width="150"/>
+                            <DataGridTextColumn Header="Valor" Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}" Width="1.5*"/>
+                            <DataGridTextColumn Header="Origem" Binding="{Binding Source}" IsReadOnly="True" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+
+            <GridSplitter Grid.Column="3" Width="8" HorizontalAlignment="Stretch" Background="Transparent"/>
+
+            <Border Grid.Column="4" Style="{StaticResource CardStyle}" Padding="12">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="0.72*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="1.05*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="GERAÇÃO E CONFERÊNCIA" Style="{StaticResource SectionTitleStyle}"/>
+
+                    <Border Grid.Row="1" Margin="0,10,0,0" Padding="12" CornerRadius="8" Background="{DynamicResource SurfaceAltBrush}">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="150"/></Grid.ColumnDefinitions>
+                            <StackPanel Grid.ColumnSpan="2">
+                                <TextBlock Text="Nome do arquivo" Style="{StaticResource CaptionTextStyle}"/>
+                                <TextBox x:Name="OutputNameBox" Height="36" VerticalContentAlignment="Center" Padding="9,0"/>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,10,8,0">
+                                <TextBlock Text="Formato final" Style="{StaticResource CaptionTextStyle}"/>
+                                <ComboBox x:Name="OutputFormatBox" Height="36" SelectedIndex="0">
+                                    <ComboBoxItem Content="Original"/>
+                                    <ComboBoxItem Content="DOCX"/>
+                                    <ComboBoxItem Content="PDF"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,10,0,0">
+                                <TextBlock Text="Conversor" Style="{StaticResource CaptionTextStyle}"/>
+                                <TextBlock x:Name="LibreOfficeStatusText" Text="Verificando…" Margin="0,8,0,0" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10,0,0">
+                                <CheckBox x:Name="OpenAfterGenerateBox" Content="Abrir depois de gerar" IsChecked="True" Margin="0,0,14,6"/>
+                                <CheckBox x:Name="KeepIntermediateBox" Content="Manter arquivo intermediário" IsChecked="False" Margin="0,0,14,6"/>
+                                <CheckBox x:Name="AddToPrintQueueBox" Content="Adicionar à fila de impressão" Margin="0,0,14,6"/>
+                                <CheckBox x:Name="SaveCadastroBox" Content="Salvar campos editados no cadastro" Margin="0,0,14,6" ToolTip="Atualiza apenas os campos cadastrais reconhecidos, após confirmação."/>
+                            </WrapPanel>
+                            <WrapPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="0,7,0,0">
+                                <Button Content="Gerar selecionado" Style="{StaticResource PrimaryButtonStyle}" Padding="18,10" Click="GenerateSelected_Click"/>
+                                <Button Content="Gerar lote" Style="{StaticResource SecondaryButtonStyle}" Margin="8,0,0,0" Padding="18,10" Click="GenerateBatch_Click"/>
+                                <Button Content="Fila de impressão" Style="{StaticResource GhostButtonStyle}" Margin="8,0,0,0" Click="OpenPrintQueue_Click"/>
+                                <Button Content="Abrir pasta" Style="{StaticResource GhostButtonStyle}" Margin="8,0,0,0" Click="OpenOutputFolder_Click"/>
+                            </WrapPanel>
+                        </Grid>
+                    </Border>
+
+                    <Grid Grid.Row="3" Margin="0,10,0,0">
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <TextBlock Text="LOTE DE MILITARES" FontWeight="Bold"/>
+                            <Button Grid.Column="1" Content="Limpar lote" Style="{StaticResource GhostButtonStyle}" Click="ClearBatch_Click"/>
+                        </Grid>
+                        <DataGrid x:Name="BatchGrid" Grid.Row="1" Margin="0,8,0,0" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Extended">
+                            <DataGrid.ContextMenu><ContextMenu><MenuItem Header="Remover do lote" Click="RemoveBatch_Click"/><MenuItem Header="Copiar identificação" Click="CopyBatchName_Click"/></ContextMenu></DataGrid.ContextMenu>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="P/G" Binding="{Binding ShortRank}" Width="75"/>
+                                <DataGridTemplateColumn Header="Militar" Width="*"><DataGridTemplateColumn.CellTemplate><DataTemplate><controls:HighlightedNameTextBlock FullName="{Binding Name}" WarName="{Binding WarName}"/></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+                                <DataGridTextColumn Header="PREC-CP" Binding="{Binding PrecCp}" Width="95"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                    <TextBlock Grid.Row="4" Text="HISTÓRICO DE GERAÇÃO" FontWeight="Bold" Margin="0,12,0,6"/>
+                    <DataGrid x:Name="HistoryGrid" Grid.Row="5" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single" MouseDoubleClick="HistoryGrid_MouseDoubleClick">
+                        <DataGrid.ContextMenu><ContextMenu><MenuItem Header="Abrir arquivo" Click="OpenHistory_Click"/><MenuItem Header="Abrir pasta" Click="OpenHistoryFolder_Click"/><MenuItem Header="Adicionar à fila" Click="AddHistoryToQueue_Click"/><MenuItem Header="Copiar caminho" Click="CopyHistoryPath_Click"/></ContextMenu></DataGrid.ContextMenu>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Data" Binding="{Binding GeneratedAtText}" Width="125"/>
+                            <DataGridTextColumn Header="Documento" Binding="{Binding TemplateTitle}" Width="145"/>
+                            <DataGridTextColumn Header="Militar" Binding="{Binding MilitaryName}" Width="*"/>
+                            <DataGridTextColumn Header="Formato" Binding="{Binding OutputFormat}" Width="75"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding StatusText}" Width="70"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="2" Margin="0,12,0,0" Padding="12,8" Background="{DynamicResource SurfaceAltBrush}" CornerRadius="8">
+            <TextBlock x:Name="StatusText" Text="Selecione um template e um militar. Todos os valores podem ser conferidos antes da geração." Foreground="{DynamicResource MutedBrush}"/>
+        </Border>
+    </Grid>
+</Window>

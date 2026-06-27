@@ -1,0 +1,34 @@
+<Window x:Class="SIGFUR.Wpf.Views.Military.DocumentDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Incluir documento" Width="580" Height="460" WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Background="{DynamicResource AppBackgroundBrush}" Icon="/Assets/sigfur.ico">
+    <Grid Margin="16">
+        <Border Style="{StaticResource CardStyle}" Padding="22">
+            <Grid>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                <TextBlock Text="Incluir documento na carteira" Style="{StaticResource PageTitleStyle}" FontSize="21"/>
+                <TextBlock x:Name="FileText" Grid.Row="1" Style="{StaticResource SubtleTextStyle}" TextWrapping="Wrap" Margin="0,4,0,16"/>
+                <TextBlock Grid.Row="2" Text="Tipo de documento" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,4"/>
+                <ComboBox x:Name="TypeBox" Grid.Row="3" SelectedIndex="0" SelectionChanged="TypeBox_SelectionChanged">
+                    <ComboBoxItem Content="Certidão de nascimento" Tag="CERTIDAO_NASCIMENTO"/>
+                    <ComboBoxItem Content="RG" Tag="RG"/><ComboBoxItem Content="CPF" Tag="CPF"/>
+                    <ComboBoxItem Content="Comprovante de residência" Tag="COMPROVANTE_RESIDENCIA"/>
+                    <ComboBoxItem Content="Documento diverso" Tag="DOCUMENTO_DIVERSO"/>
+                </ComboBox>
+                <TextBlock Grid.Row="4" Text="Título" Style="{StaticResource CaptionTextStyle}" Margin="0,13,0,4"/>
+                <TextBox x:Name="TitleBox" Grid.Row="5" VerticalAlignment="Top"/>
+                <Border x:Name="OcrCard" Grid.Row="6" Background="{DynamicResource PrimarySurfaceBrush}" BorderBrush="{DynamicResource PrimaryBrush}" BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,14,0,0">
+                    <StackPanel>
+                        <CheckBox x:Name="OcrCheck" IsChecked="True" Content="Ler a certidão automaticamente e criar as chaves do Boletim" FontWeight="SemiBold"/>
+                        <TextBlock Text="O SIGFUR abrirá uma conferência para você corrigir nome, CPF, nascimento, matrícula, filiação e cartório antes de salvar." Foreground="{DynamicResource MutedBrush}" TextWrapping="Wrap" Margin="24,5,0,0"/>
+                    </StackPanel>
+                </Border>
+                <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,0,0">
+                    <Button Style="{StaticResource SecondaryButtonStyle}" Content="Cancelar" IsCancel="True" Margin="0,0,8,0"/>
+                    <Button Style="{StaticResource PrimaryButtonStyle}" Content="Continuar" IsDefault="True" Click="Confirm_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

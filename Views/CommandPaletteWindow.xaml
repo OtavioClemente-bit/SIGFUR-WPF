@@ -1,0 +1,12 @@
+<Window x:Class="SIGFUR.Wpf.Views.CommandPaletteWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Paleta de Comandos" Width="760" Height="520" MinWidth="600" MinHeight="420" WindowStartupLocation="CenterOwner">
+    <Grid Margin="18">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel><TextBlock Text="⚡ Paleta de Comandos" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource PrimaryDarkBrush}"/><TextBlock Text="Digite para filtrar e pressione Enter para executar." Foreground="{DynamicResource MutedBrush}" Margin="0,3,0,12"/></StackPanel>
+        <TextBox x:Name="SearchBox" Grid.Row="1" TextChanged="SearchBox_TextChanged" KeyDown="SearchBox_KeyDown" />
+        <ListBox x:Name="ActionList" Grid.Row="2" Margin="0,12,0,12" MouseDoubleClick="ActionList_MouseDoubleClick" KeyDown="ActionList_KeyDown">
+            <ListBox.ItemTemplate><DataTemplate><Grid Margin="8"><Grid.ColumnDefinitions><ColumnDefinition Width="42"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><TextBlock Text="{Binding Icon}" FontFamily="Segoe UI Emoji" FontSize="20"/><StackPanel Grid.Column="1"><TextBlock Text="{Binding Title}" FontWeight="SemiBold"/><TextBlock Text="{Binding Description}" Foreground="{DynamicResource MutedBrush}" FontSize="11"/></StackPanel><TextBlock Grid.Column="2" Text="{Binding HotKey}" Foreground="{DynamicResource SubtleTextBrush}" VerticalAlignment="Center"/></Grid></DataTemplate></ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right"><Button Content="Fechar" IsCancel="True" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0"/><Button Content="Executar" IsDefault="True" Style="{StaticResource PrimaryButtonStyle}" Click="Execute_Click"/></StackPanel>
+    </Grid>
+</Window>

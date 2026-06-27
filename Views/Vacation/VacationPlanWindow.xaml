@@ -1,0 +1,282 @@
+<Window x:Class="SIGFUR.Wpf.Views.Vacation.VacationPlanWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:SIGFUR.Wpf.Controls"
+        xmlns:services="clr-namespace:SIGFUR.Wpf.Services"
+        Title="SIGFUR — Plano de Férias" Width="1450" Height="890" MinWidth="1120" MinHeight="700"
+        WindowStartupLocation="CenterOwner" Background="{DynamicResource AppBackgroundBrush}" Icon="/Assets/sigfur.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="92"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="42"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{DynamicResource PrimaryGradientBrush}" Padding="26,0">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="PLANO DE FÉRIAS" Foreground="White" FontSize="25" FontWeight="Bold"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="#20FFFFFF" CornerRadius="12" Padding="14,8" Margin="0,0,10,0">
+                        <StackPanel><TextBlock Text="ANO DO PLANO" Foreground="#DCEBFF" FontSize="9"/><TextBlock x:Name="HeaderYearText" Foreground="White" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center"/></StackPanel>
+                    </Border>
+                    <Button Content="Conferir publicações" Style="{StaticResource LightOnDarkButtonStyle}" Click="ReviewPublications_Click" Margin="0,0,8,0"/>
+                    <Button Content="Relatório Excel" Style="{StaticResource LightOnDarkButtonStyle}" Click="ExportReport_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" Padding="18,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/><ColumnDefinition Width="112"/><ColumnDefinition Width="18"/>
+                    <ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Ano:" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,0"/>
+                <ComboBox x:Name="YearBox" Grid.Column="1" SelectionChanged="YearBox_SelectionChanged"/>
+                <TextBlock Grid.Column="3" x:Name="SummaryText" VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}" TextWrapping="Wrap"/>
+                <StackPanel Grid.Column="4" Orientation="Horizontal">
+                    <Button Content="Atualizar" Style="{StaticResource SecondaryButtonStyle}" Click="Refresh_Click" Margin="0,0,8,0"/>
+                    <Button Content="Fechar" Style="{StaticResource GhostButtonStyle}" Click="Close_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <TabControl x:Name="MainTabs" Grid.Row="2" Margin="16,12,16,10" SelectionChanged="MainTabs_SelectionChanged">
+            <TabItem Header="Planejamento">
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="430"/><ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="1*"/><ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="1.08*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0" Style="{StaticResource CardStyle}" Padding="15">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="PERÍODOS DO ANO" Style="{StaticResource SectionTitleStyle}"/>
+                                
+                            </StackPanel>
+                            <ListBox x:Name="PeriodsList" Grid.Row="1" Margin="0,12,0,12" SelectionChanged="PeriodsList_SelectionChanged" HorizontalContentAlignment="Stretch">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding FullLabel}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding FullLabel}" Margin="2,5"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <StackPanel Grid.Row="2">
+                                <TextBlock Text="Nome do período" Style="{StaticResource SubtleTextStyle}"/>
+                                <TextBox x:Name="PeriodNameBox" Margin="0,4,0,8"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="Início" Style="{StaticResource SubtleTextStyle}"/>
+                                        <DatePicker x:Name="PeriodStartPicker" SelectedDateFormat="Short" Margin="0,4,0,0" MinWidth="175" HorizontalContentAlignment="Stretch"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Fim" Style="{StaticResource SubtleTextStyle}"/>
+                                        <DatePicker x:Name="PeriodEndPicker" SelectedDateFormat="Short" Margin="0,4,0,0" MinWidth="175" HorizontalContentAlignment="Stretch"/>
+                                    </StackPanel>
+                                </Grid>
+                                <WrapPanel Margin="0,12,0,0">
+                                    <Button Content="Salvar período" Style="{StaticResource PrimaryButtonStyle}" Click="SavePeriod_Click" Margin="0,0,7,7"/>
+                                    <Button Content="+ Especial" Style="{StaticResource SecondaryButtonStyle}" Click="NewSpecialPeriod_Click" Margin="0,0,7,7"/>
+                                    <Button Content="Excluir especial" Style="{StaticResource DangerButtonStyle}" Click="DeleteSpecialPeriod_Click" Margin="0,0,0,7"/>
+                                </WrapPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="15">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                <TextBlock Text="MILITARES DISPONÍVEIS" Style="{StaticResource SectionTitleStyle}"/>
+                                <Border Grid.Column="1" Background="{DynamicResource PrimarySoftBrush}" CornerRadius="12" Padding="10,4"><TextBlock x:Name="AvailableCountText" Foreground="{DynamicResource PrimaryDarkBrush}" FontWeight="SemiBold"/></Border>
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="0,12,0,10">
+                                <Grid.RowDefinitions><RowDefinition/><RowDefinition Height="8"/><RowDefinition/></Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="2*"/><ColumnDefinition Width="8"/><ColumnDefinition Width="1.25*"/></Grid.ColumnDefinitions>
+                                <TextBox x:Name="MilitarySearchBox" ToolTip="Nome, nome de guerra, CPF, PREC-CP, IDT ou P/G" TextChanged="MilitaryFilter_Changed"/>
+                                <ComboBox x:Name="RankFilterBox" Grid.Column="2" SelectionChanged="MilitaryFilter_Changed"/>
+                                <CheckBox x:Name="AvailableOnlyCheck" Grid.Row="2" Content="Mostrar somente quem ainda tem dias disponíveis" IsChecked="True" Checked="MilitaryFilter_Changed" Unchecked="MilitaryFilter_Changed"/>
+                                <ComboBox x:Name="SortModeBox" Grid.Row="2" Grid.Column="2" SelectionChanged="MilitaryFilter_Changed">
+                                    <ComboBoxItem Content="Posto/Graduação"/><ComboBoxItem Content="Nome"/><ComboBoxItem Content="Ordem salva"/>
+                                </ComboBox>
+                            </Grid>
+                            <DataGrid x:Name="MilitaryGrid" Grid.Row="2" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" MouseDoubleClick="MilitaryGrid_MouseDoubleClick">
+                                <DataGrid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Adicionar selecionados ao período" Click="Allocate_Click"/>
+                                        <Separator/>
+                                        <MenuItem Header="Selecionar todos os visíveis" Click="SelectAllMilitary_Click"/>
+                                        <MenuItem Header="Limpar seleção" Click="ClearMilitarySelection_Click"/>
+                                        <Separator/>
+                                        <MenuItem Header="Copiar selecionados" Click="CopySelectedMilitary_Click"/>
+                                    </ContextMenu>
+                                </DataGrid.ContextMenu>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="P/G" Binding="{Binding Rank}" Width="95"/>
+                                    <DataGridTemplateColumn Header="Nome completo" Width="*"><DataGridTemplateColumn.CellTemplate><DataTemplate><controls:HighlightedNameTextBlock FullName="{Binding Name}" WarName="{Binding WarName}" TextWrapping="Wrap"/></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Dias usados" Binding="{Binding DaysText}" Width="82"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Grid Grid.Row="3" Margin="0,12,0,0">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="100"/><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                <TextBlock Text="Dias:" VerticalAlignment="Center" FontWeight="SemiBold" Margin="0,0,8,0"/>
+                                <ComboBox x:Name="DaysBox" Grid.Column="1" SelectedIndex="2"><ComboBoxItem Content="10"/><ComboBoxItem Content="15"/><ComboBoxItem Content="30"/></ComboBox>
+                                <Button Grid.Column="3" Content="Adicionar ao período →" Style="{StaticResource PrimaryButtonStyle}" Click="Allocate_Click"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="4" Style="{StaticResource CardStyle}" Padding="15">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                <StackPanel><TextBlock Text="MILITARES NO PERÍODO" Style="{StaticResource SectionTitleStyle}"/><TextBlock x:Name="SelectedPeriodCaption" Text="Selecione um período à esquerda." Style="{StaticResource CaptionTextStyle}"/></StackPanel>
+                                <Border Grid.Column="1" Background="{DynamicResource InfoSoftBrush}" CornerRadius="12" Padding="10,4"><TextBlock x:Name="AllocatedCountText" Foreground="{DynamicResource InfoBrush}" FontWeight="SemiBold"/></Border>
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="0,12,0,10">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="8"/><ColumnDefinition Width="125"/></Grid.ColumnDefinitions>
+                                <TextBox x:Name="AllocationSearchBox" ToolTip="Pesquisar nome, nome de guerra, CPF, PREC-CP ou P/G" TextChanged="AllocationFilter_Changed"/>
+                                <ComboBox x:Name="AllocationStatusBox" Grid.Column="2" SelectionChanged="AllocationFilter_Changed">
+                                    <ComboBoxItem Content="Todos"/><ComboBoxItem Content="Pendentes"/><ComboBoxItem Content="Pagos"/>
+                                </ComboBox>
+                            </Grid>
+                            <DataGrid x:Name="AllocationsGrid" Grid.Row="2" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Extended" SelectionUnit="FullRow" MouseDoubleClick="AllocationsGrid_MouseDoubleClick" RowHeight="40">
+                                <DataGrid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Abrir carteira / plano individual" Click="OpenIndividual_Click"/>
+                                        <MenuItem Header="Mover / alterar dias" Click="MoveAllocation_Click"/>
+                                        <Separator/>
+                                        <MenuItem Header="Marcar selecionados como pago" Click="MarkPaid_Click"/>
+                                        <MenuItem Header="Marcar selecionados como pendente" Click="MarkUnpaid_Click"/>
+                                        <Separator/>
+                                        <MenuItem Header="Remover selecionados" Click="RemoveAllocation_Click"/>
+                                        <Separator/>
+                                        <MenuItem Header="Selecionar todos" Click="SelectAllAllocations_Click"/>
+                                        <MenuItem Header="Limpar seleção" Click="ClearAllocationsSelection_Click"/>
+                                        <Separator/>
+                                        <MenuItem Header="Copiar selecionados" Click="CopySelectedAllocations_Click"/>
+                                    </ContextMenu>
+                                </DataGrid.ContextMenu>
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                        <Setter Property="Foreground" Value="#FFB71C1C"/>
+                                        <Setter Property="Background" Value="#FFFFCDD2"/>
+                                        <Setter Property="BorderBrush" Value="#FFD32F2F"/>
+                                        <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsPaid}" Value="True">
+                                                <Setter Property="Foreground" Value="#FF1B5E20"/>
+                                                <Setter Property="Background" Value="#FFC8E6C9"/>
+                                                <Setter Property="BorderBrush" Value="#FF2E7D32"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="P/G" Binding="{Binding Rank}" Width="92"/>
+                                    <DataGridTemplateColumn Header="Nome completo" Width="*"><DataGridTemplateColumn.CellTemplate><DataTemplate><controls:HighlightedNameTextBlock FullName="{Binding Name}" WarName="{Binding WarName}" TextWrapping="Wrap"/></DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Dias" Binding="{Binding Days}" Width="58"/>
+                                    <DataGridTextColumn Header="Pagamento" Binding="{Binding PaidText}" Width="92"/>
+                                    <DataGridTextColumn Header="Aux. alimentação" Binding="{Binding FoodAidText}" Width="175"/>
+                                    <DataGridTextColumn Header="Registrado em" Binding="{Binding PaidAtText}" Width="145"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <WrapPanel Grid.Row="3" Margin="0,10,0,0">
+                                <Button Content="Carteira / plano individual" Style="{StaticResource PrimaryButtonStyle}" Click="OpenIndividual_Click" Margin="0,0,7,7"/>
+                                <Button Content="Mover / alterar dias" Style="{StaticResource SecondaryButtonStyle}" Click="MoveAllocation_Click" Margin="0,0,7,7"/>
+                                <Button Content="Marcar pago" Style="{StaticResource SecondaryButtonStyle}" Click="MarkPaid_Click" Margin="0,0,7,7"/>
+                                <Button Content="Marcar pendente" Style="{StaticResource SecondaryButtonStyle}" Click="MarkUnpaid_Click" Margin="0,0,7,7"/>
+                                <Button Content="Remover" Style="{StaticResource DangerButtonStyle}" Click="RemoveAllocation_Click" Margin="0,0,0,7"/>
+                            </WrapPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Boletins e SisBol">
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="390"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                    <Border Grid.Column="0" Style="{StaticResource CardStyle}" Padding="14">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="240"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                            <TextBlock Text="MODELOS" Style="{StaticResource SectionTitleStyle}"/>
+                            <ListBox x:Name="ModelsList" Grid.Row="1" Margin="0,10,0,8" SelectionChanged="ModelsList_SelectionChanged" FontSize="13"/>
+                            <WrapPanel Grid.Row="2"><Button Content="Novo" Style="{StaticResource SecondaryButtonStyle}" Click="NewModel_Click" Margin="0,0,6,6"/><Button Content="Renomear" Style="{StaticResource SecondaryButtonStyle}" Click="RenameModel_Click" Margin="0,0,6,6"/><Button Content="Excluir" Style="{StaticResource DangerButtonStyle}" Click="DeleteModel_Click" Margin="0,0,0,6"/></WrapPanel>
+                            <Grid Grid.Row="3" Margin="0,12,0,0">
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                                <TextBlock Text="BOLETINS SALVOS" Style="{StaticResource SectionTitleStyle}"/>
+                                <ListBox x:Name="SavedBulletinsList" Grid.Row="1" Margin="0,10,0,8" DisplayMemberPath="DisplayLabel" SelectionChanged="SavedBulletinsList_SelectionChanged" FontSize="13"/>
+                                <WrapPanel Grid.Row="2"><Button Content="Salvar edição" Style="{StaticResource PrimaryButtonStyle}" Click="SaveBulletinEdition_Click" Margin="0,0,6,6"/><Button Content="Salvar como novo" Style="{StaticResource SecondaryButtonStyle}" Click="SaveBulletin_Click" Margin="0,0,6,6"/><Button Content="Renomear" Style="{StaticResource SecondaryButtonStyle}" Click="RenameBulletin_Click" Margin="0,0,6,6"/><Button Content="Excluir" Style="{StaticResource DangerButtonStyle}" Click="DeleteBulletin_Click" Margin="0,0,0,6"/></WrapPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="14">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="10"/><RowDefinition Height="*"/><RowDefinition Height="10"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.05*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="1.25*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="1.25*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel><TextBlock Text="Período do boletim" Style="{StaticResource SubtleTextStyle}"/><ComboBox x:Name="BulletinPeriodBox" DisplayMemberPath="FullLabel" SelectionChanged="BulletinPeriodBox_SelectionChanged"/></StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="BI de publicação" Style="{StaticResource SubtleTextStyle}"/>
+                                    <DockPanel LastChildFill="True">
+                                        <Button Content="BI salvo" Style="{StaticResource GhostButtonStyle}" Click="UseSavedBi_Click" DockPanel.Dock="Right" Margin="6,0,0,0" Padding="8,2" FontSize="11" MinWidth="66" ToolTip="Escolher BI salvo e preencher referência completa."/>
+                                        <TextBox x:Name="BulletinBiBox" ToolTip="Escolha um BI salvo ou digite manualmente. Com BI salvo, o texto usa referência completa: BI Nrº 13, 14 ABR 26, da 4ª Cia PE." TextChanged="BulletinBiBox_TextChanged"/>
+                                    </DockPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Column="4"><TextBlock Text="Assunto específico" Style="{StaticResource SubtleTextStyle}"/><TextBox x:Name="SpecificSubjectBox"/></StackPanel>
+                                <StackPanel Grid.Column="6"><TextBlock Text="Código" Style="{StaticResource SubtleTextStyle}"/><TextBox x:Name="SpecificCodeBox"/></StackPanel>
+                                <Button Grid.Column="7" Content="Campos" Style="{StaticResource SecondaryButtonStyle}" Click="FormFields_Click" Margin="10,17,0,0"/>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                                <TextBlock Text="MODELO EDITÁVEL" Style="{StaticResource SectionTitleStyle}"/>
+                                <TextBox x:Name="ModelEditor" Tag="UiState.NoPersist" Grid.Row="1" SpellCheck.IsEnabled="True" Language="pt-BR" Margin="0,8,0,0" Padding="14,10" AcceptsReturn="True" AcceptsTab="True" VerticalContentAlignment="Top" HorizontalContentAlignment="Stretch" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" TextChanged="ModelEditor_TextChanged" FontFamily="Times New Roman" FontSize="13.333"/>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                                <Grid><TextBlock Text="PRÉVIA / BOLETIM SALVO" Style="{StaticResource SectionTitleStyle}"/><CheckBox x:Name="IncludeLateValuesCheck" Content="Usar valores individuais da Carteira de Férias" HorizontalAlignment="Right"/></Grid>
+                                <RichTextBox x:Name="PreviewEditor" Tag="UiState.NoPersist" Grid.Row="1" SpellCheck.IsEnabled="True" Language="pt-BR" Margin="0,8,0,0" Padding="14,10" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto" FontFamily="Times New Roman" FontSize="13.333" TextChanged="PreviewEditor_TextChanged"/>
+                            </Grid>
+                            <WrapPanel Grid.Row="5" HorizontalAlignment="Right" Margin="0,12,0,0">
+                                <Button Content="Gerar prévia" Style="{StaticResource PrimaryButtonStyle}" Click="GeneratePreview_Click" Margin="0,0,8,0"/>
+                                <Button Content="Copiar" Style="{StaticResource SecondaryButtonStyle}" Click="CopyPreview_Click" Margin="0,0,8,0"/>
+                                <Button Content="Gerar Word" Style="{StaticResource SecondaryButtonStyle}" Click="ExportWord_Click" Margin="0,0,8,0"/>
+                                <CheckBox x:Name="IncludeConsequencesCheck" Content="Incluir consequência" IsChecked="True" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <TextBox x:Name="ConsequencesTextBox" Width="460" MinHeight="44" MaxHeight="86" Text="{x:Static services:SisbolTexts.VacationConsequencesText}" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" Padding="8,5" Margin="0,0,12,0" ToolTip="Texto editável enviado ao campo Texto de Fechamento do SisBol."/>
+                                <Button Content="Enviar ao SisBol" Style="{StaticResource PrimaryButtonStyle}" Click="SendSisbol_Click"/>
+                            </WrapPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Border Grid.Row="3" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="16,0">
+            <Grid>
+                <TextBlock x:Name="StatusText" Text="Pronto." VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}" TextTrimming="CharacterEllipsis"/>
+                <TextBlock x:Name="SisbolStatusText" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{DynamicResource SubtleTextBrush}"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

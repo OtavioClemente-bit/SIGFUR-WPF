@@ -1,0 +1,114 @@
+<Window x:Class="SIGFUR.Wpf.Views.ProfileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Perfil operacional do SIGFUR" Width="1120" Height="800" MinWidth="920" MinHeight="680"
+        WindowStartupLocation="CenterOwner" Background="{DynamicResource AppBackgroundBrush}">
+    <Grid Margin="22">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <Grid Margin="0,0,0,16">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="PERFIL OPERACIONAL DO SIGFUR" FontSize="23" FontWeight="Bold" Foreground="{DynamicResource PrimaryDarkBrush}"/>
+                <TextBlock Text="Identidade do operador e catálogo oficial de quartéis do Exército Brasileiro." Foreground="{DynamicResource MutedBrush}" Margin="0,4,0,0"/>
+            </StackPanel>
+            <Border Grid.Column="1" Background="{DynamicResource PrimarySoftBrush}" CornerRadius="12" Padding="12,8" VerticalAlignment="Center">
+                <TextBlock x:Name="CatalogStatusText" Text="Catálogo oficial: aguardando" Foreground="{DynamicResource PrimaryDarkBrush}" FontWeight="SemiBold"/>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="0.92*"/><ColumnDefinition Width="14"/><ColumnDefinition Width="1.38*"/></Grid.ColumnDefinitions>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <Border Style="{StaticResource CardStyle}" Padding="18" Margin="0,0,0,12">
+                        <StackPanel>
+                            <TextBlock Text="Operador" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,14"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="145"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                                <TextBlock Text="Posto/Graduação" VerticalAlignment="Center" Margin="0,0,12,12"/>
+                                <ComboBox x:Name="RankBox" Grid.Column="1" Margin="0,0,0,12"/>
+                                <TextBlock Grid.Row="1" Text="Nome" VerticalAlignment="Center" Margin="0,0,12,12"/>
+                                <TextBox x:Name="OperatorBox" Grid.Row="1" Grid.Column="1" Margin="0,0,0,12"/>
+                                <TextBlock Grid.Row="2" Text="Função" VerticalAlignment="Center" Margin="0,0,12,12"/>
+                                <TextBox x:Name="FunctionBox" Grid.Row="2" Grid.Column="1" Margin="0,0,0,12" ToolTip="Ex.: Furriel, Auxiliar do Furriel, Chefe da Seção"/>
+                                <TextBlock Grid.Row="3" Text="Organização Militar" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                <ComboBox x:Name="OrganizationBox" Grid.Row="3" Grid.Column="1" IsEditable="True"
+                                          SelectionChanged="OrganizationBox_SelectionChanged" LostKeyboardFocus="OrganizationBox_LostKeyboardFocus"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource CardStyle}" Padding="18">
+                        <StackPanel>
+                            <TextBlock Text="Símbolo da OM" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,12"/>
+                            <Border Height="210" CornerRadius="18" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                                    Background="{DynamicResource SurfaceAltBrush}" ClipToBounds="True">
+                                <Grid>
+                                    <Image x:Name="ProfileImage" Stretch="Uniform" Margin="12"/>
+                                    <StackPanel x:Name="ProfileFallback" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock Text="🏛️" FontSize="46" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Imagem institucional da OM" TextAlignment="Center" Foreground="{DynamicResource MutedBrush}" Margin="0,8,0,0"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <TextBox x:Name="LogoBox" Margin="0,12,0,0" TextChanged="LogoBox_TextChanged" ToolTip="Caminho local da imagem"/>
+                            <WrapPanel Margin="0,10,0,0">
+                                <Button Content="Escolher imagem local…" Style="{StaticResource SecondaryButtonStyle}" Click="ChooseLogo_Click" Margin="0,0,8,8"/>
+                                <Button Content="Buscar símbolo no site oficial" Style="{StaticResource PrimaryButtonStyle}" Click="ResolveOfficialLogo_Click" Margin="0,0,8,8"/>
+                            </WrapPanel>
+                            <TextBlock x:Name="LogoStatusText" Foreground="{DynamicResource MutedBrush}" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="18">
+                <Grid>
+                    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Banco oficial de Organizações Militares" Style="{StaticResource SectionTitleStyle}"/>
+                            <TextBlock Text="Dados carregados da página “Quartéis por Estado” do portal oficial do Exército. O catálogo fica salvo para uso sem internet." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,12,0"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Content="Atualizar pela internet" Style="{StaticResource PrimaryButtonStyle}" Click="RefreshOfficialCatalog_Click" VerticalAlignment="Top"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="0,14,0,10">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="10"/><ColumnDefinition Width="120"/></Grid.ColumnDefinitions>
+                        <TextBox x:Name="OrganizationSearchBox" TextChanged="OrganizationSearchBox_TextChanged" ToolTip="Pesquise nome da OM, cidade, estado, CEP ou e-mail"/>
+                        <ComboBox x:Name="StateFilterBox" Grid.Column="2" SelectionChanged="StateFilterBox_SelectionChanged"/>
+                    </Grid>
+                    <DataGrid x:Name="OfficialOrganizationGrid" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single"
+                              SelectionChanged="OfficialOrganizationGrid_SelectionChanged" MouseDoubleClick="OfficialOrganizationGrid_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Organização Militar" Binding="{Binding Name}" Width="1.65*"/>
+                            <DataGridTextColumn Header="Cidade" Binding="{Binding City}" Width="*"/>
+                            <DataGridTextColumn Header="UF" Binding="{Binding State}" Width="48"/>
+                            <DataGridTextColumn Header="CEP" Binding="{Binding ZipCode}" Width="92"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Border Grid.Row="3" Background="{DynamicResource SurfaceAltBrush}" CornerRadius="12" Padding="12" Margin="0,10,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock x:Name="OfficialDetailTitle" Text="Selecione uma OM" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="OfficialDetailText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,12,0"/>
+                            </StackPanel>
+                            <Button Grid.Column="1" Content="Usar esta OM" Style="{StaticResource SecondaryButtonStyle}" Click="UseSelectedOrganization_Click" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,16,0,0">
+            <TextBlock Text="O símbolo automático depende de a OM possuir site público com imagem institucional identificável. Você pode substituir por uma imagem local a qualquer momento." Foreground="{DynamicResource MutedBrush}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,240,0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancelar" IsCancel="True" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0"/>
+                <Button Content="Salvar perfil" IsDefault="True" Style="{StaticResource PrimaryButtonStyle}" MinWidth="140" Click="Save_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
