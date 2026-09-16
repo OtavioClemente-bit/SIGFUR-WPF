@@ -8,37 +8,14 @@ O projeto nasceu de uma necessidade real: reduzir planilhas soltas, retrabalho m
 
 ---
 
-## Demonstração visual
+## Apresentação visual
 
-### Inicialização e preparação do ambiente
+![Capa institucional do SIGFUR WPF](docs/media/sigfur-cover.png)
 
-Tela de abertura com preparação de banco local, conferências, documentos, áreas de trabalho, identidade visual e backup operacional.
-
-![Inicialização do SIGFUR WPF](01-inicializacao.png)
-
-### Painel principal / dashboard operacional
-
-Visão geral do sistema com navegação lateral, calendário operacional, aniversariantes, efetivo por posto/graduação, corrida de pagamento e atalhos administrativos.
-
-![Dashboard do SIGFUR WPF](02-dashboard.png)
-
-### Cadastro e edição de militar
-
-Tela de cadastro com validações, identificação, dados administrativos, foto, contato e estrutura voltada ao controle individual do militar.
-
-![Cadastro de militar no SIGFUR WPF](03-cadastro-militar.png)
-
-### Menu financeiro e módulos administrativos
-
-Navegação lateral com módulos de soldos, auxílio-transporte, gratificação de representação, ajuste de contas, pensão judicial, conferência de pagamento, férias e exercício anterior.
-
-![Menu financeiro do SIGFUR WPF](04-menu-financeiro.png)
-
-### Assistente SIGFUR
-
-Assistente operacional conectado aos dados locais do sistema, capaz de responder perguntas administrativas, consultar efetivo, apoiar conferências e gerar orientações internas.
-
-![Assistente SIGFUR](05-assistente-sigfur.png)
+Uma apresentação visual única, criada para comunicar o posicionamento do
+SIGFUR como plataforma desktop operacional, com dashboard, módulos
+administrativos e automações integradas. As imagens antigas não são mais
+utilizadas como destaque nesta página.
 
 ---
 
