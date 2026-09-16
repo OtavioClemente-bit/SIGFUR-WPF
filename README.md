@@ -12,10 +12,22 @@ O projeto nasceu de uma necessidade real: reduzir planilhas soltas, retrabalho m
 
 ![Capa institucional do SIGFUR WPF](docs/media/sigfur-cover.png)
 
-Uma apresentação visual única, criada para comunicar o posicionamento do
-SIGFUR como plataforma desktop operacional, com dashboard, módulos
-administrativos e automações integradas. As imagens antigas não são mais
-utilizadas como destaque nesta página.
+### Programa em execução com dados demonstrativos
+
+![Dashboard do SIGFUR WPF com dados fictícios](docs/media/sigfur-demo-dashboard.png)
+
+A captura foi feita a partir do executável WPF em modo demonstração. Os seis
+registros exibidos são sintéticos e ficam em uma base separada, sem tocar nos
+dados oficiais do usuário.
+
+Para abrir a apresentação localmente:
+
+```bash
+SIGFUR.exe --demo
+```
+
+O modo `--demo` cria ou reutiliza somente a pasta
+`%LOCALAPPDATA%\SIGFUR\PortfolioDemo`.
 
 ---
 

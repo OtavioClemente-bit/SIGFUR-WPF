@@ -131,16 +131,28 @@ public partial class App : Application
                 }
             }
 
-            var startupWindow = new StartupLoginWindow(startupProfiles, startupBackup, startupRestore, startupUiState, ApplyStartupProfileThemeAsync);
-            var startupResult = startupWindow.ShowDialog();
-            if (startupResult != true || startupWindow.Session is null)
+            var demoMode = e.Args.Any(x => x.Equals("--demo", StringComparison.OrdinalIgnoreCase));
+            if (demoMode)
             {
-                Shutdown();
-                return;
+                var demoDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SIGFUR", "PortfolioDemo");
+                InitializeServices(demoDataPath);
+                await MilitaryRepository.EnsureSchemaAsync();
+                await DemoDataService.SeedAsync(MilitaryRepository);
+                StartupSession = new SigfurProfileSession { IsProfileMode = false, StatusMessage = "Modo demonstração: dados fictícios isolados." };
             }
+            else
+            {
+                var startupWindow = new StartupLoginWindow(startupProfiles, startupBackup, startupRestore, startupUiState, ApplyStartupProfileThemeAsync);
+                var startupResult = startupWindow.ShowDialog();
+                if (startupResult != true || startupWindow.Session is null)
+                {
+                    Shutdown();
+                    return;
+                }
 
-            StartupSession = startupWindow.Session;
-            InitializeServices(StartupSession.IsProfileMode ? StartupSession.LocalDataPath : null);
+                StartupSession = startupWindow.Session;
+                InitializeServices(StartupSession.IsProfileMode ? StartupSession.LocalDataPath : null);
+            }
             await LogStartupStepAsync(startupClock, "serviços criados");
 
             var startupWarnings = new List<string>();
