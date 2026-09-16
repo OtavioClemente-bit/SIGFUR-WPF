@@ -12,6 +12,8 @@ O projeto nasceu de uma necessidade real: reduzir planilhas soltas, retrabalho m
 
 ### Programa em execução com dados demonstrativos
 
+![Tela inicial e dashboard do SIGFUR WPF](docs/media/sigfur-demo-dashboard.png)
+
 ![Lista de militares do SIGFUR WPF](docs/media/sigfur-demo-militares.png)
 
 | Boletim e publicação | Auxílio-transporte |
