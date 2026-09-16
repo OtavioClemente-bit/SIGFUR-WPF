@@ -1,0 +1,447 @@
+﻿<Window x:Class="SIGFUR.Wpf.Views.Military.MilitaryListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:SIGFUR.Wpf.Controls"
+        mc:Ignorable="d"
+        Title="SIGFUR — Lista de Militares"
+        Width="1480" Height="860" MinWidth="960" MinHeight="600"
+        WindowStyle="SingleBorderWindow" ResizeMode="CanResize" WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource AppBackgroundBrush}"
+        Icon="/SIGFUR;component/Assets/sigfur.ico"
+        Loaded="Window_Loaded" Closing="Window_Closing" PreviewKeyDown="Window_PreviewKeyDown">
+    <Window.Resources>
+        <Style x:Key="ListCellText" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="8,0"/>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        </Style>
+        <Style x:Key="ListComboStyle" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton Focusable="False" IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" ClickMode="Press">
+                                <ToggleButton.Template><ControlTemplate TargetType="ToggleButton">
+                                    <Border x:Name="Field" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{Binding BorderBrush, RelativeSource={RelativeSource AncestorType=ComboBox}}" BorderThickness="1" CornerRadius="8">
+                                        <TextBlock Text="⌄" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Foreground="{DynamicResource MutedBrush}"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Field" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/></Trigger></ControlTemplate.Triggers>
+                                </ControlTemplate></ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="10,0,28,0" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                            <Popup x:Name="PART_Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False">
+                                <Border Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="1" CornerRadius="8" Padding="4" MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ScrollViewer MaxHeight="300" CanContentScroll="True"><ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/></ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.5"/></Trigger>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/></Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="32"/></Grid.RowDefinitions>
+        <Grid Margin="20,16,20,12">
+            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Militares" Style="{StaticResource PageTitleStyle}"/>
+                <TextBlock Foreground="{DynamicResource MutedBrush}" Margin="0,4,0,0"><Run Text="{Binding TotalCount, Mode=OneWay}" FontWeight="Bold"/><Run Text=" na relação   ·   "/><Run Text="{Binding FilteredCount, Mode=OneWay}" FontWeight="Bold"/><Run Text=" encontrados"/></TextBlock>
+            </StackPanel>
+            <WrapPanel Grid.Column="1" VerticalAlignment="Center">
+                <Button Content="＋ Novo militar" Click="New_Click" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,6,0"/>
+                <Button Content="↻" Click="Refresh_Click" ToolTip="Atualizar efetivo (Ctrl+R)" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,6,0"/>
+                <Button Content="Importar" Click="Import_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,6,0"/>
+                                            <Button Style="{StaticResource ToolbarActionButtonStyle}" Content="Exportar ▾" Click="ExportOptions_Click">
+                                <Button.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Relação de militares (Excel, CSV ou TXT)" Click="Export_Click"/>
+                                        <MenuItem Header="Relação SIAPPES / SIPPES da OM" Click="ExportPaymentSystemRelation_Click"/>
+                                        <MenuItem Header="Relação especial — Pré/PNR/Pensão/Laranjeira" Click="ExportBenefits_Click"/>
+                                        <MenuItem Header="Contracheques do mês" Click="ExportPaystubs_Click"/>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                            </Button>
+ <Button Content="Ferramentas ▾" Click="OpenMenu_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,6,0"><Button.ContextMenu><ContextMenu><MenuItem Header="Quantitativo da relação" Click="Quantity_Click"/><MenuItem Header="Central de contracheques" Click="PaystubTools_Click"/><MenuItem x:Name="LatestPaystubButton" Header="Abrir último contracheque" Click="OpenLatestPaystub_Click"/><MenuItem x:Name="LatestFinancialStatementButton" Header="Abrir última ficha financeira" Click="OpenLatestFinancialStatement_Click"/><Separator/><MenuItem Header="Transferir para licenciados / transferidos" Click="Transfer_Click"/><MenuItem Header="Lixeira" Click="Trash_Click"/><MenuItem Header="Desfazer exclusão" Click="UndoDelete_Click"/></ContextMenu></Button.ContextMenu></Button>
+            </WrapPanel>
+        </Grid>
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Padding="14" Margin="20,0,20,12">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="150"/><ColumnDefinition Width="100"/><ColumnDefinition Width="165"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel Margin="0,0,12,0"><TextBlock Text="BUSCAR MILITAR" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,5"/><Grid>
+                        <TextBox x:Name="SearchBox" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Padding="10,7,38,7" MinHeight="36" ToolTip="Nome, nome de guerra, CPF, PREC-CP, identidade ou contato. Ctrl+F"/>
+                        <TextBlock Text="Nome, CPF, PREC-CP…" Margin="11,0,30,0" VerticalAlignment="Center"
+                                   IsHitTestVisible="False" Foreground="{DynamicResource MutedBrush}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding SearchText}" Value=""/>
+                                                <Condition Binding="{Binding IsKeyboardFocusWithin, ElementName=SearchBox}" Value="False"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <Button Content="×" Click="ClearSearch_Click" ToolTip="Limpar pesquisa" HorizontalAlignment="Right" Style="{StaticResource GhostButtonStyle}" Padding="7,0" MinWidth="30"/>
+                    </Grid></StackPanel>
+                    <StackPanel Grid.Column="1" Margin="0,0,12,0"><TextBlock Text="POSTO / GRADUAÇÃO" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,5"/><ComboBox Style="{StaticResource ListComboStyle}" ItemsSource="{Binding RankOptions}" SelectedItem="{Binding SelectedRank}" MinHeight="36"/></StackPanel>
+                    <StackPanel Grid.Column="2" Margin="0,0,12,0"><TextBlock Text="ANO" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,5"/><ComboBox Style="{StaticResource ListComboStyle}" ItemsSource="{Binding YearOptions}" SelectedItem="{Binding SelectedYear}" MinHeight="36"/></StackPanel>
+                    <StackPanel Grid.Column="3" Margin="0,0,12,0"><TextBlock Text="ORDENAR POR" Style="{StaticResource CaptionTextStyle}" Margin="0,0,0,5"/><ComboBox Style="{StaticResource ListComboStyle}" ItemsSource="{Binding SortModes}" SelectedItem="{Binding SortMode}" MinHeight="36"/></StackPanel>
+                    <Button Grid.Column="4" Content="Limpar filtros" Click="ClearFilters_Click" Style="{StaticResource GhostButtonStyle}" VerticalAlignment="Bottom" MinHeight="36"/>
+                </Grid>
+                <WrapPanel Margin="0,12,0,0">
+                    <CheckBox Content="Favoritos" IsChecked="{Binding FavoritesOnly}" Margin="0,0,20,0"/>
+                    <CheckBox Content="Adidos / encostados" IsChecked="{Binding AttachedOnly}" Margin="0,0,20,0"/>
+                    <CheckBox Content="Sem auxílio-transporte" IsChecked="{Binding MissingTransportOnly}" Margin="0,0,20,0"/>
+                    <TextBlock Text="Pesquise por partes do nome, em qualquer ordem." Foreground="{DynamicResource MutedBrush}" FontSize="11"/>
+                </WrapPanel>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="2" Margin="20,0,20,12">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition x:Name="DetailsGap" Width="12"/><ColumnDefinition x:Name="DetailsColumn" Width="306"/></Grid.ColumnDefinitions>
+            <Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                <Expander Header="Minhas listas e ordem personalizada" Margin="0,0,0,10">
+                    <WrapPanel Margin="0,10,0,0">
+                        <ComboBox Style="{StaticResource ListComboStyle}" x:Name="SavedListsCombo" DisplayMemberPath="DisplayLabel" Width="200" Margin="0,0,6,6" ToolTip="Escolha uma relação salva"/>
+                        <Button Content="Abrir" Click="OpenSavedList_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,6,6"/>
+                        <Button Content="Gerenciar lista ▾" Click="OpenMenu_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,6,0"><Button.ContextMenu><ContextMenu><MenuItem Header="Salvar como nova lista" Click="SaveNewList_Click"/><MenuItem Header="Atualizar lista atual" Click="UpdateSavedList_Click"/><MenuItem Header="Excluir lista atual" Click="DeleteSavedList_Click"/><Separator/><MenuItem Header="Gerar planilha de posições" Click="ExportOrderSpreadsheet_Click"/><MenuItem Header="Importar ordem" Click="ImportSavedPositions_Click"/><MenuItem Header="Voltar à relação completa" Click="ShowAllList_Click"/></ContextMenu></Button.ContextMenu></Button>
+                        <CheckBox x:Name="LockOrderCheck" Content="Travar ordem" IsChecked="{Binding OrderLocked}" Checked="LockOrderCheck_Changed" Unchecked="LockOrderCheck_Changed" Margin="8,0,0,6" VerticalAlignment="Center"/>
+                    </WrapPanel>
+                </Expander>
+                <DockPanel Grid.Row="1" Margin="0,0,0,10" LastChildFill="False">
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                        <Button Content="Visualização ▾" Click="OpenMenu_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,6,0"><Button.ContextMenu><ContextMenu><MenuItem Header="Layout essencial" Click="EssentialLayout_Click"/><MenuItem Header="Escolher colunas" Click="Columns_Click"/><MenuItem Header="Legenda de cores" Click="ColorLegend_Click"/><Separator/><MenuItem Header="Mover para cima" Click="MoveUp_Click"/><MenuItem Header="Mover para baixo" Click="MoveDown_Click"/><MenuItem Header="Restaurar hierarquia" Click="ResetOrder_Click"/><MenuItem Header="Salvar ordem e layout" Click="SaveOrder_Click"/></ContextMenu></Button.ContextMenu></Button>
+                        <Button x:Name="DetailsToggleButton" Content="Detalhes" Click="ToggleDetails_Click" Style="{StaticResource SecondaryButtonStyle}"/>
+                    </StackPanel>
+                    <TextBlock x:Name="MarkedCountText" Text="0 marcados" VerticalAlignment="Center" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryDarkBrush}" Margin="0,0,10,0"/>
+                    <Button x:Name="ShowMarkedButton" Content="Mostrar marcados" Click="ShowMarked_Click" Style="{StaticResource GhostButtonStyle}" Margin="0,0,6,0"/>
+                    <Button Content="×" Click="ClearMarked_Click" ToolTip="Limpar marcações (Esc)" Style="{StaticResource GhostButtonStyle}" Margin="0,0,6,0"/>
+                    <Button Content="Ações ▾" Click="OpenMenu_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,6,0"><Button.ContextMenu><ContextMenu><MenuItem Header="Marcar todos os visíveis" Click="MarkVisible_Click"/><Separator/><MenuItem Header="Gerar documentação" Click="GenerateDocuments_Click"/><MenuItem Header="Alterar P/G em lote" Click="Promote_Click"/><MenuItem Header="Cor de destaque" Click="Color_Click"/><MenuItem Header="Anotação interna" Click="Note_Click"/><MenuItem Header="Copiar no padrão da relação" Click="CopyFormat_Click"/><MenuItem Header="Copiar dados completos" Click="CopySummary_Click"/><Separator/><MenuItem Header="Excluir militares selecionados" Click="Delete_Click"/></ContextMenu></Button.ContextMenu></Button>
+                </DockPanel>
+                <Border Grid.Row="2" Style="{StaticResource CardStyle}" Padding="0"><Grid>
+                                        <DataGrid x:Name="MilitaryGrid" ItemsSource="{Binding Military}" SelectedItem="{Binding SelectedMilitary}"
+                              RowHeight="42" HeadersVisibility="Column" BorderThickness="0"
+                              SelectionMode="Extended" SelectionUnit="FullRow" IsReadOnly="True"
+                              EnableRowVirtualization="True" EnableColumnVirtualization="True"
+                              VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"
+                              ScrollViewer.CanContentScroll="True"
+                              MouseDoubleClick="MilitaryGrid_MouseDoubleClick" SelectionChanged="MilitaryGrid_SelectionChanged"
+                              PreviewMouseRightButtonDown="MilitaryGrid_PreviewMouseRightButtonDown"
+                              PreviewMouseLeftButtonDown="MilitaryGrid_PreviewMouseLeftButtonDown"
+                              PreviewMouseMove="MilitaryGrid_PreviewMouseMove"
+                              Drop="MilitaryGrid_Drop" DragOver="MilitaryGrid_DragOver" DragLeave="MilitaryGrid_DragLeave"
+                              Sorting="MilitaryGrid_Sorting" ColumnReordered="MilitaryGrid_ColumnReordered" CanUserSortColumns="True" CanUserReorderColumns="True" CanUserResizeColumns="True" AllowDrop="True">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Abrir carteira" Click="OpenWallet_Click"/>
+                                <MenuItem Header="Editar" Click="Edit_Click"/>
+                                <MenuItem Header="Favoritar / desfavoritar" Click="Favorite_Click"/>
+                                <MenuItem Header="Anotação" Click="Note_Click"/>
+                                <MenuItem Header="Cor de destaque…" Click="Color_Click"/>
+                                <MenuItem Header="Copiar no padrão da relação" Click="CopyFormat_Click"/>
+                                <MenuItem Header="Quantidade / resumo" Click="Quantity_Click"/>
+                                <Separator/>
+                                <MenuItem Header="Gerar documentos">
+                                    <MenuItem Header="Auxílio-Transporte" Click="GenerateTransportDocument_Click"/>
+                                    <MenuItem Header="Pecuniária" Click="GeneratePecuniaryDocument_Click"/>
+                                    <MenuItem Header="Correios / etiqueta" Click="GeneratePostalDocument_Click"/>
+                                    <MenuItem Header="Cópia autêntica de pagamento" Click="GeneratePaymentCopyDocument_Click"/>
+                                    <MenuItem Header="Adiantamento natalino" Click="GenerateChristmasDocument_Click"/>
+                                    <Separator/>
+                                    <MenuItem Header="Capa do processo" Click="GenerateCoverDocument_Click"/>
+                                    <MenuItem Header="Requerimento / Informação EA" Click="GenerateEaRequestDocument_Click"/>
+                                    <MenuItem Header="Pensão Judicial — ficha" Click="GeneratePensionWorksheetDocument_Click"/>
+                                    <MenuItem Header="Índice remissivo" Click="GenerateIndexDocument_Click"/>
+                                    <MenuItem Header="Grat Rep — DIEx" Click="GenerateGratDiexDocument_Click"/>
+                                    <MenuItem Header="Grat Rep — mapa" Click="GenerateGratMapDocument_Click"/>
+                                </MenuItem>
+                                <MenuItem Header="Contracheques — seleção ou todos">
+                                    <MenuItem Header="Abrir contracheques salvos" Click="Paystubs_Click"/>
+                                    <MenuItem Header="Abrir último contracheque" Click="OpenLatestPaystub_Click"/>
+                                    <MenuItem Header="Abrir última ficha financeira" Click="OpenLatestFinancialStatement_Click"/>
+                                    <MenuItem Header="Exportar contracheque do mês" Click="ExportPaystubs_Click"/>
+                                    <MenuItem Header="Baixar contracheque automático" Click="DownloadSelectedPaystub_Click"/>
+                                    <MenuItem Header="Baixar contracheque do mês em lote" Click="DownloadMonthlyPaystubs_Click"/>
+                                    <MenuItem Header="Contracheque pessoa de fora" Click="ExternalPaystub_Click"/>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Header="Marcar / desmarcar Adido/Encostado" Click="Attached_Click"/>
+                                <MenuItem Header="Transferir para LT" Click="Transfer_Click"/>
+                                <MenuItem Header="Alterar P/G em lote" Click="Promote_Click"/>
+                                <MenuItem Header="Vincular como">
+                                    <MenuItem Header="Militar temporário" Tag="Temporário" Click="ApplyCareerType_Click"/>
+                                    <MenuItem Header="Militar de carreira" Tag="Carreira" Click="ApplyCareerType_Click"/>
+                                </MenuItem>
+                                <Separator/>
+                                <MenuItem Header="Copiar CPF" Click="CopyCpf_Click"/>
+                                <MenuItem Header="Copiar PREC-CP" Click="CopyPrec_Click"/>
+                                <MenuItem Header="Copiar IDT" Click="CopyIdt_Click"/>
+                                <MenuItem Header="Copiar dados completos" Click="CopySummary_Click"/>
+                                <Separator/>
+                                <MenuItem Header="Importar militares" Click="Import_Click"/>
+                                <MenuItem Header="Exportar militares" Click="Export_Click"/>
+                                <MenuItem Header="Exportar relação especial — Pré/PNR/Pensão/Laranjeira" Click="ExportBenefits_Click"/>
+                                <MenuItem Header="Escolher colunas" Click="Columns_Click"/>
+                                <Separator/>
+                                <MenuItem Header="Excluir" Click="Delete_Click"/>
+                                <MenuItem Header="Abrir lixeira" Click="Trash_Click"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                        <DataGrid.RowStyle>
+                            <!--
+                                Estilo próprio desta tela, sem BasedOn no estilo global do DataGridRow.
+                                O estilo global pintava IsSelected/IsMouseOver com PrimarySoftBrush e escondia
+                                justamente a cor manual escolhida pelo operador. Aqui a cor da linha é sempre
+                                RowColor, inclusive selecionada, marcada ou com o mouse em cima.
+                            -->
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="Background" Value="{Binding RowColor, Converter={StaticResource HexColorToBrush}}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsMarkedForBatch, Mode=OneWay}" Value="True">
+                                        <Setter Property="Background" Value="{Binding RowColor, Converter={StaticResource HexColorToBrush}}"/>
+                                        <Setter Property="Foreground" Value="#1B5E20"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                        <Setter Property="BorderBrush" Value="#0F6B4F"/>
+                                        <Setter Property="BorderThickness" Value="0,0,0,3"/>
+                                    </DataTrigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{Binding RowColor, Converter={StaticResource HexColorToBrush}}"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="{Binding RowColor, Converter={StaticResource HexColorToBrush}}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource PrimaryDarkBrush}"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryDarkBrush}"/>
+                                        <Setter Property="BorderThickness" Value="0,0,0,3"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.CellStyle>
+                            <!--
+                                Também pinta a célula. Em alguns temas/templates do WPF a célula pode cobrir
+                                o fundo da linha; amarrando a célula ao RowColor, a cor manual aparece em
+                                todos os militares, inclusive Cabos e linhas selecionadas.
+                            -->
+                            <Style TargetType="{x:Type DataGridCell}" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                <Setter Property="Background" Value="{Binding RowColor, Converter={StaticResource HexColorToBrush}}"/>
+                                <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="{Binding RowColor, Converter={StaticResource HexColorToBrush}}"/>
+                                        <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{Binding RowColor, Converter={StaticResource HexColorToBrush}}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.CellStyle>
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn x:Name="ColMove" Header="↕" Width="40" IsReadOnly="True" MinWidth="40">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border Tag="DragHandle"
+                                                Width="34" Height="26"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                CornerRadius="4"
+                                                Cursor="SizeAll"
+                                                Background="{DynamicResource PrimarySurfaceBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="1"
+                                                ToolTip="Arraste por aqui para reordenar">
+                                            <TextBlock Text="↕" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                       FontSize="15" FontWeight="Bold"
+                                                       Foreground="{DynamicResource PrimaryDarkBrush}"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn x:Name="ColMarked" Header="Marcar" Width="66" IsReadOnly="False" MinWidth="66">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="MarkButton_Click"
+                                                Focusable="False"
+                                                Padding="8,4"
+                                                MinWidth="48"
+                                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                ToolTip="Marcar para ações em lote; a marca permanece ao pesquisar">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource GhostButtonStyle}">
+                                                    <Setter Property="Content" Value="○"/>
+                                                    <Setter Property="FontSize" Value="11"/>
+                                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                                    <Setter Property="Cursor" Value="Hand"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsMarkedForBatch}" Value="True">
+                                                            <Setter Property="Content" Value="✓"/>
+                                                            <Setter Property="Background" Value="#0F6B4F"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="BorderBrush" Value="#0F6B4F"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn x:Name="ColFavorite" Header="★" Width="40" MinWidth="40">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="{Binding FavoriteGlyph, Mode=OneWay}" Click="Star_Click" ToolTip="Favoritar / desfavoritar" Style="{StaticResource GhostButtonStyle}" Padding="0" MinWidth="30" HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn ElementStyle="{StaticResource ListCellText}" x:Name="ColRank" Header="P/G" Binding="{Binding ShortRank, Mode=OneWay}" Width="82" MinWidth="70"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ListCellText}" x:Name="ColYear" Header="Ano" Binding="{Binding FormationYear}" Width="65" MinWidth="60"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ListCellText}" x:Name="ColCareerType" Header="Vínculo" Binding="{Binding CareerTypeDisplay, Mode=OneWay}" Width="105" Visibility="Collapsed"/>
+                            <DataGridTemplateColumn x:Name="ColName" Header="Nome completo" Width="*" MinWidth="230">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <controls:HighlightedNameTextBlock FullName="{Binding Name, Mode=OneWay}"
+                                                                          WarName="{Binding WarName, Mode=OneWay}"
+                                                                          TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" ToolTip="{Binding Name}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn ElementStyle="{StaticResource ListCellText}" x:Name="ColCpf" Header="CPF" Binding="{Binding FormattedCpf, Mode=OneWay}" Width="126" MinWidth="118"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ListCellText}" x:Name="ColPrec" Header="PREC-CP" Binding="{Binding PrecCp}" Width="108" Visibility="Collapsed"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ListCellText}" x:Name="ColIdt" Header="IDT" Binding="{Binding MilitaryId}" Width="112" Visibility="Collapsed"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ListCellText}" x:Name="ColPhone" Header="Telefone" Binding="{Binding Phone}" Width="128" Visibility="Collapsed"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ListCellText}" x:Name="ColEmail" Header="E-mail" Binding="{Binding Email}" Width="190" Visibility="Collapsed"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ListCellText}" x:Name="ColAddress" Header="Endereço" Binding="{Binding Address}" Width="260" Visibility="Collapsed"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ListCellText}" x:Name="ColTransport" Header="Auxílio-Transporte" Binding="{Binding TransportStatus, Mode=OneWay}" Width="142" MinWidth="134"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ListCellText}" x:Name="ColService" Header="Tempo de serviço" Binding="{Binding ServiceTimeText, Mode=OneWay}" Width="150" Visibility="Collapsed"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ListCellText}" x:Name="ColPnr" Header="PNR" Binding="{Binding PnrStatus, Mode=OneWay}" Width="58" Visibility="Collapsed"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="400" Margin="24" IsHitTestVisible="False">
+                        <StackPanel.Style><Style TargetType="StackPanel"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{Binding FilteredCount}" Value="0"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></StackPanel.Style>
+                        <TextBlock Text="Nenhum militar nesta pesquisa" FontSize="20" FontWeight="SemiBold" TextAlignment="Center" Foreground="{DynamicResource TextBrush}" TextWrapping="Wrap"/>
+                        <TextBlock Text="Tente outro nome ou CPF, limpe os filtros ou abra a relação completa em Minhas listas." Margin="0,10,0,0" TextAlignment="Center" TextWrapping="Wrap" Foreground="{DynamicResource MutedBrush}"/>
+                    </StackPanel>
+                </Grid></Border>
+            </Grid>
+            <!-- Painel de seleção -->
+            <Border x:Name="DetailsPanel" Grid.Column="2" Style="{StaticResource CardStyle}" Padding="0">
+                <Grid><Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"><Grid>
+                    <Grid.Style><Style TargetType="Grid"><Style.Triggers><DataTrigger Binding="{Binding SelectedMilitary}" Value="{x:Null}"><Setter Property="Visibility" Value="Collapsed"/></DataTrigger></Style.Triggers></Style></Grid.Style>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Background="{DynamicResource PrimarySurfaceBrush}" Padding="16" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                <TextBlock Text="MILITAR SELECIONADO" Style="{StaticResource MetricCaptionStyle}"/>
+                                <Button Grid.Column="1" Content="×" Click="ToggleDetails_Click" Style="{StaticResource GhostButtonStyle}" Padding="4,0" MinWidth="24" ToolTip="Ocultar detalhes"/>
+                            </Grid>
+                            <TextBlock Text="{Binding SelectedMilitary.ShortRank, FallbackValue='Selecione um militar'}" MouseLeftButtonDown="CopyTextBlock_DoubleClick" ToolTip="Clique para copiar" FontSize="13" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryDarkBrush}" Margin="0,6,0,0"/>
+                            <controls:HighlightedNameTextBlock FullName="{Binding SelectedMilitary.Name, Mode=OneWay}"
+                                                               WarName="{Binding SelectedMilitary.WarName, Mode=OneWay}"
+                                                               Tag="{Binding SelectedMilitary.Name}"
+                                                               MouseLeftButtonDown="CopyTextBlock_DoubleClick"
+                                                               ToolTip="Clique para copiar o nome completo"
+                                                               FontSize="17" Foreground="{DynamicResource TextBrush}"
+                                                               TextWrapping="Wrap" Margin="0,2,0,0"/>
+                            <TextBlock Tag="{Binding SelectedMilitary.WarName}" MouseLeftButtonDown="CopyTextBlock_DoubleClick"
+                                       ToolTip="Clique para copiar o nome de guerra" Foreground="{DynamicResource MutedBrush}" Margin="0,4,0,0">
+                                <Run Text="Nome de guerra: "/><Run Text="{Binding SelectedMilitary.WarName, FallbackValue=—, Mode=OneWay}" FontWeight="Bold"/>
+                            </TextBlock>
+                            <Border Background="#22FFFFFF" BorderBrush="#66FFFFFF" BorderThickness="1"
+                                    CornerRadius="12" Padding="9,4" Margin="0,9,0,0"
+                                    HorizontalAlignment="Left">
+                                <TextBlock Foreground="{DynamicResource TextBrush}"
+                                           ToolTip="Vínculo funcional salvo no cadastro do militar">
+                                    <Run Text="Vínculo: "/>
+                                    <Run Text="{Binding SelectedMilitary.CareerTypeDisplay, Mode=OneWay}" FontWeight="Bold"/>
+                                </TextBlock>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                    <Grid Grid.Row="1" Margin="16,16,16,10">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="112"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <Border Width="100" Height="122" CornerRadius="12" Background="{DynamicResource SurfaceAltBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" ClipToBounds="True">
+                            <Grid>
+                                <TextBlock Text="SEM FOTO" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource SubtleTextBrush}" FontWeight="SemiBold"/>
+                                <Image Source="{Binding SelectedMilitary.PhotoPath}" Stretch="UniformToFill"/>
+                            </Grid>
+                        </Border>
+                        <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                            <TextBlock Text="CPF" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBlock Text="{Binding SelectedMilitary.FormattedCpf, FallbackValue=—}" MouseLeftButtonDown="CopyTextBlock_DoubleClick" ToolTip="Clique para copiar" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}" Margin="0,2,0,8"/>
+                            <TextBlock Text="PREC-CP" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBlock Text="{Binding SelectedMilitary.PrecCp, FallbackValue=—}" MouseLeftButtonDown="CopyTextBlock_DoubleClick" ToolTip="Clique para copiar" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}" Margin="0,2,0,7"/>
+                            <TextBlock Text="IDT" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBlock Text="{Binding SelectedMilitary.MilitaryId, FallbackValue=—}" MouseLeftButtonDown="CopyTextBlock_DoubleClick" ToolTip="Clique para copiar" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}" Margin="0,2,0,7"/>
+                            <TextBlock Text="Situação" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBlock Text="{Binding SelectedMilitary.TransportStatus, FallbackValue=—}" MouseLeftButtonDown="CopyTextBlock_DoubleClick" ToolTip="Clique para copiar" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}" Margin="0,2,0,8"/>
+                            <TextBlock Text="Tempo de serviço" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBlock Text="{Binding SelectedMilitary.ServiceTimeText, FallbackValue='Data de praça não informada'}" MouseLeftButtonDown="CopyTextBlock_DoubleClick" ToolTip="Clique para copiar" FontWeight="SemiBold" Foreground="{DynamicResource SuccessBrush}" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Padding="16,4,16,8">
+                        <StackPanel>
+                            <TextBlock Text="Dados de contato" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,8"/>
+                            <TextBlock Text="Telefone" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBlock Text="{Binding SelectedMilitary.Phone, FallbackValue='Não informado'}" MouseLeftButtonDown="CopyTextBlock_DoubleClick" ToolTip="Clique para copiar" Foreground="{DynamicResource TextBrush}" TextWrapping="Wrap" Margin="0,2,0,8"/>
+                            <TextBlock Text="E-mail" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBlock Text="{Binding SelectedMilitary.Email, FallbackValue='Não informado'}" MouseLeftButtonDown="CopyTextBlock_DoubleClick" ToolTip="Clique para copiar" Foreground="{DynamicResource TextBrush}" TextWrapping="Wrap" Margin="0,2,0,12"/>
+                            <TextBlock Text="Endereço" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBlock Text="{Binding SelectedMilitary.Address, FallbackValue='Não informado'}" MouseLeftButtonDown="CopyTextBlock_DoubleClick" ToolTip="Clique para copiar" Foreground="{DynamicResource TextBrush}" TextWrapping="Wrap" Margin="0,2,0,12"/>
+                            <TextBlock Text="Anotação" Style="{StaticResource SectionTitleStyle}" Margin="0,4,0,7"/>
+                            <Border Background="{DynamicResource SurfaceAltBrush}" CornerRadius="8" Padding="10" MinHeight="72">
+                                <TextBlock Text="{Binding SelectedMilitary.Annotation, FallbackValue='Sem anotação'}" TextWrapping="Wrap" Foreground="{DynamicResource MutedBrush}"
+                                           MouseLeftButtonDown="CopyTextBlock_DoubleClick" ToolTip="Clique para copiar"/>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                </Grid></ScrollViewer>
+                    <Grid Grid.Row="1" Margin="16,8,16,16">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/><RowDefinition Height="8"/>
+                            <RowDefinition Height="Auto"/><RowDefinition Height="8"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="8"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                        <Button x:Name="LatestPaystubDetailsButton" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                                Style="{StaticResource PrimaryButtonStyle}" Content="Abrir último contracheque"
+                                Click="OpenLatestPaystub_Click" ToolTip="Abre a competência mais recente salva; se não existir, entra no CPEx e baixa automaticamente."/>
+                        <Button x:Name="LatestFinancialStatementDetailsButton" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                                Style="{StaticResource SecondaryButtonStyle}" Content="Abrir última ficha financeira"
+                                Click="OpenLatestFinancialStatement_Click" ToolTip="Abre o ano mais recente salvo; se não existir, entra no CPEx e baixa automaticamente."/>
+                        <Button Grid.Row="4" Grid.Column="0" Style="{StaticResource SecondaryButtonStyle}" Content="Editar" Click="Edit_Click"/>
+                        <Button Grid.Row="4" Grid.Column="2" Style="{StaticResource SecondaryButtonStyle}" Content="Abrir carteira" Click="OpenWallet_Click"/>
+                    </Grid>
+                <TextBlock Text="Selecione um militar para ver os dados e abrir a carteira." Margin="24" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}"><TextBlock.Style><Style TargetType="TextBlock"><Setter Property="Visibility" Value="Collapsed"/><Style.Triggers><DataTrigger Binding="{Binding SelectedMilitary}" Value="{x:Null}"><Setter Property="Visibility" Value="Visible"/></DataTrigger></Style.Triggers></Style></TextBlock.Style></TextBlock>
+                </Grid>
+            </Border>
+        </Grid>
+        <controls:SigfurLoadingOverlay Grid.Row="1" Grid.RowSpan="2" Panel.ZIndex="100" Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibility}}" Title="Carregando militares" Message="{Binding StatusText}"/>
+        <Border Grid.Row="3" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="20,0">
+            <DockPanel><TextBlock DockPanel.Dock="Right" Text="Ctrl+F  Buscar   ·   F2  Editar   ·   Duplo clique  Carteira" Foreground="{DynamicResource MutedBrush}" FontSize="10" VerticalAlignment="Center" Margin="14,0,0,0"/><TextBlock Text="{Binding StatusText}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}"/></DockPanel>
+        </Border>
+    </Grid>
+</Window>

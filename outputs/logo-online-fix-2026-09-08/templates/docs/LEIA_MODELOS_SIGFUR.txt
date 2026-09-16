@@ -1,0 +1,28 @@
+PASTA ÚNICA DE TEMPLATES DO SIGFUR
+=================================
+
+No computador do usuário, todos estes modelos são instalados em:
+%LOCALAPPDATA%\SIGFUR\Templates
+
+Os nomes começam pelo módulo para impedir que um documento use o modelo de
+outro módulo:
+
+- EA_*                  Exercício Anterior
+- GRAT_REP_*            Gratificação de Representação
+- LISTAR_*              Listar Militares > Gerar documentos
+- PENSAO_JUDICIAL_*     Pensão Judicial
+- PHPM_*                Pasta de Habilitação à Pensão Militar
+
+Modelos personalizados importados pelo PHPM recebem o prefixo
+PHPM_PERSONALIZADO_. Arquivos antigos encontrados nas antigas pastas são
+migrados para esta pasta na abertura do programa; depois disso, as pastas
+antigas deixam de ser usadas.
+
+Marcadores aceitos nos modelos:
+{{CAMPO}}, [[CAMPO]], <<CAMPO>>, $CAMPO$ e {CAMPO}.
+
+Exemplo de identificação do militar:
+{{MILITAR_PG_ABREV}} {{MILITAR_NOME}}
+
+Ao gerar PHPM, o SIGFUR localiza {{NOME_GUERRA}} dentro do nome completo e
+aplica negrito apenas ao nome de guerra, preservando a formatação do modelo.

@@ -1,0 +1,34 @@
+<Window x:Class="SIGFUR.Wpf.Views.Finance.GratificationProcessesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SIGFUR — Processos de Gratificação de Representação"
+        Width="1050" Height="650" MinWidth="780" MinHeight="500"
+        WindowStartupLocation="CenterOwner" Icon="/Assets/sigfur.ico"
+        Background="{DynamicResource AppBackgroundBrush}" Loaded="Window_Loaded">
+    <Grid Margin="16">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel Margin="0,0,0,12">
+            <TextBlock Text="PROCESSOS DE GRATIFICAÇÃO DE REPRESENTAÇÃO" Style="{StaticResource SectionTitleStyle}"/>
+            <TextBlock Text="Abra um processo anterior, consulte seus arquivos ou use a exclusão reversível." Style="{StaticResource CaptionTextStyle}" Margin="0,4,0,0"/>
+        </StackPanel>
+        <DataGrid x:Name="ProcessGrid" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Processo" Binding="{Binding Title}" Width="*" MinWidth="280"/>
+                <DataGridTextColumn Header="Situação SPED" Binding="{Binding Status}" Width="150"/>
+                <DataGridTextColumn Header="Atualizado" Binding="{Binding UpdatedText}" Width="145"/>
+                <DataGridTextColumn Header="Estado" Binding="{Binding DeletedText}" Width="95"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="2" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <TextBlock x:Name="StatusText" VerticalAlignment="Center"/>
+            <WrapPanel Grid.Column="1">
+                <Button Content="Abrir" Style="{StaticResource PrimaryButtonStyle}" Click="Open_Click" Margin="0,0,8,0"/>
+                <Button Content="Abrir pasta" Style="{StaticResource SecondaryButtonStyle}" Click="OpenFolder_Click" Margin="0,0,8,0"/>
+                <Button Content="Excluir" Style="{StaticResource SecondaryButtonStyle}" Click="Delete_Click" Margin="0,0,8,0"/>
+                <Button Content="Desfazer exclusão" Style="{StaticResource SecondaryButtonStyle}" Click="Restore_Click" Margin="0,0,8,0"/>
+                <Button Content="Fechar" Style="{StaticResource SecondaryButtonStyle}" Click="Close_Click"/>
+            </WrapPanel>
+        </Grid>
+    </Grid>
+</Window>

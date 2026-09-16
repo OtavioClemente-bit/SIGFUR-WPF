@@ -1,0 +1,268 @@
+﻿<Window x:Class="SIGFUR.Wpf.Views.Finance.PaymentConferenceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SIGFUR — Conferência de Pagamento" Width="1540" Height="910" MinWidth="1180" MinHeight="720"
+        WindowStartupLocation="CenterOwner" Background="{DynamicResource AppBackgroundBrush}" Icon="/SIGFUR;component/Assets/sigfur.ico"
+        Loaded="Window_Loaded" PreviewKeyDown="Window_PreviewKeyDown">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="38"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{DynamicResource PrimaryGradientBrush}" Padding="22,0">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="CONFERÊNCIA DE PAGAMENTO" Foreground="White" FontSize="23" FontWeight="Bold"/>
+                    <TextBlock Text="Boletim e contracheque: identidade, competência, códigos do manual e valores publicados." Foreground="#DCEBFF" Margin="0,4,0,0"/>
+                </StackPanel>
+                <Border Grid.Column="1" Background="#1EFFFFFF" CornerRadius="16" Padding="13,7" VerticalAlignment="Center">
+                    <TextBlock x:Name="HeaderBadge" Text="Competência: —" Foreground="White" FontWeight="SemiBold"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="16,10,16,10" Padding="12,8">
+            <Grid>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions><ColumnDefinition Width="140"/><ColumnDefinition Width="90"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel Margin="0,0,10,0"><TextBlock Text="Mês da folha" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="MonthBox" Height="36" Padding="6,2" SelectionChanged="MonthYear_Changed"/></StackPanel>
+                    <StackPanel Grid.Column="1" Margin="0,0,10,0"><TextBlock Text="Ano" Style="{StaticResource CaptionTextStyle}"/><ComboBox x:Name="YearBox" Height="36" Padding="6,2" IsEditable="False" SelectionChanged="MonthYear_Changed"/></StackPanel>
+                    <StackPanel Grid.Column="2" Margin="0,0,8,0"><TextBlock Text="Pasta dos contracheques" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="PaystubFolderBox" Height="32" IsReadOnly="True" ToolTip="Use Escolher pasta para alterar a pasta dos contracheques."/></StackPanel>
+                    <Button Grid.Column="3" Content="Escolher pasta" Style="{StaticResource SecondaryButtonStyle}" Click="ChoosePaystubFolder_Click" Height="34" VerticalAlignment="Bottom" Margin="0,0,10,0"/>
+                    <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Bottom">
+                        <Button x:Name="MonthlyAiAuditButton" Content="✦ Auditoria mensal IA" Style="{StaticResource PrimaryButtonStyle}" Height="34" Click="MonthlyAiAudit_Click" Margin="0,0,7,0" ToolTip="Inventaria o mês, executa a conferência determinística e usa IA somente em lacunas e divergências."/>
+                        <Button Content="Conferir" Style="{StaticResource PrimaryButtonStyle}" Height="34" MinWidth="90" Click="RunConference_Click" Margin="0,0,7,0"/>
+                        <Button Content="Carregar última" Style="{StaticResource SecondaryButtonStyle}" Height="34" Click="LoadLastConference_Click" Margin="0,0,7,0"/>
+                        <Button Content="Salvar" Style="{StaticResource SecondaryButtonStyle}" Height="34" Click="SaveConference_Click" Margin="0,0,7,0"/>
+                        <Button Content="Exportar CSV" Style="{StaticResource SecondaryButtonStyle}" Height="34" Click="ExportCsv_Click"/>
+                    </StackPanel>
+                </Grid>
+                <WrapPanel Grid.Row="1" Margin="0,10,0,0">
+                    <CheckBox x:Name="RequirePrefixCheck" Content="Aceitar presença por código ou nome" ToolTip="Marcado: confirma a presença do benefício. Desmarcado: exige código, natureza e valor publicados." IsChecked="True" Margin="0,0,20,0"/>
+                    <CheckBox x:Name="VacationCheck" Content="Férias" IsChecked="True" Margin="0,0,14,0"/>
+                    <CheckBox x:Name="TransportCheck" Content="Auxílio-transporte" IsChecked="True" Margin="0,0,14,0"/>
+                    <CheckBox x:Name="GratCheck" Content="Gratificação de representação" IsChecked="True" Margin="0,0,14,0"/>
+                    <CheckBox x:Name="QualificationCheck" Content="Habilitação" IsChecked="True" Margin="0,0,14,0"/>
+                    <CheckBox x:Name="OthersCheck" Content="Alimentação e outros" IsChecked="True"/>
+                </WrapPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2" Margin="16,0,16,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="330"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Style="{StaticResource CardStyle}" Padding="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin="14,13,14,8">
+                        <TextBlock Text="ADITAMENTOS DO FURRIEL" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock x:Name="BulletinCountText" Text="Carregando índice..." Foreground="{DynamicResource MutedBrush}" FontSize="10"/>
+                    </StackPanel>
+                    <WrapPanel Grid.Row="1" Margin="12,0,12,9">
+                        <Button Content="Atualizar lista" Style="{StaticResource SecondaryButtonStyle}" Click="ReloadBulletins_Click" Margin="0,0,7,7"/>
+                        <Button Content="Adicionar PDF" Style="{StaticResource SecondaryButtonStyle}" Click="AddPdf_Click" Margin="0,0,7,7"/>
+                        <Button Content="Marcar todos" Style="{StaticResource GhostButtonStyle}" Click="SelectAll_Click" Margin="0,0,7,7"/>
+                        <Button Content="Limpar" Style="{StaticResource GhostButtonStyle}" Click="ClearSelection_Click" Margin="0,0,7,7"/>
+                    </WrapPanel>
+                    <DataGrid Grid.Row="2" x:Name="BulletinsGrid" AutoGenerateColumns="False" CanUserAddRows="False" Margin="8,0" SelectionMode="Single" SelectionChanged="BulletinsGrid_SelectionChanged" MouseDoubleClick="BulletinsGrid_MouseDoubleClick" PreviewMouseLeftButtonDown="BulletinsGrid_PreviewMouseLeftButtonDown">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="✓" Width="38">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Header="Nº" Binding="{Binding Bulletin}" Width="58" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Data" Binding="{Binding Date}" Width="86" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Itens" Binding="{Binding ExpectedItems}" Width="48" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Arquivo" Binding="{Binding OriginalName}" Width="*" IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="12,8,12,12">
+                        <Button Content="Abrir PDF" Style="{StaticResource PrimaryButtonStyle}" Click="OpenSelectedBulletin_Click"/>
+                        <Button Content="Mostrar na pasta" Style="{StaticResource SecondaryButtonStyle}" Click="RevealSelectedBulletin_Click" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="76"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/><ColumnDefinition Width="10"/>
+                        <ColumnDefinition/><ColumnDefinition Width="10"/>
+                        <ColumnDefinition/><ColumnDefinition Width="10"/>
+                        <ColumnDefinition/><ColumnDefinition Width="10"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource InsetCardStyle}" Padding="12,9"><StackPanel><TextBlock Text="PUBLICADO" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource MutedBrush}"/><TextBlock x:Name="ExpectedSummaryText" Text="0" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource PrimaryDarkBrush}"/><TextBlock Text="itens no aditamento" FontSize="9" Foreground="{DynamicResource SubtleTextBrush}"/></StackPanel></Border>
+                    <Border Grid.Column="2" Style="{StaticResource InsetCardStyle}" Padding="12,9"><StackPanel><TextBlock Text="LOCALIZADOS" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource MutedBrush}"/><TextBlock x:Name="OkSummaryText" Text="0" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}"/><TextBlock Text="rubrica localizada" FontSize="9" Foreground="{DynamicResource SubtleTextBrush}"/></StackPanel></Border>
+                    <Border Grid.Column="4" Style="{StaticResource InsetCardStyle}" Padding="12,9"><StackPanel><TextBlock Text="REVISAR" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource MutedBrush}"/><TextBlock x:Name="PendingSummaryText" Text="0" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource DangerBrush}"/><TextBlock Text="pendências e dúvidas" FontSize="9" Foreground="{DynamicResource SubtleTextBrush}"/></StackPanel></Border>
+                    <Border Grid.Column="6" Style="{StaticResource InsetCardStyle}" Padding="12,9"><StackPanel><TextBlock Text="SEM PDF" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource MutedBrush}"/><TextBlock x:Name="MissingPdfSummaryText" Text="0" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource WarningBrush}"/><TextBlock Text="contracheque ausente" FontSize="9" Foreground="{DynamicResource SubtleTextBrush}"/></StackPanel></Border>
+                    <Border Grid.Column="8" Style="{StaticResource InsetCardStyle}" Padding="12,9"><StackPanel><TextBlock Text="SEM RUBRICA" FontSize="9" FontWeight="Bold" Foreground="{DynamicResource MutedBrush}"/><TextBlock x:Name="DivergentSummaryText" Text="0" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource WarningBrush}"/><TextBlock Text="rubrica não localizada" FontSize="9" Foreground="{DynamicResource SubtleTextBrush}"/></StackPanel></Border>
+                </Grid>
+
+                <TabControl Grid.Row="2">
+                    <TabItem Header="Resultado da conferência">
+                        <Grid Margin="0,10,0,0">
+                            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="10"/><RowDefinition Height="110"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <StackPanel Margin="0,0,0,8"><TextBlock x:Name="ScopeTextBlock" Text="Escolha mês/ano da folha e marque os boletins para conferir." TextWrapping="Wrap" Foreground="{DynamicResource MutedBrush}" Margin="0,0,0,6"/><DockPanel>
+                                <ComboBox x:Name="ResultFilterBox" Width="190" Height="34" SelectionChanged="ResultFilter_Changed" SelectedIndex="0" Margin="0,0,8,0">
+                                    <ComboBoxItem Content="Todos os resultados"/><ComboBoxItem Content="Rubricas localizadas"/><ComboBoxItem Content="Ausências e divergências"/><ComboBoxItem Content="Revisão necessária"/><ComboBoxItem Content="Atos / outra competência"/><ComboBoxItem Content="Não verificados"/><ComboBoxItem Content="Verificados"/>
+                                </ComboBox>
+                                <TextBlock Text="Buscar:" VerticalAlignment="Center" Margin="0,0,6,0"/><TextBox Height="34" x:Name="ResultSearchBox" TextChanged="ResultSearch_Changed" ToolTip="Buscar militar, CPF, PREC, rubrica ou observação"/>
+                            </DockPanel></StackPanel>
+                            <DataGrid Grid.Row="1" x:Name="ResultsGrid" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Extended" SelectionUnit="FullRow" SelectionChanged="ResultsGrid_SelectionChanged" MouseDoubleClick="ResultsGrid_MouseDoubleClick">
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Style.Triggers><DataTrigger Binding="{Binding IsVerified}" Value="True"><Setter Property="Background" Value="#D1F5DA"/><Setter Property="Foreground" Value="#14642D"/></DataTrigger></Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Header="Verificação" Width="128"><DataGridTemplateColumn.CellTemplate><DataTemplate>
+                                        <Button Content="{Binding VerificationText}" Click="VerifyRow_Click" ToolTip="Marcar ou desmarcar como verificado" Padding="4"/>
+                                    </DataTemplate></DataGridTemplateColumn.CellTemplate></DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Boletim" Binding="{Binding Bulletin}" Width="75"/>
+                                    <DataGridTextColumn Header="Pág." Binding="{Binding BulletinPage}" Width="42"/>
+                                    <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="175">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="ToolTip" Value="{Binding Notes}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Severity}" Value="success"><Setter Property="Foreground" Value="{DynamicResource SuccessBrush}"/></DataTrigger>
+                                                    <DataTrigger Binding="{Binding Severity}" Value="warning"><Setter Property="Foreground" Value="{DynamicResource WarningBrush}"/></DataTrigger>
+                                                    <DataTrigger Binding="{Binding Severity}" Value="danger"><Setter Property="Foreground" Value="{DynamicResource DangerBrush}"/></DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                    <DataGridTemplateColumn Header="Militar" Width="220">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Military}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" ToolTip="{Binding Military}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="Esperado (código)" Binding="{Binding ExpectedCodesText}" Width="145"/>
+                                    <DataGridTextColumn Header="Publicado" Binding="{Binding ExpectedAmountText}" Width="105"/>
+                                    <DataGridTextColumn Header="No PDF" Binding="{Binding PaidAmountText}" Width="105"/>
+                                    <DataGridTextColumn Header="Diferença" Binding="{Binding DifferenceText}" Width="105"/>
+                                    <DataGridTextColumn Header="Referência" Binding="{Binding ReferencePeriod}" Width="125"/>
+                                    <DataGridTextColumn Header="Rubricas" Binding="{Binding RubricsFound}" Width="520"/>
+                                    <DataGridTextColumn Header="CPF" Binding="{Binding Cpf}" Width="110"/>
+                                    <DataGridTextColumn Header="Tipo" Binding="{Binding PaymentType}" Width="155"/>
+                                    <DataGridTextColumn Header="Modo" Binding="{Binding PaymentMode}" Width="145"/>
+                                    <DataGridTextColumn Header="Contracheque" Binding="{Binding PaystubFile}" Width="220"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <TextBox Grid.Row="3" x:Name="ResultDetailBox" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                            <WrapPanel Grid.Row="4" Orientation="Horizontal" Margin="0,8,0,0">
+                                <Button Content="Conferir lado a lado" Style="{StaticResource PrimaryButtonStyle}" Click="OpenPaystub_Click"/>
+                                <Button Content="Pasta do contracheque" Style="{StaticResource SecondaryButtonStyle}" Click="RevealPaystub_Click" Margin="8,0,0,0"/>
+                                <Button Content="Abrir aditamento" Style="{StaticResource SecondaryButtonStyle}" Click="OpenBulletinFromResult_Click" Margin="8,0,0,0"/>
+                                <Button Content="Copiar resumo" Style="{StaticResource GhostButtonStyle}" Click="CopySummary_Click" Margin="8,0,0,0"/>
+                                <Button x:Name="AuditSelectedButton" Content="✦ IA: selecionados" Style="{StaticResource SecondaryButtonStyle}" Click="AuditSelected_Click" ToolTip="Revisar somente as linhas selecionadas (Ctrl/Shift para várias)." Margin="8,6,0,0"/>
+                                <Button x:Name="AuditFilteredButton" Content="✦ IA: todos do filtro" Style="{StaticResource SecondaryButtonStyle}" Click="AuditFiltered_Click" ToolTip="Revisar todas as linhas atualmente exibidas, em lotes, sem cortar resultados." Margin="8,6,0,0"/>
+                                <Button x:Name="CancelAuditButton" Content="Cancelar IA" Style="{StaticResource GhostButtonStyle}" Click="CancelAudit_Click" Visibility="Collapsed" Margin="8,6,0,0"/>
+                            </WrapPanel>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Itens extraídos do aditamento">
+                        <Grid Margin="0,10,0,0">
+                            <Grid.RowDefinitions><RowDefinition Height="*"/><RowDefinition Height="10"/><RowDefinition Height="130"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <DataGrid x:Name="ExpectedGrid" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single" SelectionChanged="ExpectedGrid_SelectionChanged" MouseDoubleClick="ExpectedGrid_MouseDoubleClick">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Boletim" Binding="{Binding Bulletin}" Width="75"/>
+                                    <DataGridTextColumn Header="Pág." Binding="{Binding PageText}" Width="55"/>
+                                    <DataGridTemplateColumn Header="Militar" Width="240">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding IdentityText}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" ToolTip="{Binding IdentityText}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="CPF" Binding="{Binding Cpf}" Width="115"/>
+                                    <DataGridTextColumn Header="PREC" Binding="{Binding PrecCp}" Width="105"/>
+                                    <DataGridTextColumn Header="Tipo" Binding="{Binding PaymentType}" Width="160"/>
+                                    <DataGridTextColumn Header="Modo" Binding="{Binding PaymentMode}" Width="145"/>
+                                    <DataGridTextColumn Header="Códigos esperados" Binding="{Binding ExpectedCodesText}" Width="160"/>
+                                    <DataGridTextColumn Header="Banco" Binding="{Binding MatchStatus}" Width="150"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <TextBox Grid.Row="2" x:Name="ExpectedDetailBox" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                            <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,8,0,0">
+                                <Button Content="Abrir aditamento neste militar" Style="{StaticResource PrimaryButtonStyle}" Click="OpenExpectedBulletin_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Contracheques da competência">
+                        <DataGrid x:Name="PaystubFilesGrid" Margin="0,10,0,0" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" MouseDoubleClick="PaystubFilesGrid_MouseDoubleClick">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Folha (lida no PDF)" Binding="{Binding Period}" Width="145"/>
+                                <DataGridTextColumn Header="CPF" Binding="{Binding Cpf}" Width="140"/>
+                                <DataGridTextColumn Header="Arquivo" Binding="{Binding FileName}" Width="220"/>
+                                <DataGridTextColumn Header="Caminho — duplo clique para abrir" Binding="{Binding Path}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                    <TabItem Header="Rubricas dos PDFs lidos">
+                        <DataGrid x:Name="RubricsGrid" Margin="0,10,0,0" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="Militar" Width="230">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Military}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" ToolTip="{Binding Military}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Código" Binding="{Binding Code}" Width="90"/>
+                                <DataGridTextColumn Header="Natureza" Binding="{Binding Nature}" Width="90"/>
+                                <DataGridTextColumn Header="Descrição" Binding="{Binding Description}" Width="360"/>
+                                <DataGridTextColumn Header="Valor" Binding="{Binding ValueText}" Width="110"/>
+                                <DataGridTextColumn Header="PDF" Binding="{Binding PaystubPath}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                    <TabItem Header="Regras usadas">
+                        <ScrollViewer Margin="0,10,0,0" VerticalScrollBarVisibility="Auto">
+                            <TextBlock TextWrapping="Wrap" FontSize="13" Foreground="{DynamicResource TextBrush}">
+                                <Run FontWeight="Bold" Text="Fonte: Manual Técnico do SIPPES de 17/07/2026.&#x0a;&#x0a;"/>
+                                <Run Text="O código expresso no boletim tem prioridade. Quando não há código, são usadas regras específicas do manual, com as páginas da fonte mostradas no detalhe. NR: receita normal; AR: atrasado; FR: diferença; DR: devolução; ER/ED: receita/desconto de exercício anterior. Uma rubrica de outra natureza não confirma o lançamento.&#x0a;&#x0a;"/>
+                                <Run Text="O índice de cabeçalhos identifica mês e ano dentro de cada PDF. Só os contracheques da competência escolhida seguem para leitura das rubricas e comparação com os boletins marcados. PDFs de outros meses/anos não entram no resultado. Nome semelhante ou nome de arquivo não confirma identidade. Arquivos ilegíveis, versões diferentes e competência incerta ficam para revisão.&#x0a;&#x0a;"/>
+                                <Run Text="LOCALIZADO indica presença do código na folha. Valores são comparados quando o boletim informa um valor individual inequívoco e a coluna de valor do PDF é identificável. Presença de rubrica, por si só, não confirma referência, parcela ou quitação integral. Publicações que disputam a mesma rubrica ficam para revisão.&#x0a;&#x0a;"/>
+                                <Run Text="NÃO ACHOU RUBRICA significa ausência do código no PDF identificado, na folha escolhida. Para verificar lançamento ainda não processado, consulte o SIPPES. Atos cadastrais e publicações que determinam outra competência aparecem separadamente. O mês de referência do direito não é presumido como mês da folha.&#x0a;&#x0a;"/>
+                                <Run Text="Códigos sem referência no manual e estruturas não reconhecidas permanecem visíveis para revisão, com a evidência extraída. Os filtros da tela não alteram o relatório exportado."/>
+                            </TextBlock>
+                        </ScrollViewer>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </Grid>
+
+        <Border Grid.Row="3" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0">
+            <Grid Margin="16,0"><TextBlock x:Name="StatusText" VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}" Text="Pronto."/><ProgressBar x:Name="BusyBar" Height="4" VerticalAlignment="Top" IsIndeterminate="True" Visibility="Collapsed"/></Grid>
+        </Border>
+    </Grid>
+</Window>

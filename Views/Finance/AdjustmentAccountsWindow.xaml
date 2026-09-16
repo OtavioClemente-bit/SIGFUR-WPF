@@ -1,0 +1,314 @@
+<Window x:Class="SIGFUR.Wpf.Views.Finance.AdjustmentAccountsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:SIGFUR.Wpf.Controls"
+        Title="Ajuste de Contas — conferência segura" Width="1500" Height="920"
+        MinWidth="1060" MinHeight="700" WindowStartupLocation="CenterOwner">
+    <Grid Margin="18">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Ajuste de Contas" Style="{StaticResource PageTitleStyle}"/>
+                <TextBlock Text="Simulação auditável por militar, período histórico e parâmetros SIPPES tipados."
+                           Style="{StaticResource PageSubtitleStyle}" Margin="0,3,0,12"/>
+            </StackPanel>
+            <WrapPanel Grid.Column="1" VerticalAlignment="Top">
+                <Button Content="SIMULAR AJUSTE" Style="{StaticResource PrimaryButtonStyle}" Click="Simulate_Click" Margin="0,0,8,0"/>
+                <Button x:Name="GenerateBulletinButton" Content="GERAR BOLETIM" Style="{StaticResource SecondaryButtonStyle}" Click="GenerateBulletin_Click" IsEnabled="False" Margin="0,0,8,0"/>
+                <Button Content="SALVAR RASCUNHO" Style="{StaticResource GhostButtonStyle}" Click="SaveDraft_Click"/>
+            </WrapPanel>
+        </Grid>
+
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,12">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <TextBlock x:Name="SafetyStatusText" Text="Preencha o contexto para simular." FontWeight="SemiBold" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                <StackPanel Grid.Column="1" Margin="18,0"><TextBlock Text="Erros" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="ErrorCountText" Text="0" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource DangerBrush}" HorizontalAlignment="Center"/></StackPanel>
+                <StackPanel Grid.Column="2" Margin="18,0"><TextBlock Text="Avisos" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="WarningCountText" Text="0" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/></StackPanel>
+                <StackPanel Grid.Column="3" Margin="18,0"><TextBlock Text="Cotas" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="QuotaCountText" Text="0" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource PrimaryDarkBrush}" HorizontalAlignment="Center"/></StackPanel>
+            </Grid>
+        </Border>
+
+        <TabControl x:Name="MainTabs" Grid.Row="2">
+            <TabItem Header="1. Militar e contexto">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="0,12,6,0" MaxWidth="1180" HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="14"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <Border Style="{StaticResource CardStyle}" Padding="18" Margin="0,0,0,12">
+                                <StackPanel>
+                                    <TextBlock Text="MILITAR E IDENTIFICAÇÃO" Style="{StaticResource SectionTitleStyle}"/>
+                                    <TextBlock Text="Pesquise por nome, nome de guerra, P/Grad, CPF ou PREC-CP. Ao selecionar, o P/Grad e os percentuais legais são preenchidos."
+                                               Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,0,12"/>
+                                    <TextBlock Text="Militar"/>
+                                    <ComboBox x:Name="MilitaryBox" IsEditable="True" IsTextSearchEnabled="False" TextSearch.TextPath="Name" StaysOpenOnEdit="True"
+                                              SelectionChanged="MilitaryBox_SelectionChanged" KeyUp="MilitaryBox_KeyUp" Margin="0,5,0,8" MinHeight="38">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="2">
+                                                    <WrapPanel>
+                                                        <TextBlock Text="{Binding ShortRank}" Margin="0,0,6,0"/>
+                                                        <controls:HighlightedNameTextBlock FullName="{Binding Name}" WarName="{Binding WarName}"/>
+                                                    </WrapPanel>
+                                                    <TextBlock Text="{Binding BulletinSource}" Style="{StaticResource CaptionTextStyle}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <CheckBox x:Name="ManualSimulationCheck" Content="Simular sem militar (não permite gerar boletim)"
+                                              Click="ManualSimulationCheck_Click" Margin="0,0,0,10"/>
+                                    <CheckBox x:Name="TestModeCheck" Content="MODO DE TESTE — liberar soldo, percentuais e dias manuais (não gera boletim)"
+                                              Click="TestModeCheck_Click" Margin="0,0,0,10" FontWeight="SemiBold"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                        <StackPanel><TextBlock Text="P/Grad atual"/><TextBox x:Name="CurrentRankBox" IsReadOnly="True" Margin="0,5,0,0"/></StackPanel>
+                                        <StackPanel Grid.Column="2"><TextBlock Text="Data de praça"/><TextBox x:Name="EnlistmentDateBox" IsReadOnly="True" Margin="0,5,0,0"/></StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource CardStyle}" Padding="18">
+                                <StackPanel>
+                                    <TextBlock Text="PERÍODO E P/GRAD DE CÁLCULO" Style="{StaticResource SectionTitleStyle}"/>
+                                    <TextBlock Text="Com militar selecionado, o cadastro define o P/Grad. Na simulação sem militar, escolha-o manualmente."
+                                               Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,0,12"/>
+                                    <TextBlock Text="P/Grad usado no cálculo"/>
+                                    <ComboBox x:Name="HistoricalRankBox" IsEditable="True" SelectionChanged="HistoricalRankBox_SelectionChanged" LostFocus="HistoricalRankBox_SelectionChanged" Margin="0,5,0,10"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                        <StackPanel><TextBlock Text="Início do direito (opcional no ajuste mensal)"/><DatePicker x:Name="StartDatePicker" SelectedDateChanged="DomainInputChanged" Margin="0,5,0,0"/></StackPanel>
+                                        <StackPanel Grid.Column="2"><TextBlock Text="Fim do direito (obrigatório)"/><DatePicker x:Name="EndDatePicker" SelectedDateChanged="DomainInputChanged" Margin="0,5,0,0"/></StackPanel>
+                                    </Grid>
+                                    <CheckBox x:Name="MonthlyAdjustmentOnlyCheck" Content="Pagar somente a competência do mês da data final" Click="DomainInputChanged" Margin="0,10,0,0"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <Border Style="{StaticResource CardStyle}" Padding="18" Margin="0,0,0,12">
+                                <StackPanel>
+                                    <TextBlock Text="SITUAÇÃO NO PERÍODO" Style="{StaticResource SectionTitleStyle}"/>
+                                    <TextBlock Text="A elegibilidade usa a situação completa, não apenas a palavra Recruta, Aspirante ou Soldado."
+                                               Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,0,12"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions><ColumnDefinition Width="0.9*"/><ColumnDefinition Width="14"/><ColumnDefinition Width="1.1*"/></Grid.ColumnDefinitions>
+                                        <StackPanel><TextBlock Text="Situação remuneratória"/><ComboBox x:Name="SituationBox" DisplayMemberPath="Label" SelectedValuePath="Kind" SelectionChanged="DomainInputChanged" Margin="0,5,0,10" MinHeight="38"/></StackPanel>
+                                        <Border Grid.Column="2" Style="{StaticResource InsetCardStyle}" Padding="12" Margin="0,0,0,10"><StackPanel><TextBlock Text="DIREITOS DO PERFIL" Style="{StaticResource CaptionTextStyle}"/><TextBlock Text="Conferência individual do que o militar faz jus no período." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,3,0,9"/><StackPanel x:Name="SituationRightsPanel"/></StackPanel></Border>
+                                    </Grid>
+                                    <ComboBox x:Name="ReasonBox" IsEditable="True" SelectionChanged="ReasonBox_SelectionChanged" LostKeyboardFocus="DomainInputChanged" Visibility="Collapsed"/>
+                                    <Grid Margin="0,4,0,0">
+                                        <Grid.ColumnDefinitions><ColumnDefinition Width="0.9*"/><ColumnDefinition Width="14"/><ColumnDefinition Width="1.1*"/></Grid.ColumnDefinitions>
+                                        <Border Style="{StaticResource InsetCardStyle}" Padding="14">
+                                            <StackPanel>
+                                                <TextBlock Text="MOTIVO DO AJUSTE" Style="{StaticResource CaptionTextStyle}"/>
+                                                <TextBlock x:Name="ReasonTitleText" Text="Nenhum motivo selecionado" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,7,0,4"/>
+                                                <TextBlock x:Name="ReasonOriginText" Text="Escolha uma hipótese para aplicar a matriz de direitos." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap"/>
+                                                <Button Content="ESCOLHER MOTIVO DO AJUSTE" Style="{StaticResource PrimaryButtonStyle}" Click="ChooseAdjustmentReason_Click" HorizontalAlignment="Stretch" Margin="0,14,0,0"/>
+                                                <TextBlock Text="A seleção aplica os direitos automaticamente. Você poderá conferi-los antes de confirmar." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,8,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <Border Grid.Column="2" Style="{StaticResource InsetCardStyle}" Padding="14">
+                                            <StackPanel>
+                                                <TextBlock Text="DIREITOS PELO MOTIVO" Style="{StaticResource CaptionTextStyle}"/>
+                                                <TextBlock Text="Prévia dos efeitos pecuniários da hipótese selecionada." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,3,0,9"/>
+                                                <StackPanel x:Name="ReasonRightsPanel"/>
+                                                <Border Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="7" Padding="10" Margin="0,5,0,0">
+                                                    <StackPanel>
+                                                        <TextBlock Text="FUNDAMENTO" Style="{StaticResource CaptionTextStyle}"/>
+                                                        <TextBlock x:Name="ReasonLegalBasisText" Text="—" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                                                        <TextBlock Text="ORIENTAÇÃO" Style="{StaticResource CaptionTextStyle}" Margin="0,10,0,0"/>
+                                                        <TextBlock x:Name="ReasonObservationText" Text="—" TextWrapping="Wrap" Margin="0,4,0,0"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                    <TextBlock x:Name="ReasonRuleText" Visibility="Collapsed"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource CardStyle}" Padding="18" Margin="0,0,0,12">
+                                <StackPanel>
+                                    <TextBlock Text="IMPOSTO DE RENDA DO MÊS" Style="{StaticResource SectionTitleStyle}"/>
+                                    <TextBlock Text="O cálculo compara automaticamente as deduções legais com o desconto simplificado mensal e usa a opção mais favorável." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,0,10"/>
+                                    <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="100"/></Grid.ColumnDefinitions><TextBlock Text="Dependentes selecionados" VerticalAlignment="Center"/><TextBox x:Name="IncomeTaxDependentsBox" Grid.Column="1" TextChanged="ContextDependentsBox_TextChanged" HorizontalContentAlignment="Right" ToolTip="Quantidade definida uma única vez no contexto. É usada no IR e no cálculo automático da dependência econômica."/></Grid>
+                                    <CheckBox x:Name="IncludeMonthlyIncomeTaxCheck" Content="Calcular IRRF mensal — AD0010" Click="DomainInputChanged" Margin="0,10,0,4"/>
+                                    <CheckBox x:Name="ApplyIncomeTaxReducerCheck" Content="Aplicar redução mensal vigente em 2026" Click="DomainInputChanged" Margin="0,4"/>
+                                    <CheckBox x:Name="DeductFusexMedicalCheck" Content="Deduzir despesa médica FUSEx na base do IR" Click="DomainInputChanged" Margin="0,4"/>
+                                    <CheckBox x:Name="DeductFusexDependentCheck" Content="Deduzir FUSEx de dependente na base do IR" Click="DomainInputChanged" Margin="0,4"/>
+                                    <CheckBox x:Name="DeductAlimonyCheck" Content="Deduzir pensão alimentícia na base do IR" Click="DomainInputChanged" Margin="0,4"/>
+                                    <CheckBox x:Name="DeductPnrCheck" Content="Deduzir PNR na base do IR" Click="DomainInputChanged" Margin="0,4"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border x:Name="TestOverridesPanel" Style="{StaticResource CardStyle}" Padding="18" Visibility="Collapsed">
+                                <StackPanel>
+                                    <TextBlock Text="OVERRIDES DO MODO DE TESTE" Style="{StaticResource SectionTitleStyle}"/>
+                                    <TextBlock Text="Estes valores substituem o cadastro legal apenas na simulação. O boletim permanece bloqueado." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,0,10"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="130"/></Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                                        <TextBlock Text="Soldo (R$)" VerticalAlignment="Center"/><TextBox x:Name="TestSalaryBox" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                        <TextBlock Grid.Row="1" Text="Habilitação (%)" VerticalAlignment="Center"/><TextBox x:Name="TestQualificationPercentBox" Grid.Row="1" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                        <TextBlock Grid.Row="2" Text="Adicional militar (%)" VerticalAlignment="Center"/><TextBox x:Name="TestMilitaryAdditionalPercentBox" Grid.Row="2" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                        <TextBlock Grid.Row="3" Text="Disponibilidade (%)" VerticalAlignment="Center"/><TextBox x:Name="TestAvailabilityPercentBox" Grid.Row="3" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                        <TextBlock Grid.Row="4" Text="Permanência (%)" VerticalAlignment="Center"/><TextBox x:Name="TestPermanencePercentBox" Grid.Row="4" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                        <TextBlock Grid.Row="5" Text="FUSEx (%)" VerticalAlignment="Center"/><TextBox x:Name="TestFusexPercentBox" Grid.Row="5" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                        <TextBlock Grid.Row="6" Text="Pensão militar (%)" VerticalAlignment="Center"/><TextBox x:Name="TestMilitaryPensionPercentBox" Grid.Row="6" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                        <TextBlock Grid.Row="7" Text="PNR (%)" VerticalAlignment="Center"/><TextBox x:Name="TestPnrPercentBox" Grid.Row="7" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                        <TextBlock Grid.Row="8" Text="Dias do mês" VerticalAlignment="Center"/><TextBox x:Name="TestDaysInMonthBox" Grid.Row="8" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                        <TextBlock Grid.Row="9" Text="Dias remunerados" VerticalAlignment="Center"/><TextBox x:Name="TestServedDaysBox" Grid.Row="9" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="2. Direitos e composição">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid Margin="0,12,6,0" MaxWidth="1180" HorizontalAlignment="Left">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="14"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <Border Style="{StaticResource CardStyle}" Padding="18" Margin="0,0,0,12">
+                                <StackPanel>
+                                    <TextBlock Text="DIREITOS PROPORCIONAIS" Style="{StaticResource SectionTitleStyle}"/>
+                                    <TextBlock Text="O motivo aplica a matriz do quadro. Cotas de férias podem ser informadas ou calculadas pela data inicial das cotas."
+                                               Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,0,12"/>
+                                    <CheckBox x:Name="VacationIndemnityCheck" Content="Indenização de férias — AR0094" Click="DomainInputChanged" Margin="0,6"/>
+                                    <CheckBox x:Name="VacationAdditionalCheck" Content="Adicional de férias — AR0096" Click="DomainInputChanged" Margin="0,6"/>
+                                    <CheckBox x:Name="ChristmasCheck" Content="Adicional natalino — AR0070" Click="DomainInputChanged" Margin="0,6"/>
+                                    <CheckBox x:Name="ChristmasFirstInstallmentCheck" Content="Já recebeu a 1ª parcela do adicional natalino" Click="DomainInputChanged" Margin="22,6,0,6"/>
+                                    <Grid Margin="22,6,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="100"/></Grid.ColumnDefinitions><TextBlock Text="Cotas de 13º (separadas das férias)" VerticalAlignment="Center"/><TextBox x:Name="ChristmasQuotasBox" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right"/></Grid>
+                                    <CheckBox x:Name="PecuniaryCheck" Content="Compensação pecuniária comprovada" Click="DomainInputChanged" Margin="0,12,0,6"/>
+                                    <Grid Margin="22,2,0,8"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="100"/></Grid.ColumnDefinitions><TextBlock Text="Qtd. de remunerações pecuniárias" VerticalAlignment="Center"/><TextBox x:Name="PecuniaryQuotasBox" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right"/></Grid>
+                                    <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Margin="0,10,0,0" Padding="0,12,0,0">
+                                        <StackPanel>
+                                            <TextBlock Text="COTAS DE FÉRIAS" Style="{StaticResource SectionTitleStyle}"/>
+                                            <Grid Margin="0,8,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="100"/></Grid.ColumnDefinitions><TextBlock Text="Quantidade manual (opcional)" VerticalAlignment="Center"/><TextBox x:Name="VacationQuotasOverrideBox" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" ToolTip="Deixe vazio para calcular pelas datas."/></Grid>
+                                            <Grid Margin="0,8,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="170"/></Grid.ColumnDefinitions><TextBlock Text="Início das cotas (opcional)" VerticalAlignment="Center"/><DatePicker x:Name="VacationQuotaStartPicker" Grid.Column="1" SelectedDateChanged="DomainInputChanged"/></Grid>
+                                            <Grid Margin="0,8,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="170"/></Grid.ColumnDefinitions><TextBlock Text="Fim das cotas (opcional; vazio = hoje)" VerticalAlignment="Center"/><DatePicker x:Name="VacationQuotaEndPicker" Grid.Column="1" SelectedDateChanged="DomainInputChanged"/></Grid>
+                                            <Button Content="USAR DATA DE PRAÇA" Style="{StaticResource GhostButtonStyle}" Click="UseEnlistmentDateForVacation_Click" HorizontalAlignment="Left" Margin="0,8,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+
+                        <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="18">
+                            <StackPanel>
+                                <TextBlock Text="PERFIL REMUNERATÓRIO AUTOMÁTICO" Style="{StaticResource SectionTitleStyle}"/>
+                                <TextBlock x:Name="LegalProfileText" Text="Selecione um militar para carregar o perfil legal completo."
+                                           Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,0,12"/>
+
+                                <UniformGrid Columns="3" Margin="0,0,0,12">
+                                    <Border Style="{StaticResource InsetCardStyle}" Margin="0,0,6,6" ToolTip="Clique com o botão direito para informar percentual excepcional."><Border.ContextMenu><ContextMenu><MenuItem Header="Alterar percentual excepcional..." Tag="MilitaryAdditional" Click="EditPercentage_Click"/><MenuItem Header="Restaurar percentual usual" Tag="MilitaryAdditional" Click="ResetPercentage_Click"/></ContextMenu></Border.ContextMenu><StackPanel><TextBlock Text="ADICIONAL MILITAR" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="MilitaryAdditionalValueText" Text="0%" FontSize="18" FontWeight="Bold"/></StackPanel></Border>
+                                    <Border Style="{StaticResource InsetCardStyle}" Margin="0,0,6,6" ToolTip="Clique com o botão direito para informar percentual excepcional."><Border.ContextMenu><ContextMenu><MenuItem Header="Alterar percentual excepcional..." Tag="Availability" Click="EditPercentage_Click"/><MenuItem Header="Restaurar percentual usual" Tag="Availability" Click="ResetPercentage_Click"/></ContextMenu></Border.ContextMenu><StackPanel><TextBlock Text="DISPONIBILIDADE" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="AvailabilityValueText" Text="0%" FontSize="18" FontWeight="Bold"/></StackPanel></Border>
+                                    <Border Style="{StaticResource InsetCardStyle}" Margin="0,0,0,6"><StackPanel><TextBlock Text="HABILITAÇÃO" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="QualificationPercentValueText" Text="—" FontSize="18" FontWeight="Bold"/></StackPanel></Border>
+                                    <Border Style="{StaticResource InsetCardStyle}" Margin="0,0,6,0" ToolTip="Clique com o botão direito para informar percentual excepcional."><Border.ContextMenu><ContextMenu><MenuItem Header="Alterar percentual excepcional..." Tag="Fusex" Click="EditPercentage_Click"/><MenuItem Header="Restaurar percentual usual" Tag="Fusex" Click="ResetPercentage_Click"/></ContextMenu></Border.ContextMenu><StackPanel><TextBlock Text="FUSEx" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="FusexValueText" Text="0%" FontSize="18" FontWeight="Bold"/></StackPanel></Border>
+                                    <Border Style="{StaticResource InsetCardStyle}" Margin="0,0,6,0" ToolTip="Clique com o botão direito para informar percentual excepcional."><Border.ContextMenu><ContextMenu><MenuItem Header="Alterar percentual excepcional..." Tag="MilitaryPension" Click="EditPercentage_Click"/><MenuItem Header="Restaurar percentual usual" Tag="MilitaryPension" Click="ResetPercentage_Click"/></ContextMenu></Border.ContextMenu><StackPanel><TextBlock Text="PENSÃO MILITAR" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="MilitaryPensionValueText" Text="10,5%" FontSize="18" FontWeight="Bold"/></StackPanel></Border>
+                                    <Border Style="{StaticResource InsetCardStyle}"><StackPanel><TextBlock Text="COMPLEMENTO MÍNIMO" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="MinimumWageValueText" Text="Não se aplica" FontSize="16" FontWeight="Bold" TextWrapping="Wrap"/></StackPanel></Border>
+                                </UniformGrid>
+
+                                <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="0,14,0,0">
+                                    <StackPanel>
+                                        <TextBlock Text="CURSO QUE DEFINE A HABILITAÇÃO" Style="{StaticResource SectionTitleStyle}"/>
+                                        <TextBlock x:Name="QualificationRuleText" Text="Recruta comum não recebe; soldado profissional e cabo recebem Formação 12% automaticamente. Nos demais perfis, selecione o curso aplicável."
+                                                   Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,0,10"/>
+                                        <TextBlock Text="Curso / situação cadastral"/>
+                                        <ComboBox x:Name="QualificationBox" DisplayMemberPath="DisplayText" SelectionChanged="DomainInputChanged" Margin="0,5,0,10" MinHeight="38"/>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                            <StackPanel><TextBlock Text="Início da habilitação no mês (opcional)"/><DatePicker x:Name="QualificationDatePicker" SelectedDateChanged="DomainInputChanged" Margin="0,5,0,0"/></StackPanel>
+                                            <TextBlock Grid.Column="2" Text="Se informada, a habilitação será proporcional somente aos dias a partir desta data." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" VerticalAlignment="Bottom" Margin="0,8,0,4"/>
+                                        </Grid>
+                                        <Border Style="{StaticResource InsetCardStyle}" Margin="0,12,0,0">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                <StackPanel><TextBlock x:Name="QualificationStatusText" Text="Não possui" FontWeight="SemiBold"/><TextBlock x:Name="QualificationBasisText" Text="Base: —" Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,0"/></StackPanel>
+                                                <TextBlock x:Name="QualificationValueText" Grid.Column="1" Text="R$ 0,00" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+
+                                <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="0,14,0,0" Margin="0,14,0,0">
+                                    <StackPanel>
+                                        <TextBlock Text="AJUSTES INDIVIDUAIS" Style="{StaticResource SectionTitleStyle}"/>
+                                        <TextBlock Text="Somente valores que não podem ser deduzidos do P/Grad. PNR é processado pelo vínculo de ocupação no SIPPES e não recebe percentual manual aqui."
+                                                   Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,0,10"/>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="150"/></Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                                            <TextBlock Text="Permanência (faixas legais de 5%)" VerticalAlignment="Center"/><ComboBox x:Name="PermanenceBox" Grid.Column="1" SelectionChanged="DomainInputChanged" Margin="0,3"/>
+                                            <CheckBox x:Name="IncludePreSchoolCheck" Grid.Row="1" Content="Incluir assistência pré-escolar" VerticalAlignment="Center" Checked="PreSchoolEntitlementChanged" Unchecked="PreSchoolEntitlementChanged"/><TextBox x:Name="PreSchoolBox" Grid.Row="1" Grid.Column="1" TextChanged="DomainInputChanged" IsReadOnly="True" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                            <TextBlock Grid.Row="2" Text="Dependência econômica — total automático (R$)" VerticalAlignment="Center"/><TextBox x:Name="FamilySalaryBox" Grid.Row="2" Grid.Column="1" IsReadOnly="True" HorizontalContentAlignment="Right" Margin="0,3" ToolTip="Calculado pelos dependentes selecionados em Militar e contexto: quantidade × R$ 0,16."/>
+                                            <TextBlock Grid.Row="3" Text="FUSEx dependente (R$)" VerticalAlignment="Center"/><TextBox x:Name="FusexDependentBox" Grid.Row="3" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                            <TextBlock Grid.Row="4" Text="Despesa médica FUSEx (R$)" VerticalAlignment="Center"/><TextBox x:Name="FusexMedicalBox" Grid.Row="4" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                            <TextBlock Grid.Row="5" Text="Pensão alimentícia (R$)" VerticalAlignment="Center"/><TextBox x:Name="AlimonyBox" Grid.Row="5" Grid.Column="1" TextChanged="DomainInputChanged" HorizontalContentAlignment="Right" Margin="0,3"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="3. Resultado e SIPPES">
+                <Grid Margin="0,12,0,0">
+                    <Grid.RowDefinitions><RowDefinition Height="2*"/><RowDefinition Height="12"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                    <DataGrid x:Name="ComponentsGrid" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Rubrica" Binding="{Binding RubricCode}" Width="90"/>
+                            <DataGridTextColumn Header="Componente" Binding="{Binding Description}" Width="220"/>
+                            <DataGridTextColumn Header="Tipo" Binding="{Binding ComponentType}" Width="145"/>
+                            <DataGridTextColumn Header="Elegibilidade" Binding="{Binding EligibilityText}" Width="105"/>
+                            <DataGridTextColumn Header="Motivo / regra" Binding="{Binding EligibilityReason}" Width="*" MinWidth="240"/>
+                            <DataGridTextColumn Header="Base" Binding="{Binding CalculationBaseText}" Width="120"/>
+                            <DataGridTextColumn Header="%" Binding="{Binding PercentageText}" Width="75"/>
+                            <DataGridTextColumn Header="Qtd." Binding="{Binding QuantityText}" Width="60"/>
+                            <DataGridTextColumn Header="Valor" Binding="{Binding MonetaryValueText}" Width="125"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <GroupBox Header="Detalhamento mês a mês"><DataGrid x:Name="QuotaGrid" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False"><DataGrid.Columns><DataGridTextColumn Header="Mês" Binding="{Binding MonthText}" Width="90"/><DataGridTextColumn Header="Dias" Binding="{Binding DaysText}" Width="160"/><DataGridTextColumn Header="Resultado" Binding="{Binding QuotaText}" Width="110"/><DataGridTextColumn Header="Explicação" Binding="{Binding Explanation}" Width="*"/></DataGrid.Columns></DataGrid></GroupBox>
+                        <GroupBox Grid.Column="2" Header="Parâmetros SIPPES — quantidade ≠ dinheiro"><DataGrid x:Name="SippesGrid" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False"><DataGrid.Columns><DataGridTextColumn Header="Rubrica" Binding="{Binding RubricCode}" Width="90"/><DataGridTextColumn Header="Parâmetro" Binding="{Binding ParameterTypeText}" Width="180"/><DataGridTextColumn Header="Quantidade" Binding="{Binding Quantity}" Width="90"/><DataGridTextColumn Header="Explicação" Binding="{Binding Explanation}" Width="*"/></DataGrid.Columns></DataGrid></GroupBox>
+                    </Grid>
+                    <Grid Grid.Row="3" Margin="0,12,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource SoftCardStyle}" Padding="12" Margin="0,0,8,0"><StackPanel><TextBlock Text="Rendimentos" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="EarningsText" FontSize="20" FontWeight="Bold"/></StackPanel></Border>
+                        <Border Grid.Column="1" Style="{StaticResource SoftCardStyle}" Padding="12" Margin="0,0,8,0"><StackPanel><TextBlock Text="Descontos" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="DiscountsText" FontSize="20" FontWeight="Bold"/></StackPanel></Border>
+                        <Border Grid.Column="2" Style="{StaticResource SoftCardStyle}" Padding="12" Margin="0,0,8,0"><StackPanel><TextBlock Text="Total estimado" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="NetText" FontSize="20" FontWeight="Bold"/></StackPanel></Border>
+                        <Border Grid.Column="3" Style="{StaticResource SoftCardStyle}" Padding="12"><StackPanel><TextBlock Text="Tabela remuneratória" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="TableVersionText" FontWeight="SemiBold" TextWrapping="Wrap"/></StackPanel></Border>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="4. Validações">
+                <DataGrid x:Name="ValidationGrid" Margin="0,12,0,0" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False">
+                    <DataGrid.Columns><DataGridTextColumn Header="Nível" Binding="{Binding SeverityText}" Width="90"/><DataGridTextColumn Header="Código" Binding="{Binding Code}" Width="180"/><DataGridTextColumn Header="Mensagem" Binding="{Binding Message}" Width="*"/></DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <TabItem Header="5. Memória de cálculo">
+                <TextBox x:Name="CalculationMemoryBox" Margin="0,12,0,0" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" FontFamily="Consolas" Padding="14"/>
+            </TabItem>
+        </TabControl>
+
+        <Grid Grid.Row="3" Margin="0,12,0,0">
+            <TextBlock x:Name="StatusText" Text="Carregando…" VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}" TextWrapping="Wrap"/>
+            <Button Content="Fechar" HorizontalAlignment="Right" IsCancel="True" Style="{StaticResource GhostButtonStyle}"/>
+        </Grid>
+    </Grid>
+</Window>

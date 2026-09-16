@@ -1,0 +1,64 @@
+<Window x:Class="SIGFUR.Wpf.Views.CreateProfileWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Criar Perfil SIGFUR" Width="760" Height="720" MinWidth="620" MinHeight="520" WindowStartupLocation="CenterOwner" ResizeMode="CanResize" Background="#F4F7FB" Tag="UiState.BoundsOnly">
+    <Window.Resources>
+        <Style TargetType="TextBox"><Setter Property="MinHeight" Value="34"/><Setter Property="Padding" Value="8,5"/><Setter Property="Margin" Value="0,3,0,8"/></Style>
+        <Style TargetType="PasswordBox"><Setter Property="MinHeight" Value="34"/><Setter Property="Padding" Value="8,5"/><Setter Property="Margin" Value="0,3,0,8"/></Style>
+        <Style TargetType="Button"><Setter Property="MinHeight" Value="36"/><Setter Property="Padding" Value="12,7"/><Setter Property="Margin" Value="5,0,0,0"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="ContentTemplate"><Setter.Value><DataTemplate><TextBlock Text="{Binding}" TextWrapping="Wrap" TextAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/></DataTemplate></Setter.Value></Setter></Style>
+    </Window.Resources>
+    <Grid Margin="22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="0,0,0,16">
+            <TextBlock Text="Criar Perfil SIGFUR" FontSize="24" FontWeight="Bold" Foreground="#143D66"/>
+            <TextBlock Text="A conta é local do próprio SIGFUR. A pasta de nuvem é usada apenas como local de sincronização dos arquivos." Foreground="#546579" TextWrapping="Wrap" Margin="0,6,0,0"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Background="White" CornerRadius="14" Padding="18" BorderBrush="#D8E2EF" BorderThickness="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock Text="Nome do perfil" FontWeight="SemiBold" Foreground="#26384D"/>
+                    <TextBox x:Name="ProfileNameTextBox" TextChanged="ProfileNameTextBox_TextChanged"/>
+
+                    <TextBlock Text="Senha" FontWeight="SemiBold" Foreground="#26384D"/>
+                    <PasswordBox x:Name="PasswordBox"/>
+
+                    <TextBlock Text="Confirmar senha" FontWeight="SemiBold" Foreground="#26384D"/>
+                    <PasswordBox x:Name="ConfirmPasswordBox"/>
+
+                    <TextBlock Text="Pasta local dos dados" FontWeight="SemiBold" Foreground="#26384D"/>
+                    <Grid Margin="0,3,0,8">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <TextBox x:Name="LocalPathTextBox" Margin="0"/>
+                        <Button Grid.Column="1" Content="Escolher" Click="BrowseLocal_Click"/>
+                    </Grid>
+
+                    <TextBlock Text="Pasta de sincronização" FontWeight="SemiBold" Foreground="#26384D"/>
+                    <Grid Margin="0,3,0,8">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <TextBox x:Name="SyncPathTextBox" Margin="0"/>
+                        <Button Grid.Column="1" Content="Escolher" Click="BrowseSync_Click"/>
+                    </Grid>
+
+                    <CheckBox x:Name="BackupOnCloseCheckBox" Content="Fazer backup ao fechar o SIGFUR" Margin="0,10,0,4"/>
+                    <CheckBox x:Name="SafetyBackupCheckBox" Content="Criar backup de segurança antes de restaurar" IsChecked="True" Margin="0,4,0,4"/>
+                    <CheckBox x:Name="InitialBackupCheckBox" Content="Criar backup inicial agora" IsChecked="True" Margin="0,4,0,12"/>
+
+                    <Border Background="#EAF2FB" CornerRadius="10" Padding="12">
+                        <TextBlock x:Name="StatusTextBlock" Text="Nenhuma senha será salva em texto puro. O SIGFUR usa PBKDF2-SHA256 com salt." TextWrapping="Wrap" Foreground="#143D66"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="Cancelar" Click="Cancel_Click" Background="#F8EDEE" Foreground="#9F1D2D"/>
+            <Button Content="Criar perfil" Click="Create_Click" Background="#143D66" Foreground="White" MinWidth="130"/>
+        </StackPanel>
+    </Grid>
+</Window>

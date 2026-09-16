@@ -1,0 +1,138 @@
+<Window x:Class="SIGFUR.Wpf.Views.EbMailComposeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Enviar documentos pelo EBMail" Width="1180" Height="820" MinWidth="920" MinHeight="680"
+        WindowStartupLocation="CenterOwner" Background="{DynamicResource AppBackgroundBrush}">
+    <Grid Margin="20">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+
+        <Grid Margin="0,0,0,14">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="ENVIAR PELO EBMAIL" Style="{StaticResource PageTitleStyle}"/>
+                <TextBlock Text="Prepare destinatários, mensagem e anexos. O login acontece somente na página oficial do EBMail." Style="{StaticResource PageSubtitleStyle}" Margin="0,4,12,0"/>
+            </StackPanel>
+            <Border Grid.Column="1" Background="{DynamicResource SuccessSoftBrush}" CornerRadius="10" Padding="12,7" VerticalAlignment="Center">
+                <TextBlock Text="SESSÃO PROTEGIDA PELO NAVEGADOR" Foreground="{DynamicResource SuccessBrush}" FontWeight="Bold" FontSize="11"/>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="0.9*"/><ColumnDefinition Width="14"/><ColumnDefinition Width="1.35*"/></Grid.ColumnDefinitions>
+
+            <StackPanel>
+                <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12">
+                    <Grid>
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="DOCUMENTOS SELECIONADOS" Style="{StaticResource SectionTitleStyle}"/>
+                                <TextBlock x:Name="DocumentCountText" Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,10"/>
+                            </StackPanel>
+                            <Button Grid.Column="1" Content="Remover da lista" Style="{StaticResource GhostButtonStyle}" Click="RemoveDocument_Click" VerticalAlignment="Top"/>
+                        </Grid>
+                        <DataGrid x:Name="DocumentsGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" SelectionMode="Extended" MinHeight="210">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Tipo" Binding="{Binding Kind}" Width="58"/>
+                                <DataGridTextColumn Header="Referência" Binding="{Binding DisplayReference}" Width="*"/>
+                                <DataGridTextColumn Header="Disponível" Binding="{Binding AvailableVersionsText}" Width="120"/>
+                                <DataGridTemplateColumn Header="Enviar" Width="145">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding AttachmentOptions}"
+                                                      DisplayMemberPath="Label"
+                                                      SelectedValuePath="Mode"
+                                                      SelectedValue="{Binding AttachmentMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                      SelectionChanged="AttachmentMode_SelectionChanged"
+                                                      MinHeight="30"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBlock Grid.Row="2" Text="Os arquivos originais não são alterados. O EBMail receberá apenas cópias como anexos." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,9,0,0"/>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel>
+                        <TextBlock Text="GRUPOS DE DESTINATÁRIOS" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="Salve os destinatários usados com frequência para não preencher novamente." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,3,0,10"/>
+                        <ComboBox x:Name="PresetBox" DisplayMemberPath="Name" SelectionChanged="PresetBox_SelectionChanged" MinHeight="38"/>
+                        <TextBox x:Name="PresetNameBox" ToolTip="Nome do grupo, por exemplo: S1 e Comando" Margin="0,9,0,0"/>
+                        <UniformGrid Columns="3" Margin="0,8,0,0">
+                            <Button Content="Novo grupo" Style="{StaticResource GhostButtonStyle}" Click="NewPreset_Click" Margin="0,0,5,0"/>
+                            <Button Content="Salvar grupo" Style="{StaticResource PrimaryButtonStyle}" Click="SavePreset_Click" Margin="3,0,3,0"/>
+                            <Button Content="Excluir grupo" Style="{StaticResource DangerButtonStyle}" Click="DeletePreset_Click" Margin="5,0,0,0"/>
+                        </UniformGrid>
+                        <CheckBox x:Name="SavePresetCheck" Content="Atualizar este grupo automaticamente ao preparar" IsChecked="True" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="18">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="FormPanel">
+                        <Border Background="{DynamicResource SuccessSoftBrush}" BorderBrush="{DynamicResource SuccessBrush}" BorderThickness="1" CornerRadius="9" Padding="11" Margin="0,0,0,14">
+                            <Grid>
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="LOGIN E DISPOSITIVO CONFIÁVEL" FontWeight="SemiBold" Foreground="{DynamicResource SuccessBrush}"/>
+                                    <TextBlock Text="O EBMail abre sempre no mesmo perfil protegido. No primeiro acesso, aceite salvar a senha no navegador e marque “confiar neste dispositivo” no autenticador." TextWrapping="Wrap" Margin="0,4,0,0"/>
+                                </StackPanel>
+                                <Button x:Name="OpenSessionButton" Grid.Column="2" Content="ABRIR PARA CONECTAR" Style="{StaticResource SecondaryButtonStyle}" Click="OpenSession_Click" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <TextBlock Text="DESTINATÁRIOS E MENSAGEM" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="Separe vários endereços por ponto e vírgula, vírgula ou nova linha." Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,12"/>
+
+                        <TextBlock Text="Para" FontWeight="SemiBold"/>
+                        <TextBox x:Name="ToBox" AcceptsReturn="True" MinHeight="58" TextWrapping="Wrap" Margin="0,5,0,10"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Cc — cópia visível" FontWeight="SemiBold"/>
+                                <TextBox x:Name="CcBox" AcceptsReturn="True" MinHeight="54" TextWrapping="Wrap" Margin="0,5,0,0"
+                                         ToolTip="Envia uma cópia. Todos os destinatários conseguem ver quem recebeu em Cc."/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Cco — cópia oculta" FontWeight="SemiBold"/>
+                                <TextBox x:Name="BccBox" AcceptsReturn="True" MinHeight="54" TextWrapping="Wrap" Margin="0,5,0,0"
+                                         ToolTip="Envia uma cópia oculta. Os demais destinatários não veem quem recebeu em Cco."/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Text="Assunto" FontWeight="SemiBold" Margin="0,12,0,0"/>
+                        <TextBox x:Name="SubjectBox" TextChanged="TemplateBox_TextChanged" Margin="0,5,0,0"/>
+                        <TextBlock x:Name="SubjectPreviewText" Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,4,0,0"/>
+
+                        <TextBlock Text="Corpo da mensagem" FontWeight="SemiBold" Margin="0,12,0,0"/>
+                        <TextBox x:Name="BodyBox" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" MinHeight="150" MaxHeight="240" Margin="0,5,0,0"/>
+                        <TextBlock Text="Campos automáticos: {TIPO}, {REFERENCIAS}, {QUANTIDADE}, {LISTA_DOCUMENTOS} e {DATA}." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,5,0,0"/>
+
+                        <Border Background="{DynamicResource WarningSoftBrush}" BorderBrush="{DynamicResource WarningBrush}" BorderThickness="1" CornerRadius="9" Padding="11" Margin="0,14,0,0">
+                            <StackPanel>
+                                <CheckBox x:Name="AutoSendCheck" Content="Enviar automaticamente depois de preparar" FontWeight="SemiBold"/>
+                                <TextBlock Text="Desmarcado: o SIGFUR para com a mensagem aberta para sua revisão. Marcado: será solicitada uma confirmação final antes de iniciar." Foreground="{DynamicResource WarningBrush}" TextWrapping="Wrap" Margin="22,4,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,14,0,0">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock x:Name="ProgressStageText" Text="Pronto para preparar" FontWeight="SemiBold"/>
+                <TextBlock x:Name="ProgressMessageText" Text="O navegador será aberto quando você continuar." Style="{StaticResource CaptionTextStyle}" TextWrapping="Wrap" Margin="0,2,350,0"/>
+                <ProgressBar x:Name="ProgressBar" Height="5" Minimum="0" Maximum="100" Value="0" Margin="0,6,350,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Button x:Name="CancelButton" Content="Cancelar" Style="{StaticResource SecondaryButtonStyle}" Click="Cancel_Click" Margin="0,0,8,0"/>
+                <Button x:Name="PrepareButton" Content="ABRIR EBMAIL E PREPARAR" Style="{StaticResource PrimaryButtonStyle}" Click="Prepare_Click" MinWidth="220"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

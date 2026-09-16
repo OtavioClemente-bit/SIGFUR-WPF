@@ -1,0 +1,159 @@
+<Window x:Class="SIGFUR.Wpf.Views.AppearanceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Aparência do SIGFUR" Icon="/Assets/sigfur.ico"
+        Width="960" Height="660" MinWidth="820" MinHeight="600"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <StackPanel>
+                <TextBlock Text="Aparência do SIGFUR" Style="{StaticResource PageTitleStyle}"/>
+                <TextBlock Text="Tema, tamanho visual e modo de leitura agora valem para o programa inteiro: janela principal, cadastro, férias, auditorias e demais módulos."
+                           Style="{StaticResource PageSubtitleStyle}" Margin="0,5,0,18"/>
+            </StackPanel>
+            <Border HorizontalAlignment="Right" VerticalAlignment="Top" Padding="10,6" CornerRadius="999"
+                    Background="{DynamicResource PrimarySurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Escala atual: " Foreground="{DynamicResource MutedBrush}" FontSize="11"/>
+                    <TextBlock x:Name="HeaderScaleText" Foreground="{DynamicResource PrimaryDarkBrush}" FontWeight="SemiBold" FontSize="11"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.25*"/>
+                <ColumnDefinition Width="18"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Style="{StaticResource CardStyle}" Padding="16">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="Temas profissionais" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="Escolha uma identidade visual. A prévia é aplicada na hora e só fica definitiva ao clicar em Aplicar."
+                                   Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,0"/>
+                    </StackPanel>
+
+                    <ListBox x:Name="ThemeList" Grid.Row="1" BorderThickness="0" SelectionChanged="ThemeList_SelectionChanged"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="4" MinHeight="72">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="86"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Width="72" Height="48" CornerRadius="10" Background="{Binding PrimaryBrush}"
+                                            BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                                        <Grid>
+                                            <Border Width="25" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="7" CornerRadius="7" Background="{Binding DarkBrush}"/>
+                                            <Border Width="28" Height="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="7" CornerRadius="4" Background="{Binding SoftBrush}"/>
+                                        </Grid>
+                                    </Border>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding DisplayName}" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"/>
+                                        <TextBlock Text="{Binding Description}" Foreground="{DynamicResource MutedBrush}" FontSize="10.5" TextWrapping="Wrap" Margin="0,3,12,0"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="2" Text="✓" FontSize="19" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}" VerticalAlignment="Center"
+                                               Visibility="{Binding IsCurrent, Converter={StaticResource BoolToVisibility}}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+
+            <StackPanel Grid.Column="2">
+                <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,14">
+                    <StackPanel>
+                        <TextBlock Text="Tamanho global do programa" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="Use compacto no monitor do quartel. Isso reduz tudo o que abrir: tabelas, cadastros, carteira, boletins e janelas auxiliares."
+                                   Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,12"/>
+
+                        <Grid Margin="0,4,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="65%" Foreground="{DynamicResource SubtleTextBrush}" VerticalAlignment="Center" FontSize="10"/>
+                            <Slider x:Name="ScaleSlider" Grid.Column="1" Minimum="65" Maximum="145" TickFrequency="5" IsSnapToTickEnabled="True"
+                                    ValueChanged="ScaleSlider_ValueChanged" Margin="10,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="145%" Grid.Column="2" Foreground="{DynamicResource SubtleTextBrush}" VerticalAlignment="Center" FontSize="10"/>
+                        </Grid>
+
+                        <Border Padding="12" CornerRadius="12" Background="{DynamicResource SurfaceAltBrush}" BorderBrush="{DynamicResource DividerBrush}" BorderThickness="1" Margin="0,0,0,12">
+                            <Grid>
+                                <TextBlock Text="Escala selecionada" Foreground="{DynamicResource MutedBrush}" FontSize="10"/>
+                                <TextBlock x:Name="ScaleValueText" HorizontalAlignment="Right" Foreground="{DynamicResource PrimaryDarkBrush}" FontSize="18" FontWeight="SemiBold"/>
+                            </Grid>
+                        </Border>
+
+                        <UniformGrid Columns="2" Rows="3" Margin="0,0,0,2">
+                            <Button Content="Muito compacto" Tag="0.75" Click="Preset_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,6,6" ToolTip="Bom para telas pequenas e muitas colunas."/>
+                            <Button Content="Compacto quartel" Tag="0.85" Click="Preset_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="6,0,0,6" ToolTip="Recomendado para monitor 1366x768."/>
+                            <Button Content="Normal" Tag="1.00" Click="Preset_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,6,6"/>
+                            <Button Content="Confortável" Tag="1.10" Click="Preset_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="6,0,0,6"/>
+                            <Button Content="Grande" Tag="1.20" Click="Preset_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,6,0"/>
+                            <Button Content="Apresentação" Tag="1.35" Click="Preset_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="6,0,0,0"/>
+                        </UniformGrid>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Padding="16">
+                    <StackPanel>
+                        <TextBlock Text="Prévia" Style="{StaticResource SectionTitleStyle}"/>
+                        <Border Margin="0,10,0,0" Padding="14" CornerRadius="14" Background="{DynamicResource PrimaryGradientBrush}">
+                            <StackPanel>
+                                <TextBlock x:Name="PreviewTitle" Text="SIGFUR • Conferência operacional" Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="PreviewSubtitle" Text="Tabelas mais legíveis, menos cortes e aparência padronizada." Foreground="{DynamicResource TextOnPrimaryMutedBrush}" TextWrapping="Wrap" FontSize="11" Margin="0,4,0,10"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Padding="10" CornerRadius="10" Background="#26FFFFFF">
+                                        <StackPanel>
+                                            <TextBlock Text="MILITARES" Foreground="#DCEBFF" FontSize="9" FontWeight="SemiBold"/>
+                                            <TextBlock Text="124" Foreground="White" FontSize="24" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Grid.Column="2" Padding="10" CornerRadius="10" Background="#26FFFFFF">
+                                        <StackPanel>
+                                            <TextBlock Text="PENDÊNCIAS" Foreground="#DCEBFF" FontSize="9" FontWeight="SemiBold"/>
+                                            <TextBlock Text="08" Foreground="White" FontSize="24" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <TextBlock Text="Dica: use 75% ou 85% quando a tabela estiver cortando no monitor pequeno." Style="{StaticResource SubtleTextStyle}" Margin="0,10,0,0"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,18,0,0">
+            <TextBlock Text="Cancelar desfaz a prévia. Aplicar salva a aparência no AppData para as próximas aberturas."
+                       Foreground="{DynamicResource SubtleTextBrush}" VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancelar" IsCancel="True" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0"/>
+                <Button Content="Restaurar padrão" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0" Click="Reset_Click"/>
+                <Button Content="Aplicar aparência" IsDefault="True" Style="{StaticResource PrimaryButtonStyle}" Click="Apply_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

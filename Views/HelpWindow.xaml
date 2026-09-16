@@ -1,0 +1,88 @@
+<Window x:Class="SIGFUR.Wpf.Views.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SIGFUR — Central de ajuda" Width="1120" Height="780" MinWidth="860" MinHeight="620"
+        WindowStartupLocation="CenterOwner" Icon="/SIGFUR;component/Assets/sigfur.ico" Background="{DynamicResource AppBackgroundBrush}">
+    <Window.Resources>
+        <Style x:Key="HelpHeading" TargetType="TextBlock"><Setter Property="FontSize" Value="18"/><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Foreground" Value="{DynamicResource PrimaryDarkBrush}"/><Setter Property="Margin" Value="0,0,0,7"/></Style>
+        <Style x:Key="HelpBody" TargetType="TextBlock"><Setter Property="TextWrapping" Value="Wrap"/><Setter Property="Foreground" Value="{DynamicResource MutedBrush}"/><Setter Property="LineHeight" Value="20"/></Style>
+        <Style x:Key="HelpCard" TargetType="Border" BasedOn="{StaticResource CardStyle}"><Setter Property="Padding" Value="16"/><Setter Property="Margin" Value="0,0,10,10"/></Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions><RowDefinition Height="118"/><RowDefinition Height="*"/><RowDefinition Height="58"/></Grid.RowDefinitions>
+        <Border Background="{DynamicResource PrimaryGradientBrush}" Padding="28,0">
+            <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <Border Width="68" Height="68" CornerRadius="17" Background="#24FFFFFF" VerticalAlignment="Center"><Image Source="/SIGFUR;component/Assets/sigfur-mark.png" Width="58" Height="58"/></Border>
+                <StackPanel Grid.Column="1" Margin="18,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="Central de ajuda do SIGFUR" Foreground="White" FontSize="26" FontWeight="SemiBold"/>
+                    <TextBlock Text="Recursos, rotinas seguras e solução de problemas em um só lugar" Foreground="{DynamicResource TextOnPrimaryMutedBrush}" Margin="0,5,0,0"/>
+                    <TextBlock x:Name="DeveloperOrganizationText" Text="Desenvolvido por 3º Sgt Otávio" Foreground="White" FontWeight="SemiBold" Margin="0,9,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" VerticalAlignment="Center"><Border Background="#22FFFFFF" CornerRadius="11" Padding="14,8"><TextBlock x:Name="VersionText" Foreground="White" FontWeight="SemiBold"/></Border><TextBlock x:Name="ThemeText" Foreground="{DynamicResource TextOnPrimaryMutedBrush}" FontSize="10" HorizontalAlignment="Right" Margin="0,6,0,0"/></StackPanel>
+            </Grid>
+        </Border>
+
+        <TabControl x:Name="HelpTabs" Grid.Row="1" Margin="16" SelectionChanged="HelpTabs_SelectionChanged">
+            <TabItem Header="Começar"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="20">
+                <TextBlock Text="O SIGFUR organiza a rotina do furriel" Style="{StaticResource HelpHeading}"/>
+                <TextBlock Text="O sistema reúne efetivo, pagamentos, boletins, documentos, escalas e acompanhamento administrativo. Os módulos usam o mesmo banco oficial e mantêm as conferências próximas da informação que será lançada ou publicada." Style="{StaticResource HelpBody}" Margin="0,0,0,18"/>
+                <UniformGrid Columns="3">
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="1 · Mantenha o cadastro" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="Revise CPF, Prec-CP, identidade, endereço, banco, documentos, foto e dados de pagamento." Style="{StaticResource HelpBody}" Margin="0,6,0,0"/></StackPanel></Border>
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="2 · Prepare a rotina" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="Use férias, escala, auxílio-transporte, lembretes, plano de chamada e corrida de pagamento." Style="{StaticResource HelpBody}" Margin="0,6,0,0"/></StackPanel></Border>
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="3 · Confira antes de enviar" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="Revise boletins, rubricas, contracheques, efetivo SIPPES, anexos e prévias." Style="{StaticResource HelpBody}" Margin="0,6,0,0"/></StackPanel></Border>
+                </UniformGrid>
+                <TextBlock Text="Recursos presentes em todo o programa" Style="{StaticResource HelpHeading}" Margin="0,12,0,8"/>
+                <WrapPanel>
+                    <Border Style="{StaticResource InsetCardStyle}" Margin="0,0,8,8"><TextBlock Text="Pesquisa de comandos"/></Border><Border Style="{StaticResource InsetCardStyle}" Margin="0,0,8,8"><TextBlock Text="Temas e escala visual"/></Border><Border Style="{StaticResource InsetCardStyle}" Margin="0,0,8,8"><TextBlock Text="Perfis e sincronização"/></Border><Border Style="{StaticResource InsetCardStyle}" Margin="0,0,8,8"><TextBlock Text="Alertas e calendário"/></Border><Border Style="{StaticResource InsetCardStyle}" Margin="0,0,8,8"><TextBlock Text="Assistente local"/></Border><Border Style="{StaticResource InsetCardStyle}" Margin="0,0,8,8"><TextBlock Text="Atalhos configuráveis"/></Border>
+                </WrapPanel>
+                <Border Background="{DynamicResource InfoSoftBrush}" BorderBrush="{DynamicResource InfoBrush}" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,12,10,0"><TextBlock Text="Use a pesquisa do menu lateral ou a Paleta de Comandos para localizar qualquer módulo. No Listar Militares, selecione uma pessoa para acessar carteira, documentos, contracheque e ficha financeira." TextWrapping="Wrap"/></Border>
+            </StackPanel></ScrollViewer></TabItem>
+
+            <TabItem Header="Todos os recursos"><Grid Margin="18">
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition/></Grid.RowDefinitions>
+                <TextBlock Text="Encontre um recurso" Style="{StaticResource HelpHeading}"/>
+                <Grid Grid.Row="1" Margin="0,4,0,12"><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="12"/><ColumnDefinition Width="245"/></Grid.ColumnDefinitions><TextBox x:Name="ModuleSearchBox" MinHeight="40" Padding="11,7" TextChanged="ModuleFilter_Changed" ToolTip="Pesquise pelo nome, finalidade ou categoria"/><ComboBox x:Name="ModuleCategoryBox" Grid.Column="2" MinHeight="40" Padding="9,6" SelectionChanged="ModuleFilter_Changed"/></Grid>
+                <ListBox x:Name="ModuleList" Grid.Row="2" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemTemplate><DataTemplate><Border Style="{StaticResource HelpCard}" HorizontalAlignment="Stretch"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="44"/><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><TextBlock Text="{Binding Icon}" FontSize="22"/><StackPanel Grid.Column="1"><TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="14" Foreground="{DynamicResource PrimaryDarkBrush}"/><TextBlock Text="{Binding Description}" Style="{StaticResource HelpBody}" Margin="0,4,12,0"/><TextBlock Text="{Binding Category}" Foreground="{DynamicResource SubtleTextBrush}" FontSize="10" Margin="0,5,0,0"/></StackPanel><Border Grid.Column="2" Background="{DynamicResource PrimarySoftBrush}" CornerRadius="7" Padding="9,5" VerticalAlignment="Top"><Border.Style><Style TargetType="Border"><Style.Triggers><DataTrigger Binding="{Binding HotKey}" Value=""><Setter Property="Visibility" Value="Collapsed"/></DataTrigger></Style.Triggers></Style></Border.Style><TextBlock Text="{Binding HotKey}" Foreground="{DynamicResource PrimaryDarkBrush}" FontWeight="SemiBold" FontSize="10"/></Border></Grid></Border></DataTemplate></ListBox.ItemTemplate>
+                </ListBox>
+            </Grid></TabItem>
+
+            <TabItem Header="Boletins e pagamentos"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="20">
+                <TextBlock Text="Publicação e conferência" Style="{StaticResource HelpHeading}"/>
+                <UniformGrid Columns="2">
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="Boletim e SisBol" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="Escolha o modelo, militares e dados gerais ou individuais; confira pendências SIPPES e revise a prévia. BI e Adt Furr podem vir da biblioteca. Prepare a sessão SisBol na tela principal; login e captcha continuam sob controle do operador." Style="{StaticResource HelpBody}" Margin="0,6,0,0"/></StackPanel></Border>
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="Bibliotecas de boletins" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="Resumo de Boletins pesquisa menções em PDFs. Aditamento Furriel indexa aditamentos. Boletins de Fora consulta publicações regionais e do CML. O histórico localiza matérias enviadas." Style="{StaticResource HelpBody}" Margin="0,6,0,0"/></StackPanel></Border>
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="Conferência de pagamento" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="Cruza os contracheques da competência escolhida com os boletins marcados, mostra os documentos lado a lado, destaca o militar e permite marcar cada item como verificado." Style="{StaticResource HelpBody}" Margin="0,6,0,0"/></StackPanel></Border>
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="Auditoria dos contracheques" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="Analisa rubricas, férias recebidas no documento, FUSEx, banco e auxílio-transporte. A revisão de transporte mostra os nomes e permite escolher quem será atualizado." Style="{StaticResource HelpBody}" Margin="0,6,0,0"/></StackPanel></Border>
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="Auxílio-transporte" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="Mantém rotas, tarifas, ficha, comprovante opcional, declaração, implantação, atrasados, atualização e despesa a anular. A competência antecipada e as férias recebem tratamento próprio." Style="{StaticResource HelpBody}" Margin="0,6,0,0"/></StackPanel></Border>
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="Financeiro e processos" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="Soldos, gratificação, ajuste de contas, pensão judicial, exercício anterior, inconsistência bancária, SPED e corrida de pagamento oferecem cálculo, documentos e conferências conforme a finalidade." Style="{StaticResource HelpBody}" Margin="0,6,0,0"/></StackPanel></Border>
+                </UniformGrid>
+                <Border Background="{DynamicResource WarningSoftBrush}" BorderBrush="{DynamicResource WarningBrush}" BorderThickness="1" CornerRadius="10" Padding="14" Margin="0,8,10,0"><TextBlock Text="As conferências impedem campos ausentes e apontam inconsistências objetivas. Confirme o direito, a competência, os documentos de origem e a publicação antes do lançamento." TextWrapping="Wrap"/></Border>
+            </StackPanel></ScrollViewer></TabItem>
+
+            <TabItem Header="Dados e segurança"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="20">
+                <TextBlock Text="Dados do perfil atual" Style="{StaticResource HelpHeading}"/><TextBlock x:Name="DataPathText" Style="{StaticResource HelpBody}" Margin="0,0,0,14"/>
+                <UniformGrid Columns="2">
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="Banco oficial" FontWeight="SemiBold"/><TextBlock Text="Cadastros e rotinas integradas usam a pasta de dados ativa. Evite mover ou editar o banco manualmente enquanto o SIGFUR estiver aberto." Style="{StaticResource HelpBody}" Margin="0,5,0,0"/></StackPanel></Border>
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="Perfis e sincronização" FontWeight="SemiBold"/><TextBlock Text="Cada perfil aponta para suas pastas local e sincronizada. Remover um perfil da tela inicial remove somente o vínculo; os dados e backups são preservados." Style="{StaticResource HelpBody}" Margin="0,5,0,0"/></StackPanel></Border>
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="Backup e restauração" FontWeight="SemiBold"/><TextBlock Text="Crie e restaure cópias em Perfil, Backup e Sincronização. O SIGFUR avisa quando os dados locais parecem mais recentes e pode criar uma cópia de segurança antes de substituir." Style="{StaticResource HelpBody}" Margin="0,5,0,0"/></StackPanel></Border>
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="Credenciais" FontWeight="SemiBold"/><TextBlock Text="Senhas oferecidas para salvamento são protegidas para o usuário atual do Windows. A senha do perfil permanece somente durante a autenticação inicial." Style="{StaticResource HelpBody}" Margin="0,5,0,0"/></StackPanel></Border>
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="Documentos e PDFs" FontWeight="SemiBold"/><TextBlock Text="Contracheques, fichas financeiras, boletins, anexos e documentos gerados ficam organizados dentro dos dados do perfil. Use o próprio módulo para localizar os arquivos." Style="{StaticResource HelpBody}" Margin="0,5,0,0"/></StackPanel></Border>
+                    <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="Assistente SIGFUR" FontWeight="SemiBold"/><TextBlock Text="Pode usar dados locais, legislação, anexos e gerar minutas quando configurado. Revise todo conteúdo antes do uso e oculte dados sensíveis sempre que a tarefa permitir." Style="{StaticResource HelpBody}" Margin="0,5,0,0"/></StackPanel></Border>
+                </UniformGrid>
+            </StackPanel></ScrollViewer></TabItem>
+
+            <TabItem Header="Resolver problemas"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="20">
+                <TextBlock Text="Verificações rápidas" Style="{StaticResource HelpHeading}"/>
+                <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="O militar ou documento não aparece" FontWeight="SemiBold"/><TextBlock Text="Confirme o perfil, limpe os filtros, confira a competência e use Atualizar. Para contracheques e boletins, verifique a pasta e o mês do documento." Style="{StaticResource HelpBody}" Margin="0,5,0,0"/></StackPanel></Border>
+                <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="SisBol ou CPEX pediu login novamente" FontWeight="SemiBold"/><TextBlock Text="A sessão pode ter expirado. Prepare a sessão novamente, conclua login e captcha e mantenha o navegador disponível até a confirmação." Style="{StaticResource HelpBody}" Margin="0,5,0,0"/></StackPanel></Border>
+                <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="A conferência mostra pendência incorreta" FontWeight="SemiBold"/><TextBlock Text="Atualize depois de alterar campos. Confira modelo, militar em edição, boletins marcados e competência. Se persistir, copie o diagnóstico e preserve o arquivo que reproduz o caso." Style="{StaticResource HelpBody}" Margin="0,5,0,0"/></StackPanel></Border>
+                <Border Style="{StaticResource HelpCard}"><StackPanel><TextBlock Text="Interface pequena ou fora da tela" FontWeight="SemiBold"/><TextBlock Text="Use A+, A ou A− no topo. Aparência troca o tema completo. Tamanho, posição e escala são restaurados automaticamente quando possível." Style="{StaticResource HelpBody}" Margin="0,5,0,0"/></StackPanel></Border>
+                <TextBlock Text="Informações desta execução" Style="{StaticResource HelpHeading}" Margin="0,10,0,7"/><TextBox x:Name="SystemInfoBox" IsReadOnly="True" TextWrapping="Wrap" MinHeight="108" Padding="12" VerticalScrollBarVisibility="Auto"/>
+            </StackPanel></ScrollViewer></TabItem>
+        </TabControl>
+
+        <Border Grid.Row="2" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource DividerBrush}" BorderThickness="0,1,0,0" Padding="18,0">
+            <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><TextBlock x:Name="StatusText" VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}" Text="Ajuda pronta para consulta."/><Button Grid.Column="1" Content="Abrir pasta de dados" Style="{StaticResource GhostButtonStyle}" Click="OpenData_Click" Margin="0,0,8,0"/><Button Grid.Column="2" Content="Copiar diagnóstico" Style="{StaticResource SecondaryButtonStyle}" Click="CopyDiagnostics_Click" Margin="0,0,8,0"/><Button Grid.Column="3" Content="Fechar" Style="{StaticResource PrimaryButtonStyle}" Click="Close_Click" MinWidth="100"/></Grid>
+        </Border>
+    </Grid>
+</Window>

@@ -1,0 +1,4788 @@
+﻿{
+  "Version": "2026.07.10-sippes-publicacoes-revisadas",
+  "UpdatedAt": "2026-07-10T00:00:00",
+  "Sources": [
+    "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+    "2026-06-03_O_021_aditamento_do_furriel.pdf",
+    "2026-05-06_O_018_aditamento_do_furriel.pdf"
+  ],
+  "Rules": [
+    {
+      "Id": "implanta_o_sippes_sd_efetivo_vari_vel",
+      "TemplateName": "IMPLANTAÇÃO SIPPES - Sd Efetivo Variável",
+      "Title": "IMPLANTAÇÃO SIPPES - Sd Efetivo Variável",
+      "Category": "Implantação Sippes",
+      "Action": "Sd Efetivo Variável",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "IMPLANTAÇÃO SIPPES Sd Efetivo Variável",
+        "IMPLANTAÇÃO SIPPES"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "DATA_INCORPORACAO",
+          "Label": "data de incorporação",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "ENDERECO",
+          "Label": "endereco",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "CEP",
+          "Label": "cep",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "TELEFONE",
+          "Label": "telefone",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "ESCOLARIDADE",
+          "Label": "escolaridade",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "BANCO",
+          "Label": "banco",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "AGENCIA",
+          "Label": "agencia",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "CONTA",
+          "Label": "conta",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "OPERACAO_CAIXA",
+          "Label": "operação CAIXA",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "reimplanta_o_sippes_militar",
+      "TemplateName": "REIMPLANTAÇÃO SIPPES - Militar",
+      "Title": "REIMPLANTAÇÃO SIPPES - Militar",
+      "Category": "Reimplantação Sippes",
+      "Action": "Militar",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "REIMPLANTAÇÃO SIPPES Militar",
+        "REIMPLANTAÇÃO SIPPES"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "DATA_REIMPLANTACAO",
+          "Label": "data de reimplantação",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "MOTIVO_REIMPLANTACAO",
+          "Label": "motivo da reimplantação",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "ENDERECO",
+          "Label": "endereco",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "CEP",
+          "Label": "cep",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "TELEFONE",
+          "Label": "telefone",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "ESCOLARIDADE",
+          "Label": "escolaridade",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "BANCO",
+          "Label": "banco",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "AGENCIA",
+          "Label": "agencia",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "CONTA",
+          "Label": "conta",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "OPERACAO_CAIXA",
+          "Label": "operação CAIXA",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "adicional_compensa_o_org_nica_atividade_especial",
+      "TemplateName": "ADICIONAL COMPENSAÇÃO ORGÂNICA - Atividade Especial",
+      "Title": "ADICIONAL COMPENSAÇÃO ORGÂNICA - Atividade Especial",
+      "Category": "Adicional Compensação Orgânica",
+      "Action": "Atividade Especial",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "ADICIONAL COMPENSAÇÃO ORGÂNICA Atividade Especial",
+        "ADICIONAL COMPENSAÇÃO ORGÂNICA"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "ATIVIDADE_ESPECIAL",
+          "Label": "atividade especial",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_GRAD_ATIVIDADE",
+          "Label": "posto/graduação da atividade especial",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DATA_INICIO_ATIVIDADE",
+          "Label": "data inicial da atividade",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DATA_FIM_ATIVIDADE",
+          "Label": "data final da atividade",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DATA_CALCULADA",
+          "Label": "data calculada",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DOC_AMPARO",
+          "Label": "documento de amparo",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "adicional_compensa_o_org_nica_cotas_homologadas",
+      "TemplateName": "ADICIONAL COMPENSAÇÃO ORGÂNICA - Cotas Homologadas",
+      "Title": "ADICIONAL COMPENSAÇÃO ORGÂNICA - Cotas Homologadas",
+      "Category": "Adicional Compensação Orgânica",
+      "Action": "Cotas Homologadas",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "ADICIONAL COMPENSAÇÃO ORGÂNICA Cotas Homologadas",
+        "ADICIONAL COMPENSAÇÃO ORGÂNICA"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "ATIVIDADE_ESPECIAL",
+          "Label": "atividade especial",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "COTAS_HOMOLOGADAS",
+          "Label": "cotas homologadas",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_GRAD_ATIVIDADE",
+          "Label": "posto/graduação da atividade especial",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "FIM_EXERCICIO",
+          "Label": "fim do exercício",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "INICIO_COTAS",
+          "Label": "início das cotas",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DOC_AMPARO",
+          "Label": "documento de amparo",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "adicional_compensa_o_org_nica_saque_de_atrasado",
+      "TemplateName": "ADICIONAL COMPENSAÇÃO ORGÂNICA - Saque de Atrasado",
+      "Title": "ADICIONAL COMPENSAÇÃO ORGÂNICA - Saque de Atrasado",
+      "Category": "Adicional Compensação Orgânica",
+      "Action": "Saque de Atrasado",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "ADICIONAL COMPENSAÇÃO ORGÂNICA Saque de Atrasado",
+        "ADICIONAL COMPENSAÇÃO ORGÂNICA"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "ATIVIDADE_ESPECIAL",
+          "Label": "atividade especial",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "MESES_ANOS_REFERENCIA",
+          "Label": "mês(es)/ano(s) de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_COMPETENCIA",
+          "Label": "valor por competência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DOC_AMPARO",
+          "Label": "documento de amparo",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "adicional_perman_ncia_implanta_o",
+      "TemplateName": "ADICIONAL PERMANÊNCIA - Implantação",
+      "Title": "ADICIONAL PERMANÊNCIA - Implantação",
+      "Category": "Adicional Permanência",
+      "Action": "Implantação",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "ADICIONAL PERMANÊNCIA Implantação",
+        "ADICIONAL PERMANÊNCIA"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "PERCENTUAL_PERMANENCIA",
+          "Label": "percentual de permanência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DATA_DIREITO",
+          "Label": "data do direito",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "adicional_perman_ncia_altera_o",
+      "TemplateName": "ADICIONAL PERMANÊNCIA - Alteração",
+      "Title": "ADICIONAL PERMANÊNCIA - Alteração",
+      "Category": "Adicional Permanência",
+      "Action": "Alteração",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "ADICIONAL PERMANÊNCIA Alteração",
+        "ADICIONAL PERMANÊNCIA"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "PERCENTUAL_ANTERIOR",
+          "Label": "percentual anterior",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "PERCENTUAL_NOVO",
+          "Label": "percentual novo",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "DATA_INICIO",
+          "Label": "data de início",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "adicional_habilita_o_implanta_o_ou_altera_o",
+      "TemplateName": "ADICIONAL HABILITAÇÃO - Implantação ou Alteração",
+      "Title": "ADICIONAL HABILITAÇÃO - Implantação ou Alteração",
+      "Category": "Adicional Habilitação",
+      "Action": "Implantação ou Alteração",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "ADICIONAL HABILITAÇÃO Implantação ou Alteração",
+        "ADICIONAL HABILITAÇÃO"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "ACAO_HABILITACAO",
+          "Label": "Ação no SIPPES",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "implantado",
+            "alterado"
+          ]
+        },
+        {
+          "Key": "NOME_CURSO_DGP",
+          "Label": "Nome do curso DGP/SICAPEx",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "TIPO_CURSO",
+          "Label": "Tipo do curso",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "Formação",
+            "Especialização",
+            "Aperfeiçoamento",
+            "Altos Estudos Categoria I",
+            "Altos Estudos Categoria II"
+          ]
+        },
+        {
+          "Key": "PERCENTUAL_CURSO",
+          "Label": "Percentual do curso",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "12%",
+            "16%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "73%"
+          ]
+        },
+        {
+          "Key": "CODIGO_CURSO",
+          "Label": "Código do curso",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PAGAMENTO_A_PARTIR",
+          "Label": "Pagamento a partir de",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "BOLETIM_ORGAO_FORMADOR",
+          "Label": "BI do órgão formador",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "Posto/graduação",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "Nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Confirmar lançamento e homologação no SICAPEx antes de enviar ao SPP.",
+        "Conferir tipo do curso e percentual conforme Manual SIPPES.",
+        "Usar exatamente o nome/código do curso cadastrado no SICAPEx."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "adicional_habilita_o_saque_de_atrasados",
+      "TemplateName": "ADICIONAL HABILITAÇÃO - Saque de Atrasados",
+      "Title": "ADICIONAL HABILITAÇÃO - Saque de Atrasados",
+      "Category": "Adicional Habilitação",
+      "Action": "Saque de Atrasados",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "ADICIONAL HABILITAÇÃO Saque de Atrasados",
+        "ADICIONAL HABILITAÇÃO"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "PERCENTUAL_CURSO",
+          "Label": "Percentual do curso",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "12%",
+            "16%",
+            "20%",
+            "25%",
+            "30%",
+            "35%",
+            "40%",
+            "45%",
+            "73%"
+          ]
+        },
+        {
+          "Key": "TIPO_CURSO",
+          "Label": "Tipo do curso",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "Formação",
+            "Especialização",
+            "Aperfeiçoamento",
+            "Altos Estudos Categoria I",
+            "Altos Estudos Categoria II"
+          ]
+        },
+        {
+          "Key": "NOME_CURSO_DGP",
+          "Label": "Nome do curso DGP/SICAPEx",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CODIGO_CURSO",
+          "Label": "Código do curso",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "DATA_CONCLUSAO",
+          "Label": "Data de conclusão",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "BOLETIM_ORGAO_FORMADOR",
+          "Label": "BI do órgão formador",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PERIODO_ATRASADO",
+          "Label": "Competências atrasadas",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "Valor total",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "Posto/graduação",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "Nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "aux_lio_alimenta_o_ordem_de_saque",
+      "TemplateName": "AUXÍLIO-ALIMENTAÇÃO - Ordem de Saque",
+      "Title": "AUXÍLIO-ALIMENTAÇÃO - Ordem de Saque",
+      "Category": "Auxílio-Alimentação",
+      "Action": "Ordem de Saque",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "AUXÍLIO-ALIMENTAÇÃO Ordem de Saque",
+        "AUXÍLIO-ALIMENTAÇÃO"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "MOTIVO_MISSAO",
+          "Label": "motivo da missão",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DOC_REFERENCIA",
+          "Label": "documento de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "PERIODO_MISSAO",
+          "Label": "período da missão",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "LOCALIDADE",
+          "Label": "localidade",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "MES_REFERENCIA",
+          "Label": "mês de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "MES_PAGAMENTO",
+          "Label": "mês de pagamento",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "CODIGO_SAQUE",
+          "Label": "código de saque",
+          "Source": "form",
+          "Description": "O SIGFUR calcula automaticamente valor por dia e valor total a partir do código e da quantidade de dias.",
+          "Options": [
+            "NR0058 - Aux Alim comum/B",
+            "NR0052 - Aux Alim 5X",
+            "NR0053 - Aux Alim 10X",
+            "AR0058 - Aux Alim comum/B atrasado",
+            "AR0052 - Aux Alim 5X atrasado",
+            "AR0053 - Aux Alim 10X atrasado"
+          ]
+        },
+        {
+          "Key": "QTD_DIAS",
+          "Label": "quantidade de dias",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_DIA",
+          "Label": "valor por dia",
+          "Source": "form",
+          "Description": "Campo calculado automaticamente quando código e quantidade de dias estiverem preenchidos.",
+          "Severity": "warning",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo calculado automaticamente quando código e quantidade de dias estiverem preenchidos.",
+          "Severity": "warning",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol.",
+        "Conferir código A58/A53/A52 ou A48/A43/A42 e quantidade de dias; os valores são calculados pelo SIGFUR."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "aux_lio_alimenta_o_ordem_de_saque_motorista_do_cmt",
+      "TemplateName": "AUXÍLIO-ALIMENTAÇÃO - Ordem de Saque (Motorista do Cmt)",
+      "Title": "AUXÍLIO-ALIMENTAÇÃO - Ordem de Saque (Motorista do Cmt)",
+      "Category": "Auxílio-Alimentação",
+      "Action": "Ordem de Saque (Motorista do Cmt)",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "AUXÍLIO-ALIMENTAÇÃO Ordem de Saque (Motorista do Cmt)",
+        "AUXÍLIO-ALIMENTAÇÃO"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "DIAS_MISSAO",
+          "Label": "dias da missão",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "MES_REFERENCIA",
+          "Label": "mês de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "QTD_DIAS",
+          "Label": "quantidade de dias",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo calculado automaticamente quando código e quantidade de dias estiverem preenchidos.",
+          "Severity": "warning",
+          "Options": []
+        },
+        {
+          "Key": "DOC_REFERENCIA",
+          "Label": "documento de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol.",
+        "Conferir a regra 0058 = etapa comum/B, 0052 = etapa 5X e 0053 = etapa 10X, além do prefixo NR/AR coerente com os meses.",
+        "Conferir quantidade e relação dos dias; os valores e o resumo de códigos são calculados pelo SIGFUR."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "aux_lio_alimenta_o_saque_de_atrasado",
+      "TemplateName": "AUXÍLIO-ALIMENTAÇÃO - Saque de Atrasado",
+      "Title": "AUXÍLIO-ALIMENTAÇÃO - Saque de Atrasado",
+      "Category": "Auxílio-Alimentação",
+      "Action": "Saque de Atrasado",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "AUXÍLIO-ALIMENTAÇÃO Saque de Atrasado",
+        "AUXÍLIO-ALIMENTAÇÃO"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "MES_REFERENCIA",
+          "Label": "mês/ano de referência no SIPPES",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "MES_SOLICITACAO_ATRASADO",
+          "Label": "mês da solicitação do atrasado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DOC_REFERENCIA",
+          "Label": "documento/publicação de amparo",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol.",
+        "Conferir código A58/A53/A52 ou A48/A43/A42 e quantidade de dias; os valores são calculados pelo SIGFUR."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "aux_lio_fardamento_saque_de_atrasado",
+      "TemplateName": "AUXÍLIO FARDAMENTO - Saque de Atrasado",
+      "Title": "AUXÍLIO FARDAMENTO - Saque de Atrasado",
+      "Category": "Auxílio Fardamento",
+      "Action": "Saque de Atrasado",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "AUXÍLIO FARDAMENTO Saque de Atrasado",
+        "AUXÍLIO FARDAMENTO"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "MES_REFERENCIA",
+          "Label": "mês de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "QTD_SOLDOS",
+          "Label": "quantidade de soldos",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_GRAD_DIREITO",
+          "Label": "posto/graduação à época do direito",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "aux_lio_fardamento_saque_de_diferen_a",
+      "TemplateName": "AUXÍLIO FARDAMENTO - Saque de Diferença",
+      "Title": "AUXÍLIO FARDAMENTO - Saque de Diferença",
+      "Category": "Auxílio Fardamento",
+      "Action": "Saque de Diferença",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "AUXÍLIO FARDAMENTO Saque de Diferença",
+        "AUXÍLIO FARDAMENTO"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "MES_REFERENCIA",
+          "Label": "mês de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "MOTIVO_DIFERENCA",
+          "Label": "motivo da diferença",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_RECEBIDO",
+          "Label": "valor recebido",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_DEVIDO",
+          "Label": "valor devido",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "aux_lio_natalidade_ordem_de_saque",
+      "TemplateName": "AUXÍLIO-NATALIDADE - Ordem de Saque",
+      "Title": "AUXÍLIO-NATALIDADE - Ordem de Saque",
+      "Category": "Auxílio-Natalidade",
+      "Action": "Ordem de Saque",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "AUXÍLIO-NATALIDADE Ordem de Saque",
+        "AUXÍLIO-NATALIDADE"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "NOME_DEPENDENTE",
+          "Label": "Nome do dependente",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF_DEPENDENTE",
+          "Label": "CPF do dependente",
+          "Source": "form",
+          "Description": "",
+          "Severity": "warning",
+          "Options": []
+        },
+        {
+          "Key": "DATA_NASCIMENTO",
+          "Label": "Data de nascimento",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "MATRICULA_CERTIDAO",
+          "Label": "Matrícula da certidão",
+          "Source": "form",
+          "Description": "",
+          "Severity": "warning",
+          "Options": []
+        },
+        {
+          "Key": "DATA_CERTIDAO",
+          "Label": "Data da certidão",
+          "Source": "form",
+          "Description": "",
+          "Severity": "warning",
+          "Options": []
+        },
+        {
+          "Key": "CARTORIO",
+          "Label": "Cartório",
+          "Source": "form",
+          "Description": "",
+          "Severity": "warning",
+          "Options": []
+        },
+        {
+          "Key": "FILIACAO1",
+          "Label": "Filiação 1",
+          "Source": "form",
+          "Description": "",
+          "Severity": "warning",
+          "Options": []
+        },
+        {
+          "Key": "FILIACAO2",
+          "Label": "Filiação 2",
+          "Source": "form",
+          "Description": "",
+          "Severity": "warning",
+          "Options": []
+        },
+        {
+          "Key": "BI_REFERENCIA",
+          "Label": "BI de referência",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "Posto/graduação",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "Nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Antes do auxílio-natalidade, conferir/gerar DEPENDÊNCIA ECONÔMICA do dependente.",
+        "Dependência econômica deve cobrir Salário-Família, FUSEx e Imposto de Renda quando cabível.",
+        "Usar chaves de OCR da certidão quando disponíveis; se não houver OCR, preencher manualmente."
+      ],
+      "RelatedPublications": [
+        "DEPENDÊNCIA ECONÔMICA - Implantação",
+        "SALÁRIO FAMÍLIA - Saque de Atrasados",
+        "ASSISTÊNCIA PRÉ-ESCOLAR - Implantação/Saque, quando cabível"
+      ],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "depend_ncia_econ_mica_inclus_o",
+      "TemplateName": "DEPENDÊNCIA ECONÔMICA - Implantação",
+      "Title": "DEPENDÊNCIA ECONÔMICA - Implantação",
+      "Category": "Dependência Econômica",
+      "Action": "Inclusão",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "DEPENDÊNCIA ECONÔMICA Inclusão",
+        "DEPENDÊNCIA ECONÔMICA"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "NOME_DEPENDENTE",
+          "Label": "Nome do dependente",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF_DEPENDENTE",
+          "Label": "CPF do dependente",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PARENTESCO",
+          "Label": "Parentesco",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "Filho(a)",
+            "Cônjuge",
+            "Companheiro(a)",
+            "Enteado(a)",
+            "Menor sob guarda/tutela",
+            "Pai",
+            "Mãe",
+            "Irmão(ã)",
+            "Outro"
+          ]
+        },
+        {
+          "Key": "DATA_NASCIMENTO",
+          "Label": "Data de nascimento",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "FINALIDADE_DEPENDENCIA",
+          "Label": "Finalidade da dependência",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "Salário-Família e Imposto de Renda",
+            "Salário-Família, FUSEx e Imposto de Renda",
+            "FUSEx",
+            "Imposto de Renda",
+            "Assentamentos"
+          ]
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "Posto/graduação",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "Nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Usar OCR da certidão quando disponível; manter preenchimento manual como alternativa.",
+        "Conferir finalidade: Salário-Família, FUSEx e Imposto de Renda, conforme o caso."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "assist_ncia_pr_escolar_implanta_o",
+      "TemplateName": "ASSISTÊNCIA PRÉ-ESCOLAR - Implantação",
+      "Title": "ASSISTÊNCIA PRÉ-ESCOLAR - Implantação",
+      "Category": "Assistência Pré-Escolar",
+      "Action": "Implantação",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "ASSISTÊNCIA PRÉ-ESCOLAR Implantação",
+        "ASSISTÊNCIA PRÉ-ESCOLAR"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "NOME_DEPENDENTE",
+          "Label": "nome do dependente",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DATA_INICIO",
+          "Label": "data de início",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_MENSAL",
+          "Label": "valor mensal",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF_DEPENDENTE",
+          "Label": "CPF do dependente",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DATA_NASCIMENTO",
+          "Label": "data de nascimento",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol.",
+        "Dados podem ser preenchidos pela certidão OCR ou manualmente."
+      ],
+      "RelatedPublications": [
+        "DEPENDÊNCIA ECONÔMICA - Implantação"
+      ],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "assist_ncia_pr_escolar_saque_de_atrasado",
+      "TemplateName": "ASSISTÊNCIA PRÉ-ESCOLAR - Saque de Atrasado",
+      "Title": "ASSISTÊNCIA PRÉ-ESCOLAR - Saque de Atrasado",
+      "Category": "Assistência Pré-Escolar",
+      "Action": "Saque de Atrasado",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "ASSISTÊNCIA PRÉ-ESCOLAR Saque de Atrasado",
+        "ASSISTÊNCIA PRÉ-ESCOLAR"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "PERIODO_ATRASADO",
+          "Label": "período do atrasado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "NOME_DEPENDENTE",
+          "Label": "nome do dependente",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_MENSAL",
+          "Label": "valor mensal",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol.",
+        "Dados podem ser preenchidos pela certidão OCR ou manualmente."
+      ],
+      "RelatedPublications": [
+        "DEPENDÊNCIA ECONÔMICA - Implantação"
+      ],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "sal_rio_fam_lia_saque_de_atrasado",
+      "TemplateName": "SALÁRIO-FAMÍLIA - Saque de Atrasado",
+      "Title": "SALÁRIO-FAMÍLIA - Saque de Atrasado",
+      "Category": "Salário-Família",
+      "Action": "Saque de Atrasado",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "SALÁRIO-FAMÍLIA Saque de Atrasado",
+        "SALÁRIO-FAMÍLIA"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "NOME_DEPENDENTE",
+          "Label": "nome do dependente",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "PERIODO_ATRASADO",
+          "Label": "período do atrasado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "compensa_o_pecuni_ria_ordem_de_saque",
+      "TemplateName": "COMPENSAÇÃO PECUNIÁRIA - Ordem de Saque",
+      "Title": "COMPENSAÇÃO PECUNIÁRIA - Ordem de Saque",
+      "Category": "Compensação Pecuniária",
+      "Action": "Ordem de Saque",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "COMPENSAÇÃO PECUNIÁRIA Ordem de Saque",
+        "COMPENSAÇÃO PECUNIÁRIA"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "MOTIVO_DESLIGAMENTO",
+          "Label": "motivo do desligamento",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DATA_DESLIGAMENTO",
+          "Label": "data de desligamento",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "TEMPO_CONSIDERADO",
+          "Label": "tempo considerado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "exerc_cios_anteriores_ordem_de_saque",
+      "TemplateName": "EXERCÍCIOS ANTERIORES - Ordem de Saque",
+      "Title": "EXERCÍCIOS ANTERIORES - Ordem de Saque",
+      "Category": "Exercícios Anteriores",
+      "Action": "Ordem de Saque",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "EXERCÍCIOS ANTERIORES Ordem de Saque",
+        "EXERCÍCIOS ANTERIORES"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "DOC_MATERIALIZOU_DIREITO",
+          "Label": "Documento que materializou o direito",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PROTOCOLO_CPEX",
+          "Label": "Protocolo CPEx/SIPPES",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "TIPO_EXERCICIO_ANTERIOR",
+          "Label": "Tipo/código EA",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "AEA - Pagamento de EA tributável",
+            "A98 - Pagamento de EA não tributável",
+            "AEC - Dev Fusex 3% EA",
+            "AED - Dev P MIL EA",
+            "AEE - Dev P MIL 1,5% EA",
+            "AEF - Dev DEP FUSEX",
+            "AEG - Pagamento de Auxílio-Fardamento",
+            "AEH - Pagamento de Auxílio-Alimentação",
+            "AEI - Pagamento de Auxílio-Natalidade",
+            "AEJ - Pagamento de DEA Auxílio-Transporte - Ativa (DAP)",
+            "AEK - Pagamento de DEA Assistência Pré-Escolar - Ativa (DAP)",
+            "AEL - Pagamento de Férias",
+            "AEP - Ex Ant RCB Precatório",
+            "AEQ - Adicional Natalino"
+          ]
+        },
+        {
+          "Key": "PERIODO_DIVIDA",
+          "Label": "Período da dívida",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "RUBRICAS_VALORES",
+          "Label": "Rubricas e valores",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_BRUTO",
+          "Label": "Valor bruto",
+          "Source": "form",
+          "Description": "",
+          "Severity": "warning",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "Valor corrigido/total",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "Posto/graduação",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "Nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Preferir importar do módulo Exercício Anterior/CPEx: protocolo, rubricas, período e valores.",
+        "Não digitar valores de memória; conferir com o protocolo salvo antes do SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "fusex_3_implanta_o",
+      "TemplateName": "FUSEx 3% - Implantação",
+      "Title": "FUSEx 3% - Implantação",
+      "Category": "Fusex 3%",
+      "Action": "Implantação",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "FUSEx 3% Implantação",
+        "FUSEx 3%"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "DATA_INICIO",
+          "Label": "data de início",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "fusex_3_saque_de_atrasado",
+      "TemplateName": "FUSEx 3% - Saque de Atrasado",
+      "Title": "FUSEx 3% - Saque de Atrasado",
+      "Category": "Fusex 3%",
+      "Action": "Saque de Atrasado",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "FUSEx 3% Saque de Atrasado",
+        "FUSEx 3%"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "PERIODO_ATRASADO",
+          "Label": "período do atrasado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "fusex_3_saque_de_diferen_a",
+      "TemplateName": "FUSEx 3% - Saque de Diferença",
+      "Title": "FUSEx 3% - Saque de Diferença",
+      "Category": "Fusex 3%",
+      "Action": "Saque de Diferença",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "FUSEx 3% Saque de Diferença",
+        "FUSEx 3%"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "PERIODO_DIFERENCA",
+          "Label": "período da diferença",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_DESCONTADO",
+          "Label": "valor descontado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_DEVIDO",
+          "Label": "valor devido",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "ficha_financeira_inclus_o_ou_altera_o",
+      "TemplateName": "FICHA FINANCEIRA - Inclusão ou Alteração",
+      "Title": "FICHA FINANCEIRA - Inclusão ou Alteração",
+      "Category": "Ficha Financeira",
+      "Action": "Inclusão ou Alteração",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "FICHA FINANCEIRA Inclusão ou Alteração",
+        "FICHA FINANCEIRA"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "ACAO_FICHA",
+          "Label": "ação da ficha financeira",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "MOTIVO_ALTERACAO",
+          "Label": "motivo da alteração",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DADOS_FICHA",
+          "Label": "dados da ficha financeira",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "gratifica_o_representa_o_cargo_de_chefe_ou_comandante",
+      "TemplateName": "GRATIFICAÇÃO REPRESENTAÇÃO - Cargo de Chefe ou Comandante",
+      "Title": "GRATIFICAÇÃO REPRESENTAÇÃO - Cargo de Chefe ou Comandante",
+      "Category": "Gratificação Representação",
+      "Action": "Cargo de Chefe ou Comandante",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "GRATIFICAÇÃO REPRESENTAÇÃO Cargo de Chefe ou Comandante",
+        "GRATIFICAÇÃO REPRESENTAÇÃO"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "FUNCAO_REPRESENTACAO",
+          "Label": "função de representação",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "PERIODO_FUNCAO",
+          "Label": "período da função",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "PERCENTUAL_BASE",
+          "Label": "percentual/base",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DOC_AMPARO",
+          "Label": "documento de amparo",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "gratifica_o_representa_o_2_acolhida",
+      "TemplateName": "GRATIFICAÇÃO REPRESENTAÇÃO 2% - Acolhida",
+      "Title": "GRATIFICAÇÃO REPRESENTAÇÃO 2% - Acolhida",
+      "Category": "Gratificação Representação 2%",
+      "Action": "Acolhida",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "GRATIFICAÇÃO REPRESENTAÇÃO 2% Acolhida",
+        "GRATIFICAÇÃO REPRESENTAÇÃO 2%"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "PERIODO_MISSAO",
+          "Label": "período da missão",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DOC_AMPARO",
+          "Label": "documento de amparo",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "gratifica_o_representa_o_2_normal",
+      "TemplateName": "GRATIFICAÇÃO REPRESENTAÇÃO 2% - Normal",
+      "Title": "GRATIFICAÇÃO REPRESENTAÇÃO 2% - Normal",
+      "Category": "Gratificação Representação 2%",
+      "Action": "Normal",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "GRATIFICAÇÃO REPRESENTAÇÃO 2% Normal",
+        "GRATIFICAÇÃO REPRESENTAÇÃO 2%"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "PERIODO_MISSAO",
+          "Label": "período da missão",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DOC_AMPARO",
+          "Label": "documento de amparo",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "gratifica_o_localidade_especial_saque_de_atrasado",
+      "TemplateName": "GRATIFICAÇÃO LOCALIDADE ESPECIAL - Saque de Atrasado",
+      "Title": "GRATIFICAÇÃO LOCALIDADE ESPECIAL - Saque de Atrasado",
+      "Category": "Gratificação Localidade Especial",
+      "Action": "Saque de Atrasado",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "GRATIFICAÇÃO LOCALIDADE ESPECIAL Saque de Atrasado",
+        "GRATIFICAÇÃO LOCALIDADE ESPECIAL"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "PERIODO_ATRASADO",
+          "Label": "período do atrasado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "PERCENTUAL_LOCALIDADE",
+          "Label": "percentual de localidade",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DOC_AMPARO",
+          "Label": "documento de amparo",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "gratifica_o_localidade_especial_20_saque_de_diferen_a",
+      "TemplateName": "GRATIFICAÇÃO LOCALIDADE ESPECIAL 20% - Saque de Diferença",
+      "Title": "GRATIFICAÇÃO LOCALIDADE ESPECIAL 20% - Saque de Diferença",
+      "Category": "Gratificação Localidade Especial 20%",
+      "Action": "Saque de Diferença",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "GRATIFICAÇÃO LOCALIDADE ESPECIAL 20% Saque de Diferença",
+        "GRATIFICAÇÃO LOCALIDADE ESPECIAL 20%"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "PERIODO_DIFERENCA",
+          "Label": "período da diferença",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_RECEBIDO",
+          "Label": "valor recebido",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_DEVIDO",
+          "Label": "valor devido",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "exclus_o_de_cadastro_sippes_militar_tempor_rio",
+      "TemplateName": "EXCLUSÃO DE CADASTRO SIPPES - Militar Temporário",
+      "Title": "EXCLUSÃO DE CADASTRO SIPPES - Militar Temporário",
+      "Category": "Exclusão De Cadastro Sippes",
+      "Action": "Militar Temporário",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "EXCLUSÃO DE CADASTRO SIPPES Militar Temporário",
+        "EXCLUSÃO DE CADASTRO SIPPES"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "MOTIVO_EXCLUSAO",
+          "Label": "motivo da exclusão",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DATA_DESLIGAMENTO",
+          "Label": "data de desligamento",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "pagamento_transfer_ncia_para_outra_om",
+      "TemplateName": "PAGAMENTO - Transferência de Pagamento",
+      "Title": "PAGAMENTO - Transferência para Outra OM",
+      "Category": "Pagamento",
+      "Action": "Transferência para Outra OM",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "PAGAMENTO - Transferência de Pagamento",
+        "transferencia pagamento",
+        "PAGAMENTO",
+        "transferência de pagamento",
+        "PAGAMENTO Transferência para Outra OM"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "OM_ORIGEM",
+          "Label": "OM de origem",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "4ª Cia PE - CODOM 1950/4ª RM",
+            "Comando da 4ª Região Militar - CODOM PREENCHER",
+            "Comando Militar do Leste - CODOM PREENCHER",
+            "Outra OM - informar OM e CODOM"
+          ]
+        },
+        {
+          "Key": "CODOM_ORIGEM",
+          "Label": "CODOM de origem",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "1950/4ª RM",
+            "PREENCHER conforme OM",
+            "Não se aplica"
+          ]
+        },
+        {
+          "Key": "OM_DESTINO",
+          "Label": "OM de destino",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "4ª Cia PE - CODOM 1950/4ª RM",
+            "Comando da 4ª Região Militar - CODOM PREENCHER",
+            "Comando Militar do Leste - CODOM PREENCHER",
+            "Outra OM - informar OM e CODOM"
+          ]
+        },
+        {
+          "Key": "CODOM_DESTINO",
+          "Label": "CODOM de destino",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "1950/4ª RM",
+            "PREENCHER conforme OM",
+            "Não se aplica"
+          ]
+        },
+        {
+          "Key": "DATA_TRANSFERENCIA",
+          "Label": "Data de apresentação/desligamento",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "DOC_REFERENCIA",
+          "Label": "Documento de amparo",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "Posto/graduação",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "Nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir OM e CODOM antes de enviar ao SIPPES.",
+        "Quando a OM não estiver cadastrada, preencher manualmente e revisar no boletim de movimentação."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "pagamento_transfer_ncia_para_esta_om",
+      "TemplateName": "PAGAMENTO - Transferência de Pagamento",
+      "Title": "PAGAMENTO - Transferência para Esta OM",
+      "Category": "Pagamento",
+      "Action": "Transferência para Esta OM",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "PAGAMENTO - Transferência de Pagamento",
+        "transferencia pagamento",
+        "PAGAMENTO",
+        "transferência de pagamento",
+        "PAGAMENTO Transferência para Esta OM"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "OM_ORIGEM",
+          "Label": "OM de origem",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "4ª Cia PE - CODOM 1950/4ª RM",
+            "Comando da 4ª Região Militar - CODOM PREENCHER",
+            "Comando Militar do Leste - CODOM PREENCHER",
+            "Outra OM - informar OM e CODOM"
+          ]
+        },
+        {
+          "Key": "CODOM_ORIGEM",
+          "Label": "CODOM de origem",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "1950/4ª RM",
+            "PREENCHER conforme OM",
+            "Não se aplica"
+          ]
+        },
+        {
+          "Key": "OM_DESTINO",
+          "Label": "OM de destino",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "4ª Cia PE - CODOM 1950/4ª RM",
+            "Comando da 4ª Região Militar - CODOM PREENCHER",
+            "Comando Militar do Leste - CODOM PREENCHER",
+            "Outra OM - informar OM e CODOM"
+          ]
+        },
+        {
+          "Key": "CODOM_DESTINO",
+          "Label": "CODOM de destino",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": [
+            "1950/4ª RM",
+            "PREENCHER conforme OM",
+            "Não se aplica"
+          ]
+        },
+        {
+          "Key": "DATA_TRANSFERENCIA",
+          "Label": "Data de apresentação/desligamento",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "DOC_REFERENCIA",
+          "Label": "Documento de amparo",
+          "Source": "form",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "Posto/graduação",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "Nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Description": "",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir OM e CODOM antes de enviar ao SIPPES.",
+        "Quando a OM não estiver cadastrada, preencher manualmente e revisar no boletim de movimentação."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "pnr_implanta_o_de_desconto",
+      "TemplateName": "PNR - Implantação de Desconto",
+      "Title": "PNR - Implantação de Desconto",
+      "Category": "Pnr",
+      "Action": "Implantação de Desconto",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "PNR Implantação de Desconto",
+        "PNR"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "IDENTIFICACAO_PNR",
+          "Label": "identificação do PNR",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DATA_INICIO",
+          "Label": "data de início",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "PERCENTUAL_VALOR",
+          "Label": "percentual/valor",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "pnr_exclus_o_de_desconto",
+      "TemplateName": "PNR - Exclusão de Desconto",
+      "Title": "PNR - Exclusão de Desconto",
+      "Category": "Pnr",
+      "Action": "Exclusão de Desconto",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "PNR Exclusão de Desconto",
+        "PNR"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "IDENTIFICACAO_PNR",
+          "Label": "identificação do PNR",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DATA_EXCLUSAO",
+          "Label": "data de exclusão",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "pnr_altera_o",
+      "TemplateName": "PNR - Alteração",
+      "Title": "PNR - Alteração",
+      "Category": "Pnr",
+      "Action": "Alteração",
+      "Summary": "Modelo profissional criado a partir dos lembretes obrigatórios do Gerador de Direito/SIPPES.",
+      "Aliases": [
+        "PNR Alteração",
+        "PNR"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "IDENTIFICACAO_PNR",
+          "Label": "identificação do PNR",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_ANTERIOR",
+          "Label": "valor anterior",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_NOVO",
+          "Label": "valor novo",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "DATA_INICIO",
+          "Label": "data de início",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme lembretes do Gerador de Direito/SIPPES.",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "PREC-CP",
+          "Source": "military",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Conferir se P/G, nome, Prec-CP e CPF vieram do cadastro oficial.",
+        "Não publicar sem preencher todos os campos obrigatórios do SIPPES.",
+        "Conferir documento de amparo, competência, data e valor antes de enviar ao SisBol."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Não inventar valor, data, curso, processo, competência ou documento de amparo.",
+        "Quando faltar dado obrigatório, marcar pendência impeditiva."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "pensao_judicial_implantacao",
+      "TemplateName": "PENSÃO JUDICIAL - Implantação",
+      "Title": "PENSÃO JUDICIAL - Implantação",
+      "Category": "Pensão Alimentícia",
+      "Action": "Implantação",
+      "Summary": "Modelo revisado para apresentar somente os dados obrigatórios de pensão alimentícia necessários ao lançamento no SIPPES.",
+      "Aliases": [
+        "PENSÃO JUDICIAL - Implantação",
+        "PENSÃO JUDICIAL"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "NUMERO_PROCESSO",
+          "Label": "número do processo",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "ORIGEM_DECISAO",
+          "Label": "origem da decisão",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "DECISAO_JUDICIAL",
+          "Label": "tipo da decisão judicial",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": [
+            "Acórdão",
+            "Liminar",
+            "Sentença",
+            "Transitado em Julgado",
+            "Tutela Antecipada"
+          ]
+        },
+        {
+          "Key": "DATA_DECISAO",
+          "Label": "data da decisão",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NATUREZA_ACAO",
+          "Label": "natureza da ação",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "RESUMO_DECISAO",
+          "Label": "resumo da decisão até 250 caracteres",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME_AUTOR",
+          "Label": "autor",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF_AUTOR",
+          "Label": "CPF do autor",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "OFICIO_RECEBIMENTO",
+          "Label": "número do ofício de recebimento",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "ORIGEM_OFICIO_RECEBIMENTO",
+          "Label": "origem do ofício de recebimento",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "DATA_OFICIO_RECEBIMENTO",
+          "Label": "data do ofício de recebimento",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME_ALIMENTADO",
+          "Label": "alimentado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF_ALIMENTADO",
+          "Label": "CPF do alimentado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "DETENTOR_GUARDA",
+          "Label": "detentor da guarda legal",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF_DETENTOR_GUARDA",
+          "Label": "CPF do detentor da guarda",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "GRAU_PARENTESCO",
+          "Label": "grau de parentesco",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": [
+            "Mãe",
+            "Pai",
+            "Filho(a)",
+            "Detentor(a) da guarda",
+            "Outro"
+          ]
+        },
+        {
+          "Key": "TIPO_PENSAO",
+          "Label": "tipo de pensão",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": [
+            "Pensão Judicial",
+            "Pensão Extrajudicial"
+          ]
+        },
+        {
+          "Key": "VALOR_PENSAO",
+          "Label": "valor fixo, fórmula ou percentual da pensão",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "INCIDE_COMPENSACAO",
+          "Label": "incidência sobre compensação pecuniária",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": [
+            "Incide",
+            "Não incide"
+          ]
+        },
+        {
+          "Key": "INCIDE_FERIAS",
+          "Label": "incidência sobre férias",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": [
+            "Incide",
+            "Não incide"
+          ]
+        },
+        {
+          "Key": "INCIDE_NATALINO",
+          "Label": "incidência sobre adicional natalino",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": [
+            "Incide",
+            "Não incide"
+          ]
+        },
+        {
+          "Key": "PENSOES_ANTERIORES",
+          "Label": "informação sobre pensões anteriores",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "BANCO_GUARDA",
+          "Label": "banco do detentor/beneficiário",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": [
+            "001 - Banco do Brasil S.A",
+            "033 - Santander",
+            "041 - Banrisul",
+            "104 - Caixa Econômica Federal",
+            "237 - Bradesco",
+            "341 - Itaú Unibanco S.A",
+            "756 - Sicoob"
+          ]
+        },
+        {
+          "Key": "AGENCIA_GUARDA",
+          "Label": "agência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CONTA_GUARDA",
+          "Label": "conta corrente",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "Severity": "warning",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Não incluir memória de cálculo, rubrica interna ou orientação ao operador no corpo da publicação.",
+        "Resumo e justificativa destinados ao SIPPES devem respeitar 250 caracteres.",
+        "Conferir se os dados do alimentado, detentor da guarda e processo batem com a decisão/ofício."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Na implantação, a publicação pode ser única, desde que contenha os dados das duas etapas do SIPPES.",
+        "Em desconto de atrasados, não exigir processo/decisão quando o lançamento só precisa de valor, mês/ano, alimentado e representante.",
+        "Quando faltar dado obrigatório, bloquear cópia/envio e informar exatamente o campo pendente."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "pensao_judicial_atualizacao",
+      "TemplateName": "PENSÃO JUDICIAL - Atualização",
+      "Title": "PENSÃO JUDICIAL - Atualização",
+      "Category": "Pensão Alimentícia",
+      "Action": "Atualização",
+      "Summary": "Modelo revisado para apresentar somente os dados obrigatórios de pensão alimentícia necessários ao lançamento no SIPPES.",
+      "Aliases": [
+        "PENSÃO JUDICIAL - Atualização",
+        "PENSÃO JUDICIAL"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "NOME_ALIMENTADO",
+          "Label": "alimentado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF_ALIMENTADO",
+          "Label": "CPF do alimentado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "DETENTOR_GUARDA",
+          "Label": "detentor da guarda",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF_DETENTOR_GUARDA",
+          "Label": "CPF do detentor",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "ITEM_ATUALIZADO",
+          "Label": "item atualizado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "DADOS_ATUALIZADOS",
+          "Label": "valor ou dados bancários atualizados",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "MOTIVO_ATUALIZACAO",
+          "Label": "motivo da atualização",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "RESUMO_DECISAO",
+          "Label": "resumo da decisão/ofício até 250 caracteres",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "Severity": "warning",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Não incluir memória de cálculo, rubrica interna ou orientação ao operador no corpo da publicação.",
+        "Resumo e justificativa destinados ao SIPPES devem respeitar 250 caracteres.",
+        "Conferir se os dados do alimentado, detentor da guarda e processo batem com a decisão/ofício."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Na implantação, a publicação pode ser única, desde que contenha os dados das duas etapas do SIPPES.",
+        "Em desconto de atrasados, não exigir processo/decisão quando o lançamento só precisa de valor, mês/ano, alimentado e representante.",
+        "Quando faltar dado obrigatório, bloquear cópia/envio e informar exatamente o campo pendente."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "pensao_judicial_desconto_atrasados",
+      "TemplateName": "PENSÃO JUDICIAL - Desconto de Atrasados",
+      "Title": "PENSÃO JUDICIAL - Desconto de Atrasados",
+      "Category": "Pensão Alimentícia",
+      "Action": "Desconto de Atrasados",
+      "Summary": "Modelo revisado para apresentar somente os dados obrigatórios de pensão alimentícia necessários ao lançamento no SIPPES.",
+      "Aliases": [
+        "PENSÃO JUDICIAL - Desconto de Atrasados",
+        "PENSÃO JUDICIAL"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total do desconto",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "MES_REFERENCIA",
+          "Label": "mês de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "ANO_REFERENCIA",
+          "Label": "ano de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME_ALIMENTADO",
+          "Label": "alimentado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "DETENTOR_GUARDA",
+          "Label": "representante/detentor da guarda",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "Severity": "warning",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Não incluir memória de cálculo, rubrica interna ou orientação ao operador no corpo da publicação.",
+        "Resumo e justificativa destinados ao SIPPES devem respeitar 250 caracteres.",
+        "Conferir se os dados do alimentado, detentor da guarda e processo batem com a decisão/ofício."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Na implantação, a publicação pode ser única, desde que contenha os dados das duas etapas do SIPPES.",
+        "Em desconto de atrasados, não exigir processo/decisão quando o lançamento só precisa de valor, mês/ano, alimentado e representante.",
+        "Quando faltar dado obrigatório, bloquear cópia/envio e informar exatamente o campo pendente."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "pensao_judicial_exclusao",
+      "TemplateName": "PENSÃO JUDICIAL - Exclusão",
+      "Title": "PENSÃO JUDICIAL - Exclusão",
+      "Category": "Pensão Alimentícia",
+      "Action": "Exclusão",
+      "Summary": "Modelo revisado para apresentar somente os dados obrigatórios de pensão alimentícia necessários ao lançamento no SIPPES.",
+      "Aliases": [
+        "PENSÃO JUDICIAL - Exclusão",
+        "PENSÃO JUDICIAL"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "NUMERO_PROCESSO",
+          "Label": "número do processo",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME_ALIMENTADO",
+          "Label": "alimentado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF_ALIMENTADO",
+          "Label": "CPF do alimentado",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "DETENTOR_GUARDA",
+          "Label": "detentor da guarda",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF_DETENTOR_GUARDA",
+          "Label": "CPF do detentor",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "MOTIVO_EXCLUSAO",
+          "Label": "motivo da exclusão",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": [
+            "Ordem Judicial",
+            "Óbito do Alimentado"
+          ]
+        },
+        {
+          "Key": "JUSTIFICATIVA_EXCLUSAO",
+          "Label": "justificativa da exclusão até 250 caracteres",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "DATA_ENCERRAMENTO",
+          "Label": "data de encerramento",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "Severity": "warning",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Não incluir memória de cálculo, rubrica interna ou orientação ao operador no corpo da publicação.",
+        "Resumo e justificativa destinados ao SIPPES devem respeitar 250 caracteres.",
+        "Conferir se os dados do alimentado, detentor da guarda e processo batem com a decisão/ofício."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Na implantação, a publicação pode ser única, desde que contenha os dados das duas etapas do SIPPES.",
+        "Em desconto de atrasados, não exigir processo/decisão quando o lançamento só precisa de valor, mês/ano, alimentado e representante.",
+        "Quando faltar dado obrigatório, bloquear cópia/envio e informar exatamente o campo pendente."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "auxilio_transporte_implantacao",
+      "TemplateName": "AUXÍLIO-TRANSPORTE - Implantação",
+      "Title": "AUXÍLIO-TRANSPORTE - Implantação",
+      "Category": "Auxílio-Transporte",
+      "Action": "Implantação",
+      "Summary": "Modelo revisado para publicar somente os dados necessários ao lançamento no SIPPES, sem linhas, passagens, endereço ou memória de cálculo.",
+      "Aliases": [
+        "AUXÍLIO-TRANSPORTE - Implantação",
+        "AT Implantação"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "VALOR_DIARIO",
+          "Label": "valor diário",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "QTD_DIAS",
+          "Label": "quantidade de dias",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "ANO_REFERENCIA",
+          "Label": "ano de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "Severity": "warning",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Não publicar linhas de ônibus, valores de passagens, endereço ou memória de cálculo.",
+        "Conferir se valor diário, quantidade de dias e competência estão compatíveis com o SIPPES.",
+        "Na implantação, informar Boletim Regional da 4ª RM somente quando o valor estiver acima do teto."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Usar o cálculo de rotas apenas como subsídio interno; não transportar esses detalhes para a publicação.",
+        "Quando faltar dado obrigatório, bloquear cópia/envio e apontar o campo pendente."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "auxilio_transporte_devolucao_militar",
+      "TemplateName": "AUXÍLIO-TRANSPORTE - Devolução a Militar",
+      "Title": "AUXÍLIO-TRANSPORTE - Devolução a Militar",
+      "Category": "Auxílio-Transporte",
+      "Action": "Devolução a Militar",
+      "Summary": "Modelo revisado para publicar somente os dados necessários ao lançamento no SIPPES, sem linhas, passagens, endereço ou memória de cálculo.",
+      "Aliases": [
+        "AUXÍLIO-TRANSPORTE - Devolução a Militar",
+        "AT Devolução a Militar"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "VALOR_DIARIO",
+          "Label": "valor diário",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "QTD_DIAS",
+          "Label": "quantidade de dias",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "MES_REFERENCIA",
+          "Label": "mês de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "ANO_REFERENCIA",
+          "Label": "ano de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "Severity": "warning",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Não publicar linhas de ônibus, valores de passagens, endereço ou memória de cálculo.",
+        "Conferir se valor diário, quantidade de dias e competência estão compatíveis com o SIPPES."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Usar o cálculo de rotas apenas como subsídio interno; não transportar esses detalhes para a publicação.",
+        "Quando faltar dado obrigatório, bloquear cópia/envio e apontar o campo pendente."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "auxilio_transporte_saque_atrasado",
+      "TemplateName": "AUXÍLIO-TRANSPORTE - Saque de Atrasado",
+      "Title": "AUXÍLIO-TRANSPORTE - Saque de Atrasado",
+      "Category": "Auxílio-Transporte",
+      "Action": "Saque de Atrasado",
+      "Summary": "Modelo revisado para publicar somente os dados necessários ao lançamento no SIPPES, sem linhas, passagens, endereço ou memória de cálculo.",
+      "Aliases": [
+        "AUXÍLIO-TRANSPORTE - Saque de Atrasado",
+        "AT Saque de Atrasado"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "VALOR_DIARIO",
+          "Label": "valor diário",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "VALOR_TOTAL",
+          "Label": "valor total",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "QTD_DIAS",
+          "Label": "quantidade de dias",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "MES_REFERENCIA",
+          "Label": "mês de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "ANO_REFERENCIA",
+          "Label": "ano de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "Severity": "warning",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Não publicar linhas de ônibus, valores de passagens, endereço ou memória de cálculo.",
+        "Conferir se valor diário, quantidade de dias e competência estão compatíveis com o SIPPES.",
+        "Na implantação, informar Boletim Regional da 4ª RM somente quando o valor estiver acima do teto."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Usar o cálculo de rotas apenas como subsídio interno; não transportar esses detalhes para a publicação.",
+        "Quando faltar dado obrigatório, bloquear cópia/envio e apontar o campo pendente."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "auxilio_transporte_despesa_anular",
+      "TemplateName": "AUXÍLIO-TRANSPORTE - Despesa a Anular",
+      "Title": "AUXÍLIO-TRANSPORTE - Despesa a Anular",
+      "Category": "Auxílio-Transporte",
+      "Action": "Despesa a Anular",
+      "Summary": "Modelo revisado para publicar somente os dados necessários ao lançamento no SIPPES, sem linhas, passagens, endereço ou memória de cálculo.",
+      "Aliases": [
+        "AUXÍLIO-TRANSPORTE - Despesa a Anular",
+        "AT Despesa a Anular"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "VALOR_TOTAL_DESCONTAR",
+          "Label": "valor total a descontar",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "MES_REFERENCIA",
+          "Label": "mês de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "ANO_REFERENCIA",
+          "Label": "ano de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "Severity": "warning",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Não publicar linhas de ônibus, valores de passagens, endereço ou memória de cálculo.",
+        "Conferir se valor diário, quantidade de dias e competência estão compatíveis com o SIPPES.",
+        "Na implantação, informar Boletim Regional da 4ª RM somente quando o valor estiver acima do teto."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Usar o cálculo de rotas apenas como subsídio interno; não transportar esses detalhes para a publicação.",
+        "Quando faltar dado obrigatório, bloquear cópia/envio e apontar o campo pendente."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    },
+    {
+      "Id": "auxilio_transporte_atualizacao_valores",
+      "TemplateName": "AUXÍLIO-TRANSPORTE - Atualização de Valores",
+      "Title": "AUXÍLIO-TRANSPORTE - Atualização de Valores",
+      "Category": "Auxílio-Transporte",
+      "Action": "Atualização de Valores",
+      "Summary": "Modelo revisado para publicar somente os dados necessários ao lançamento no SIPPES, sem linhas, passagens, endereço ou memória de cálculo.",
+      "Aliases": [
+        "AUXÍLIO-TRANSPORTE - Atualização de Valores",
+        "AT Atualização de Valores"
+      ],
+      "RequiredFields": [
+        {
+          "Key": "NOVO_VALOR_DIARIO",
+          "Label": "valor diário",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "QTD_DIAS",
+          "Label": "quantidade de dias",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "MES_REFERENCIA",
+          "Label": "mês de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "ANO_REFERENCIA",
+          "Label": "ano de referência",
+          "Source": "form",
+          "Description": "Campo obrigatório conforme Lembretes ao Gerador de Direito/SIPPES.",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "POSTO_ABREV",
+          "Label": "posto/graduação",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "NOME",
+          "Label": "nome completo com nome de guerra em negrito",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "PREC_CP",
+          "Label": "Prec-CP",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        },
+        {
+          "Key": "CPF",
+          "Label": "CPF",
+          "Source": "military",
+          "Severity": "error",
+          "Options": []
+        }
+      ],
+      "RequiredText": [
+        {
+          "Label": "fechamento de consequência",
+          "Severity": "warning",
+          "AnyOf": [
+            "Em consequência"
+          ]
+        }
+      ],
+      "Checklist": [
+        "Não publicar linhas de ônibus, valores de passagens, endereço ou memória de cálculo.",
+        "Conferir se valor diário, quantidade de dias e competência estão compatíveis com o SIPPES.",
+        "Na implantação, informar Boletim Regional da 4ª RM somente quando o valor estiver acima do teto."
+      ],
+      "RelatedPublications": [],
+      "AiGuidance": [
+        "Usar o cálculo de rotas apenas como subsídio interno; não transportar esses detalhes para a publicação.",
+        "Quando faltar dado obrigatório, bloquear cópia/envio e apontar o campo pendente."
+      ],
+      "SourceReferences": [
+        "Lembretes ao GERADOR DE DIREITO__SIPPES.odt",
+        "Aditamentos do Furriel enviados como padrão visual"
+      ],
+      "ExamplePattern": "Enunciado profissional; bloco por militar; identificação em linha própria; fechamento com Em consequência."
+    }
+  ]
+}

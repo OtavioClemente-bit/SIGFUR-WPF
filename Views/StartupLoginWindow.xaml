@@ -1,0 +1,174 @@
+<Window x:Class="SIGFUR.Wpf.Views.StartupLoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SIGFUR — Acesso" Width="980" Height="700" MinWidth="760" MinHeight="620"
+        WindowStartupLocation="CenterScreen" ResizeMode="CanResize"
+        Background="{DynamicResource AppBackgroundBrush}" Tag="UiState.BoundsOnly"
+        Icon="/SIGFUR;component/Assets/sigfur.ico" PreviewKeyDown="Window_PreviewKeyDown"
+        SizeChanged="Window_SizeChanged" LocationChanged="Window_LocationChanged" StateChanged="Window_StateChanged">
+    <Window.Resources>
+        <Style x:Key="LoginLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11"/><Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{DynamicResource MutedBrush}"/><Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+        <Style x:Key="LoginActionStyle" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/><Setter Property="Padding" Value="14,11"/><Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+        <Style x:Key="LoginComboStyle" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ComboBox">
+                <Grid>
+                    <ToggleButton Focusable="False" IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" ClickMode="Press">
+                        <ToggleButton.Template><ControlTemplate TargetType="ToggleButton">
+                            <Border x:Name="Field" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="1" CornerRadius="8">
+                                <TextBlock Text="⌄" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,11,0" Foreground="{DynamicResource MutedBrush}"/>
+                            </Border>
+                            <ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="Field" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/></Trigger></ControlTemplate.Triggers>
+                        </ControlTemplate></ToggleButton.Template>
+                    </ToggleButton>
+                    <TextBlock Text="{Binding SelectedItem.ProfileName, RelativeSource={RelativeSource TemplatedParent}}"
+                               Margin="11,0,30,0" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" IsHitTestVisible="False"/>
+                    <Popup x:Name="PART_Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False">
+                        <Border Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource BorderStrongBrush}" BorderThickness="1" CornerRadius="8" Padding="4" MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ScrollViewer MaxHeight="260" CanContentScroll="True"><ItemsPresenter/></ScrollViewer>
+                        </Border>
+                    </Popup>
+                </Grid>
+                <ControlTemplate.Triggers><Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.5"/></Trigger></ControlTemplate.Triggers>
+            </ControlTemplate></Setter.Value></Setter>
+        </Style>
+        <Style x:Key="LoginPasswordStyle" TargetType="PasswordBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/><Setter Property="Background" Value="{DynamicResource SurfaceElevatedBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}"/><Setter Property="BorderThickness" Value="1"/><Setter Property="Padding" Value="11,8"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="PasswordBox">
+                <Border x:Name="Field" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="8">
+                    <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"/>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter TargetName="Field" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/><Setter TargetName="Field" Property="BorderThickness" Value="2"/></Trigger>
+                    <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.5"/></Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate></Setter.Value></Setter>
+        </Style>
+        <Style x:Key="LoginVisiblePasswordStyle" TargetType="TextBox">
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource SurfaceElevatedBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderStrongBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="11,8,46,8"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="TextBox">
+                <Border x:Name="Field" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="8">
+                    <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"/>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter TargetName="Field" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/><Setter TargetName="Field" Property="BorderThickness" Value="2"/></Trigger>
+                    <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.5"/></Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate></Setter.Value></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <Border Background="{DynamicResource PrimaryDarkBrush}" Padding="28,20">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <Border Width="64" Height="64" CornerRadius="16" Background="#22FFFFFF" Margin="0,0,18,0">
+                    <Image Source="/SIGFUR;component/Assets/sigfur-mark.png" Width="52" Height="52" Stretch="Uniform"/>
+                </Border>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="Bem-vindo ao SIGFUR" Foreground="White" FontSize="26" FontWeight="SemiBold"/>
+                    <TextBlock Text="Escolha como deseja acessar os dados deste computador." Foreground="#D7E9FF" Margin="0,5,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                    <TextBlock Text="ACESSO SEGURO" Foreground="#BFD8F4" FontSize="10" FontWeight="Bold" HorizontalAlignment="Right"/>
+                    <TextBlock Text="Perfil e backup" Foreground="White" FontSize="14" FontWeight="SemiBold" Margin="0,4,0,0" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Grid x:Name="LoginContent" Grid.Row="1" Margin="24,20,24,16">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="1.45*" MinWidth="400"/><ColumnDefinition Width="16"/><ColumnDefinition Width="0.85*" MinWidth="260"/></Grid.ColumnDefinitions>
+            <Border Style="{StaticResource CardStyle}" Padding="22">
+                <Grid>
+                    <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Entrar com Perfil SIGFUR" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Text="Acesse seus dados locais e mantenha a opção de backup sincronizado." Style="{StaticResource PageSubtitleStyle}" Margin="0,5,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Margin="0,22,0,0">
+                        <TextBlock Text="PERFIL" Style="{StaticResource LoginLabelStyle}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="8"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <ComboBox x:Name="ProfilesComboBox" DisplayMemberPath="ProfileName" SelectionChanged="ProfilesComboBox_SelectionChanged" MinHeight="40" Style="{StaticResource LoginComboStyle}"/>
+                            <Button x:Name="RemoveProfileButton" Grid.Column="2" Content="Remover" Click="RemoveProfileButton_Click"
+                                    Style="{StaticResource GhostButtonStyle}" Foreground="{DynamicResource DangerBrush}" MinHeight="40"
+                                    ToolTip="Remove apenas o vínculo deste computador; dados e backups são preservados."/>
+                        </Grid>
+                        <TextBlock Text="SENHA" Style="{StaticResource LoginLabelStyle}" Margin="0,16,0,5"/>
+                        <Grid>
+                            <PasswordBox x:Name="ProfilePasswordBox" MinHeight="42" Padding="11,8,46,8"
+                                         Style="{StaticResource LoginPasswordStyle}" ToolTip="Digite a senha e pressione Enter"/>
+                            <TextBox x:Name="ProfilePasswordTextBox" MinHeight="42" Visibility="Collapsed"
+                                     Style="{StaticResource LoginVisiblePasswordStyle}" ToolTip="Senha visível; pressione Enter para entrar"/>
+                            <Button x:Name="TogglePasswordButton" Width="36" Height="34" Margin="0,4,4,4"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center" Panel.ZIndex="2"
+                                    Style="{StaticResource GhostButtonStyle}" Padding="0" ToolTip="Mostrar senha"
+                                    AutomationProperties.Name="Mostrar senha" Click="TogglePasswordButton_Click">
+                                <Grid Width="20" Height="16">
+                                    <Path Data="M 1,8 C 4,2 8,1 10,1 C 12,1 16,2 19,8 C 16,14 12,15 10,15 C 8,15 4,14 1,8 Z"
+                                          Stroke="{DynamicResource MutedBrush}" StrokeThickness="1.7" Fill="Transparent"/>
+                                    <Ellipse Width="5" Height="5" Fill="{DynamicResource MutedBrush}"/>
+                                    <Line x:Name="PasswordEyeSlash" X1="2" Y1="1" X2="18" Y2="15"
+                                          Stroke="{DynamicResource DangerBrush}" StrokeThickness="2" Visibility="Collapsed"/>
+                                </Grid>
+                            </Button>
+                        </Grid>
+                        <TextBlock Text="Pressione Enter para entrar" Foreground="{DynamicResource MutedBrush}" FontSize="10" Margin="2,5,0,0"/>
+                    </StackPanel>
+                    <Border Grid.Row="2" Background="{DynamicResource SurfaceAltBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1" CornerRadius="10" Padding="13" Margin="0,18,0,14" VerticalAlignment="Top">
+                        <StackPanel>
+                            <TextBlock x:Name="SelectedProfileNameText" Text="Nenhum perfil selecionado" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"/>
+                            <TextBlock x:Name="FooterTextBlock" Foreground="{DynamicResource MutedBrush}" FontSize="10" TextWrapping="Wrap" Margin="0,5,0,0" MaxHeight="76"/>
+                        </StackPanel>
+                    </Border>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="8"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                        <Button x:Name="EnterProfileButton" Content="Entrar" Click="EnterProfileButton_Click" IsDefault="True" Style="{StaticResource PrimaryButtonStyle}" MinHeight="44"/>
+                        <Button x:Name="EnterAndRestoreButton" Grid.Column="2" Content="Entrar e restaurar backup"
+                                Click="EnterAndRestoreButton_Click" Style="{StaticResource SecondaryButtonStyle}" MinHeight="44"
+                                ToolTip="Valida a senha e carrega o último backup sincronizado."/>
+                    </Grid>
+                </Grid>
+            </Border>
+            <StackPanel Grid.Column="2">
+                <Border Style="{StaticResource CardStyle}" Padding="18" Margin="0,0,0,12">
+                    <StackPanel>
+                        <TextBlock Text="Neste computador" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryDarkBrush}"/>
+                        <TextBlock Text="Abra os dados locais sem usar perfil ou restauração." Style="{StaticResource PageSubtitleStyle}" Margin="0,5,0,12"/>
+                        <Button x:Name="NoLoginButton" Content="Entrar sem perfil" Click="NoLoginButton_Click" Style="{StaticResource SecondaryButtonStyle}"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource CardStyle}" Padding="18">
+                    <StackPanel>
+                        <TextBlock Text="Gerenciar perfis" FontSize="15" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryDarkBrush}"/>
+                        <TextBlock Text="Crie um acesso ou conecte esta máquina a uma pasta já sincronizada." Style="{StaticResource PageSubtitleStyle}" Margin="0,5,0,14"/>
+                        <Button Content="＋  Criar novo perfil" Click="CreateProfileButton_Click" Style="{StaticResource LoginActionStyle}"/>
+                        <Button Content="↗  Conectar perfil existente" Click="UseExistingProfileButton_Click" Style="{StaticResource LoginActionStyle}"/>
+                        <Separator Margin="0,6,0,10"/>
+                        <Button Content="Cancelar e fechar" Click="CancelButton_Click" IsCancel="True" Style="{StaticResource GhostButtonStyle}"
+                                Foreground="{DynamicResource DangerBrush}" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+        <Border Grid.Row="2" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="24,11">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <ProgressBar x:Name="BusyProgress" Width="64" Height="6" IsIndeterminate="True" Visibility="Collapsed" Margin="0,0,12,0"/>
+                <TextBlock x:Name="StatusTextBlock" Grid.Column="1" Text="Status: aguardando escolha de entrada."
+                           Foreground="{DynamicResource MutedBrush}" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="2" Text="Enter  Entrar   ·   Esc  Fechar" Foreground="{DynamicResource MutedBrush}" FontSize="10" VerticalAlignment="Center" Margin="12,0,0,0"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

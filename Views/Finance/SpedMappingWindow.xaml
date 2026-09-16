@@ -1,0 +1,156 @@
+<Window x:Class="SIGFUR.Wpf.Views.Finance.SpedMappingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SIGFUR — Automatizar o SPED 3.0"
+        Width="960" Height="820" MinWidth="820" MinHeight="680"
+        WindowStartupLocation="CenterOwner" Icon="/Assets/sigfur.ico"
+        Background="{DynamicResource AppBackgroundBrush}"
+        Loaded="Window_Loaded" Closing="Window_Closing" Closed="Window_Closed">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="76"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="44"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{DynamicResource PrimaryDarkBrush}" Padding="22,0">
+            <Grid>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="AUTOMATIZAR O SPED 3.0" Foreground="White" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="Execução oculta, anexos verificados e salvamento automático" Foreground="{DynamicResource TextOnPrimaryMutedBrush}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="18">
+                <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="1. Acesso ao SPED" Style="{StaticResource SectionTitleStyle}"/>
+                        <Grid Grid.Row="1" Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="12"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Login ou CPF" Style="{StaticResource CaptionTextStyle}"/>
+                                <TextBox x:Name="LoginBox" MinHeight="38"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Senha" Style="{StaticResource CaptionTextStyle}"/>
+                                <PasswordBox x:Name="PasswordInput" MinHeight="38" Padding="9,6"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="2" Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <CheckBox x:Name="SavePasswordCheck" Content="Salvar a senha protegida neste usuário do Windows" VerticalAlignment="Center"/>
+                            <Button x:Name="OpenLoginButton" Grid.Column="1" Content="Executar e salvar no SPED" Style="{StaticResource PrimaryButtonStyle}" Click="OpenLogin_Click" MinWidth="220"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border x:Name="DiexDefaultsCard" Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="2. Padrões do DIEx" Style="{StaticResource SectionTitleStyle}"/>
+                                <TextBlock Text="Digite os valores desejados. Eles ficam salvos para os próximos DIEx." Style="{StaticResource CaptionTextStyle}" Margin="0,4,0,0"/>
+                            </StackPanel>
+                            <WrapPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
+                                <Button Content="Restaurar padrões" Style="{StaticResource SecondaryButtonStyle}" Click="RestoreDefaults_Click" Margin="0,0,8,0"/>
+                                <Button Content="Salvar escolhas" Style="{StaticResource SecondaryButtonStyle}" Click="SaveChoices_Click"/>
+                            </WrapPanel>
+                        </Grid>
+                        <Grid Grid.Row="1" Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="12"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Remetente — nome de guerra" Style="{StaticResource CaptionTextStyle}"/>
+                                <TextBox x:Name="SenderBox" MinHeight="38" ToolTip="Ex.: PHABLLO"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Destinatário externo" Style="{StaticResource CaptionTextStyle}"/>
+                                <TextBox x:Name="RecipientBox" MinHeight="38" ToolTip="Ex.: E1"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="2" Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="12"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Classificação documental" Style="{StaticResource CaptionTextStyle}"/>
+                                <TextBox x:Name="ClassificationBox" MinHeight="38" ToolTip="Ex.: 085.612 - GRATIFICAÇÕES"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Finalidade do documento" Style="{StaticResource CaptionTextStyle}"/>
+                                <TextBox x:Name="PurposeBox" MinHeight="38" ToolTip="Ex.: Geral"/>
+                            </StackPanel>
+                        </Grid>
+                        <StackPanel Grid.Row="3" Margin="0,10,0,0">
+                            <TextBlock Text="Assunto do DIEx" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBox x:Name="SubjectBox" MinHeight="38" ToolTip="Ex.: Gratificação de Representação (2%)"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12" Visibility="Collapsed">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="3. Abrir e preencher" Style="{StaticResource SectionTitleStyle}"/>
+                        <TextBlock Grid.Row="1" Margin="0,8,0,12" TextWrapping="Wrap"
+                                   Text="A execução agora é feita integralmente em segundo plano pelo botão da primeira etapa."/>
+                        <Button x:Name="StartMappingButton" Grid.Row="2" Content="Já loguei — abrir e preencher o DIEx"
+                                Style="{StaticResource PrimaryButtonStyle}" Click="StartMapping_Click" MinHeight="43" IsEnabled="False"/>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Padding="16" Visibility="Collapsed">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <TextBlock Text="4. Finalizar e exportar" Style="{StaticResource SectionTitleStyle}"/>
+                            <Border Grid.Column="1" x:Name="RecordingBadge" Background="{DynamicResource SurfaceAltBrush}" CornerRadius="12" Padding="10,4">
+                                <TextBlock x:Name="RecordingBadgeText" Text="Aguardando" FontWeight="SemiBold"/>
+                            </Border>
+                        </Grid>
+                        <TextBlock Grid.Row="1" x:Name="MappingInfoText" Margin="0,10,0,12" TextWrapping="Wrap"
+                                   Text="Nenhum mapeamento iniciado."/>
+                        <Button x:Name="FinishButton" Grid.Row="2" Content="Finalizar e exportar log seguro"
+                                Style="{StaticResource SecondaryButtonStyle}" Click="Finish_Click" MinHeight="42" IsEnabled="False"/>
+                    </Grid>
+                </Border>
+
+                <Border Background="{DynamicResource WarningSoftBrush}" CornerRadius="9" Padding="12" Margin="0,12,0,0">
+                    <TextBlock TextWrapping="Wrap" Text="Ao marcar “Salvar senha”, ela é armazenada de forma criptografada e vinculada ao seu usuário do Windows. A senha não é incluída nos processos da Grat Rep."/>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Border Grid.Row="2" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource DividerBrush}" BorderThickness="0,1,0,0" Padding="16,0">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <TextBlock x:Name="StatusText" Text="Preparando..." VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                <Button Grid.Column="1" Content="Fechar" Style="{StaticResource SecondaryButtonStyle}" Click="Close_Click" Padding="18,5"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

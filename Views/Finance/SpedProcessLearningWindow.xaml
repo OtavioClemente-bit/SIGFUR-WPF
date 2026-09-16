@@ -1,0 +1,72 @@
+<Window x:Class="SIGFUR.Wpf.Views.Finance.SpedProcessLearningWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SIGFUR — Gravar caminho do SPED" Width="900" Height="720" MinWidth="760" MinHeight="620"
+        WindowStartupLocation="CenterOwner" Icon="/Assets/sigfur.ico" Background="{DynamicResource AppBackgroundBrush}"
+        Loaded="Window_Loaded" Closing="Window_Closing" Closed="Window_Closed">
+    <Grid>
+        <Grid.RowDefinitions><RowDefinition Height="92"/><RowDefinition Height="*"/><RowDefinition Height="48"/></Grid.RowDefinitions>
+        <Border Background="{DynamicResource PrimaryGradientBrush}" Padding="24,0">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="GRAVAR NOVO CAMINHO — SPED PROCESSO" Foreground="White" FontSize="22" FontWeight="Bold"/>
+                <TextBlock Text="Faça manualmente as etapas alteradas e gere o ZIP para enviar" Foreground="#DCEBFF" Margin="0,4,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="18">
+                <Border Background="{DynamicResource WarningSoftBrush}" CornerRadius="9" Padding="13" Margin="0,0,0,12">
+                    <TextBlock TextWrapping="Wrap" Text="Este modo apenas grava o caminho; ele não executa nem modifica a automação atual. Faça o procedimento devagar e na ordem real. O SIGFUR registra os elementos clicados, mudanças de tela e capturas. Senha e conteúdo digitado nos campos não entram no log. Confira as imagens antes de enviar o ZIP."/>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12">
+                    <Grid>
+                        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                        <TextBlock Text="1. ABRIR E ENTRAR NO SPED" Style="{StaticResource SectionTitleStyle}"/>
+                        <Grid Grid.Row="1" Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="12"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                            <StackPanel><TextBlock Text="Login ou CPF" Style="{StaticResource CaptionTextStyle}"/><TextBox x:Name="LoginBox" MinHeight="38"/></StackPanel>
+                            <StackPanel Grid.Column="2"><TextBlock Text="Senha" Style="{StaticResource CaptionTextStyle}"/><PasswordBox x:Name="PasswordInput" MinHeight="38" Padding="9,6"/></StackPanel>
+                        </Grid>
+                        <Grid Grid.Row="2" Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <CheckBox x:Name="SavePasswordCheck" Content="Salvar senha protegida neste usuário do Windows" VerticalAlignment="Center"/>
+                            <Button x:Name="OpenButton" Grid.Column="1" Content="Abrir SPED para login" Style="{StaticResource PrimaryButtonStyle}" Click="Open_Click" MinWidth="190"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12">
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="48"/><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <Border Width="36" Height="36" CornerRadius="18" Background="{DynamicResource PrimarySoftBrush}" VerticalAlignment="Top"><TextBlock Text="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/></Border>
+                        <StackPanel Grid.Column="1" Margin="8,0,16,0"><TextBlock Text="INICIAR A GRAVAÇÃO DO NOVO CAMINHO" FontWeight="Bold" FontSize="14"/><TextBlock Text="Depois do login, clique em começar e faça manualmente as etapas que mudaram. Se o caminho começar no DIEx, siga até a assinatura; se a alteração for apenas no processo, navegue até ele e grave essa parte normalmente. A senha digitada não será gravada." TextWrapping="Wrap" Foreground="{DynamicResource MutedBrush}" Margin="0,4,0,0"/></StackPanel>
+                        <Button x:Name="StartButton" Grid.Column="2" Content="Começar a gravar" Style="{StaticResource PrimaryButtonStyle}" Click="Start_Click" IsEnabled="False" MinWidth="160"/>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12">
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="48"/><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <Border Width="36" Height="36" CornerRadius="18" Background="{DynamicResource PrimarySoftBrush}" VerticalAlignment="Top"><TextBlock Text="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/></Border>
+                        <StackPanel Grid.Column="1" Margin="8,0,16,0"><TextBlock Text="MARCAR O INÍCIO DA PARTE DO PROCESSO" FontWeight="Bold" FontSize="14"/><TextBlock Text="Quando chegar ao Módulo Processos, clique neste botão para deixar a mudança de fase marcada no pacote. Depois continue fazendo o novo caminho até o ponto final desejado." TextWrapping="Wrap" Foreground="{DynamicResource MutedBrush}" Margin="0,4,0,0"/></StackPanel>
+                        <Button x:Name="ProcessButton" Grid.Column="2" Content="Marcar início do processo" Style="{StaticResource SecondaryButtonStyle}" Click="Process_Click" IsEnabled="False" MinWidth="210"/>
+                    </Grid>
+                </Border>
+
+                <Border Style="{StaticResource CardStyle}" Padding="16">
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="48"/><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <Border Width="36" Height="36" CornerRadius="18" Background="{DynamicResource SuccessSoftBrush}" VerticalAlignment="Top"><TextBlock Text="4" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/></Border>
+                        <StackPanel Grid.Column="1" Margin="8,0,16,0"><TextBlock Text="FINALIZAR E GERAR O ZIP" FontWeight="Bold" FontSize="14"/><TextBlock x:Name="RecordingInfoText" Text="Nenhuma gravação iniciada." TextWrapping="Wrap" Foreground="{DynamicResource MutedBrush}" Margin="0,4,0,0"/></StackPanel>
+                        <Button x:Name="ExportButton" Grid.Column="2" Content="Finalizar e gerar ZIP" Style="{StaticResource PrimaryButtonStyle}" Click="Export_Click" IsEnabled="False" MinWidth="180"/>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Border Grid.Row="2" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource DividerBrush}" BorderThickness="0,1,0,0" Padding="16,0">
+            <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><TextBlock x:Name="StatusText" Text="Preparando..." VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/><Button Grid.Column="1" Content="Fechar" Style="{StaticResource SecondaryButtonStyle}" Click="Close_Click"/></Grid>
+        </Border>
+    </Grid>
+</Window>

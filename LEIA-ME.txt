@@ -1,0 +1,22 @@
+Hotfix SIGFUR - Contracheques somente no AppData
+
+Altera o fluxo de contracheques para usar apenas:
+%LOCALAPPDATA%\SIGFUR\contracheques
+
+Arquivos alterados:
+- Services/PaystubService.cs
+- Services/PersonDocumentStorageService.cs
+- Services/CpexPaystubAutomationService.cs
+- Views/Military/PaystubCenterWindow.xaml
+- Views/Military/PaystubCenterWindow.xaml.cs
+- Views/Military/MilitaryListWindow.xaml
+- Views/Military/MilitaryListWindow.xaml.cs
+- Views/Military/PaystubAuditWindow.xaml
+- Views/Military/PaystubAuditWindow.xaml.cs
+
+Mudanças:
+- removidos os botões de migração de contracheques;
+- removida a escolha de pasta raiz na Central de Contracheques;
+- a leitura de PDFs foi limitada a AppData\Local\SIGFUR\contracheques;
+- pastas antigas em Documentos/Downloads/Desktop/OneDrive não são mais varridas;
+- configurações antigas de pasta são ignoradas e substituídas pelo AppData oficial.

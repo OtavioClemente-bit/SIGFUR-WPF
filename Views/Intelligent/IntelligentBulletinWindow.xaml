@@ -1,0 +1,503 @@
+<Window x:Class="SIGFUR.Wpf.Views.Intelligent.IntelligentBulletinWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:SIGFUR.Wpf.Controls"
+        Title="SIGFUR — Boletim Inteligente"
+        Width="1560" Height="920" MinWidth="1180" MinHeight="720"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource AppBackgroundBrush}"
+        Icon="/Assets/sigfur.ico"
+        Loaded="Window_Loaded"
+        PreviewKeyDown="Window_PreviewKeyDown">
+    <Window.Resources>
+        <Style x:Key="ProfessionalGridStyle" TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="CanUserReorderColumns" Value="True"/>
+            <Setter Property="CanUserResizeColumns" Value="True"/>
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource DividerBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource DividerBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="RowHeight" Value="44"/>
+            <Setter Property="ColumnHeaderHeight" Value="42"/>
+            <Setter Property="RowHeaderWidth" Value="0"/>
+            <Setter Property="SelectionUnit" Value="FullRow"/>
+            <Setter Property="SelectionMode" Value="Single"/>
+            <Setter Property="AlternationCount" Value="2"/>
+            <Setter Property="AlternatingRowBackground" Value="{DynamicResource SurfaceAltBrush}"/>
+            <Setter Property="EnableRowVirtualization" Value="True"/>
+            <Setter Property="EnableColumnVirtualization" Value="True"/>
+            <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
+            <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        </Style>
+        <Style x:Key="MetricPillStyle" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource SurfaceAltBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource DividerBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="9"/>
+            <Setter Property="Padding" Value="11,7"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+        </Style>
+        <Style x:Key="FilterLabelStyle" TargetType="TextBlock" BasedOn="{StaticResource CaptionTextStyle}">
+            <Setter Property="Margin" Value="0,0,0,4"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="78"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="38"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="{DynamicResource PrimaryDarkBrush}" Padding="22,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="BOLETIM INTELIGENTE" Foreground="White" FontWeight="Bold" FontSize="20"/>
+                    <TextBlock Text="Histórico consolidado do SisBol, pesquisa instantânea e conferência por pessoa"
+                               Foreground="{DynamicResource TextOnPrimaryMutedBrush}" FontSize="12" Margin="0,3,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Content="Importar BIs" Style="{StaticResource LightOnDarkButtonStyle}" Click="ImportFiles_Click"
+                            ToolTip="Importar PDF ou ZIP de boletins"/>
+                    <Button Content="Importar pasta" Style="{StaticResource LightOnDarkButtonStyle}" Click="ImportFolder_Click" Margin="8,0,0,0"/>
+                    <Button Content="Baixar BIs do SisBol" Style="{StaticResource LightOnDarkButtonStyle}" Click="DownloadSisbolBulletins_Click" Margin="8,0,0,0"/>
+                    <Button Content="Exportar individual" Style="{StaticResource LightOnDarkButtonStyle}" Click="ExportIndividualBulletin_Click" Margin="8,0,0,0"
+                            ToolTip="Salvar uma cópia do boletim selecionado"/>
+                    <Button Content="Exportar intervalo" Style="{StaticResource LightOnDarkButtonStyle}" Click="ExportBulletinRange_Click" Margin="8,0,0,0"
+                            ToolTip="Criar uma pasta organizada por ano e intervalo de números"/>
+                    <Button Content="Enviar pelo EBMail" Style="{StaticResource LightOnDarkButtonStyle}" Click="SendEbMail_Click" Margin="8,0,0,0"
+                            ToolTip="Preparar uma mensagem no EBMail com os BIs selecionados"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" Margin="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="330"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Style="{StaticResource CardStyle}" Padding="14">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="124"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Biblioteca de boletins" Style="{StaticResource SectionTitleStyle}"/>
+                            <TextBlock Text="BIs disponíveis para consulta" Style="{StaticResource CaptionTextStyle}"/>
+                            <TextBlock x:Name="LibrarySelectionText" Text="Nenhum boletim selecionado" Style="{StaticResource CaptionTextStyle}"
+                                       Foreground="{DynamicResource InfoBrush}" FontWeight="SemiBold" Margin="0,2,0,0"/>
+                        </StackPanel>
+                        <Border Grid.Column="1" Background="{DynamicResource InfoSoftBrush}" CornerRadius="12" Padding="10,4" VerticalAlignment="Top">
+                            <TextBlock x:Name="LibraryCountText" Text="0" Foreground="{DynamicResource InfoBrush}" FontWeight="Bold"/>
+                        </Border>
+                    </Grid>
+
+                    <DataGrid Grid.Row="1" x:Name="LibraryGrid" Style="{StaticResource ProfessionalGridStyle}"
+                              Margin="0,12,0,10" RowHeight="38" ColumnHeaderHeight="38"
+                              SelectionMode="Extended"
+                              SelectionChanged="LibraryGrid_SelectionChanged" MouseDoubleClick="LibraryGrid_MouseDoubleClick">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="BI" Binding="{Binding DisplayNumber}" Width="62"/>
+                            <DataGridTextColumn Header="Data" Binding="{Binding DisplayDate}" Width="82"/>
+                            <DataGridTextColumn Header="Arquivo" Binding="{Binding FileName}" Width="*"/>
+                        </DataGrid.Columns>
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Abrir PDF" Click="OpenSelectedFile_Click"/>
+                                <MenuItem Header="Reindexar selecionado" Click="Reindex_Click"/>
+                                <MenuItem Header="Exportar boletim individual" Click="ExportIndividualBulletin_Click"/>
+                                <MenuItem Header="Exportar intervalo organizado" Click="ExportBulletinRange_Click"/>
+                                <MenuItem Header="Enviar selecionados pelo EBMail" Click="SendEbMail_Click"/>
+                                <Separator/>
+                                <MenuItem Header="Remover selecionados" Click="Remove_Click"/>
+                                <MenuItem Header="Remover todos os boletins" Click="RemoveAll_Click"/>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
+                    </DataGrid>
+
+                    <WrapPanel Grid.Row="2">
+                        <Button Content="Abrir PDF" Style="{StaticResource PrimaryButtonStyle}" Click="OpenSelectedFile_Click" Margin="0,0,6,6"/>
+                        <Button Content="Reindexar" Style="{StaticResource SecondaryButtonStyle}" Click="Reindex_Click" Margin="0,0,6,6"/>
+                        <Button Content="✦ Reanalisar pendentes com IA" Style="{StaticResource SecondaryButtonStyle}" Click="ReanalyzePendingWithAi_Click" Margin="0,0,6,6" ToolTip="Envia somente páginas ambíguas; achados da IA permanecem pendentes de revisão."/>
+                        <Button Content="Exportar individual" Style="{StaticResource SecondaryButtonStyle}" Click="ExportIndividualBulletin_Click" Margin="0,0,6,6"/>
+                        <Button Content="Exportar intervalo" Style="{StaticResource SecondaryButtonStyle}" Click="ExportBulletinRange_Click" Margin="0,0,6,6"/>
+                        <Button Content="EBMail" Style="{StaticResource SecondaryButtonStyle}" Click="SendEbMail_Click" Margin="0,0,6,6"/>
+                        <Button Content="Remover selecionados" Style="{StaticResource DangerButtonStyle}" Click="Remove_Click" Margin="0,0,6,6"/>
+                        <Button Content="Pasta" Style="{StaticResource SecondaryButtonStyle}" Click="OpenFolder_Click" Margin="0,0,6,6"/>
+                    </WrapPanel>
+
+                    <Border Grid.Row="3" Background="{DynamicResource SurfaceAltBrush}" BorderBrush="{DynamicResource DividerBrush}"
+                            BorderThickness="1" CornerRadius="9" Padding="10" Margin="0,4,0,10">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <TextBlock x:Name="FilePreviewText" Text="Selecione um boletim para ver os detalhes."
+                                       TextWrapping="Wrap" FontSize="11" Foreground="{DynamicResource SubtleTextBrush}"/>
+                        </ScrollViewer>
+                    </Border>
+
+                    <StackPanel Grid.Row="4">
+                        <CheckBox x:Name="AutoUpdateCheckBox" Content="Monitorar a última pasta"
+                                  Checked="AutoUpdateCheckBox_Changed" Unchecked="AutoUpdateCheckBox_Changed"/>
+                        <Button Content="Atualizar biblioteca" Style="{StaticResource SecondaryButtonStyle}" Click="Refresh_Click" Margin="0,10,0,0"/>
+                        <Button Content="Reindexar todos os BIs" Style="{StaticResource SecondaryButtonStyle}" Click="ReindexAll_Click" Margin="0,7,0,0"/>
+                        <Button Content="Esvaziar biblioteca de boletins" Style="{StaticResource DangerButtonStyle}" Click="RemoveAll_Click"
+                                Margin="0,7,0,0" ToolTip="Remove todos os BIs e suas cópias locais; o Índice por Pessoa é preservado"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="8">
+                <TabControl x:Name="ResultTabs" SelectionChanged="ResultTabs_SelectionChanged">
+                    <TabItem Header="Índice por pessoa">
+                        <Grid Margin="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Histórico consolidado por pessoa" Style="{StaticResource SectionTitleStyle}" FontSize="16"/>
+                                    <TextBlock Text="Os períodos importados ficam acumulados. Um novo download atualiza somente o intervalo correspondente."
+                                               Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,0"/>
+                                </StackPanel>
+                                <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
+                                    <Border Style="{StaticResource MetricPillStyle}">
+                                        <StackPanel Orientation="Horizontal"><TextBlock Text="Registros  " Foreground="{DynamicResource SubtleTextBrush}"/><TextBlock x:Name="PersonIndexTotalText" Text="0" FontWeight="Bold"/></StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource MetricPillStyle}">
+                                        <StackPanel Orientation="Horizontal"><TextBlock Text="Pessoas  " Foreground="{DynamicResource SubtleTextBrush}"/><TextBlock x:Name="PersonIndexPeopleText" Text="0" FontWeight="Bold"/></StackPanel>
+                                    </Border>
+                                    <Border Style="{StaticResource MetricPillStyle}" Margin="0">
+                                        <StackPanel Orientation="Horizontal"><TextBlock Text="Exibindo  " Foreground="{DynamicResource SubtleTextBrush}"/><TextBlock x:Name="PersonIndexVisibleText" Text="0" FontWeight="Bold" Foreground="{DynamicResource InfoBrush}"/></StackPanel>
+                                    </Border>
+                                </WrapPanel>
+                            </Grid>
+
+                            <Border Grid.Row="1" Background="{DynamicResource SurfaceAltBrush}" BorderBrush="{DynamicResource DividerBrush}"
+                                    BorderThickness="1" CornerRadius="10" Padding="12" Margin="0,12,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.7*"/><ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="1.6*"/><ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="92"/><ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="122"/><ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="130"/><ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel>
+                                        <TextBlock Text="Pessoa" Style="{StaticResource FilterLabelStyle}"/>
+                                        <ComboBox x:Name="PersonIndexPersonBox" IsEditable="True" IsTextSearchEnabled="False" StaysOpenOnEdit="True"
+                                                  MaxDropDownHeight="340" SelectionChanged="PersonIndexFilter_Changed" KeyUp="PersonIndexCombo_KeyUp"
+                                                  ToolTip="Nome completo, nome de guerra, posto/graduação, CPF ou PREC">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Margin="3,3">
+                                                        <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Rank}" FontWeight="SemiBold" Margin="0,0,7,0"/>
+                                                        <controls:HighlightedNameTextBlock Grid.Column="1" FullName="{Binding FullName}" WarName="{Binding WarName}"/>
+                                                        <TextBlock Grid.Column="2" Text="{Binding Count}" Foreground="{DynamicResource SubtleTextBrush}" Margin="10,0,0,0"/>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Assunto ou nota" Style="{StaticResource FilterLabelStyle}"/>
+                                        <TextBox x:Name="PersonIndexSubjectNoteSearchBox" TextChanged="PersonIndexSearchBox_TextChanged"
+                                                 ToolTip="Pesquisa em assunto e nota ao mesmo tempo"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="4">
+                                        <TextBlock Text="Ano" Style="{StaticResource FilterLabelStyle}"/>
+                                        <ComboBox x:Name="PersonIndexYearBox" SelectionChanged="PersonIndexFilter_Changed"
+                                                  ToolTip="A pesquisa sempre começa em Todos os anos ao abrir a tela"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="6">
+                                        <TextBlock Text="Mês" Style="{StaticResource FilterLabelStyle}"/>
+                                        <ComboBox x:Name="PersonIndexMonthBox" SelectionChanged="PersonIndexFilter_Changed"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="8">
+                                        <TextBlock Text="Vínculo" Style="{StaticResource FilterLabelStyle}"/>
+                                        <ComboBox x:Name="PersonIndexLinkBox" SelectionChanged="PersonIndexFilter_Changed"/>
+                                    </StackPanel>
+                                    <Button Grid.Column="10" Content="Limpar filtros" Style="{StaticResource SecondaryButtonStyle}"
+                                            Click="ClearPersonIndexFilters_Click" VerticalAlignment="Bottom" MinWidth="104"/>
+                                </Grid>
+                            </Border>
+
+                            <Border Grid.Row="2" Background="{DynamicResource InfoSoftBrush}" CornerRadius="8" Padding="10,5" Margin="0,8">
+                                <Grid>
+                                    <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                    <TextBlock x:Name="PersonIndexMissingBiText" Text="Analisando a continuidade dos BIs..."
+                                               Foreground="{DynamicResource InfoBrush}" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                                    <TextBlock Grid.Column="1" x:Name="PersonIndexPeriodText" Margin="12,0,0,0"
+                                               Foreground="{DynamicResource SubtleTextBrush}" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+
+                            <DataGrid Grid.Row="3" x:Name="PersonIndexGrid" Style="{StaticResource ProfessionalGridStyle}"
+                                      MouseDoubleClick="PersonIndexGrid_MouseDoubleClick"
+                                      PreviewMouseRightButtonDown="SearchGrid_PreviewMouseRightButtonDown">
+                                <DataGrid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Abrir BI" Click="OpenPersonIndexBulletin_Click"/>
+                                        <MenuItem Header="Exportar boletim escolhido" Click="ExportPersonIndexBulletin_Click"/>
+                                    </ContextMenu>
+                                </DataGrid.ContextMenu>
+                                <DataGrid.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Data" Binding="{Binding DateText}" Width="92"/>
+                                    <DataGridTextColumn Header="BI" Binding="{Binding BulletinNumber}" Width="88"/>
+                                    <DataGridTextColumn Header="Nº nota" Binding="{Binding NoteNumber}" Width="82"/>
+                                    <DataGridTextColumn Header="Assunto / nota" Binding="{Binding DisplaySubjectNote}" Width="1.7*"/>
+                                    <DataGridTemplateColumn Header="Pessoas mencionadas" Width="2.25*">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <controls:HighlightedNameTextBlock FullName="{Binding PeopleDisplay}" WarName="{Binding DisplayWarName}"
+                                                                                    TextTrimming="CharacterEllipsis" ToolTip="{Binding PeopleDisplay}"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="P/G" Binding="{Binding Rank}" Width="72"/>
+                                    <DataGridTextColumn Header="Pág." Binding="{Binding PageText}" Width="58"/>
+                                    <DataGridTextColumn Header="Vínculo" Binding="{Binding LinkedText}" Width="72"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <Grid Grid.Row="4" Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="Período do próximo download" VerticalAlignment="Center" Foreground="{DynamicResource SubtleTextBrush}" Margin="0,0,8,0"/>
+                                    <DatePicker x:Name="PersonIndexDownloadStartPicker" Width="124" SelectedDateChanged="PersonIndexDownloadDate_Changed"/>
+                                    <TextBlock Text=" até " VerticalAlignment="Center" Foreground="{DynamicResource SubtleTextBrush}" Margin="5,0"/>
+                                    <DatePicker x:Name="PersonIndexDownloadEndPicker" Width="124" SelectedDateChanged="PersonIndexDownloadDate_Changed"/>
+                                </StackPanel>
+                                <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
+                                    <Button Content="Importar índice" Style="{StaticResource PrimaryButtonStyle}" Click="ImportPersonIndex_Click" Margin="0,0,7,0"/>
+                                    <Button Content="Baixar do SisBol" Style="{StaticResource SecondaryButtonStyle}" Click="DownloadPersonIndex_Click" Margin="0,0,7,0"/>
+                                    <Button Content="Abrir origem" Style="{StaticResource SecondaryButtonStyle}" Click="OpenPersonIndexSource_Click" Margin="0,0,7,0"/>
+                                    <Button Content="Abrir BI" Style="{StaticResource SecondaryButtonStyle}" Click="OpenPersonIndexBulletin_Click" Margin="0,0,7,0"/>
+                                    <Button Content="Exportar BI escolhido" Style="{StaticResource SecondaryButtonStyle}" Click="ExportPersonIndexBulletin_Click" Margin="0,0,7,0"/>
+                                    <Button Content="Mais" Style="{StaticResource SecondaryButtonStyle}" ToolTip="Reprocessar o índice selecionado" Click="ReprocessPersonIndex_Click" Margin="0,0,7,0"/>
+                                    <Button Content="Exportar CSV" Style="{StaticResource SecondaryButtonStyle}" Click="ExportPersonIndexCsv_Click"/>
+                                </WrapPanel>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+
+                    <TabItem Header="Consequências">
+                        <Grid Margin="10">
+                            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Caixa de leitura das consequências" Style="{StaticResource SectionTitleStyle}" FontSize="16"/>
+                                    <TextBlock Text="Uma linha por nota. Escolha o responsável, leia o texto e registre ciência para não repetir a leitura."
+                                               Style="{StaticResource CaptionTextStyle}" Margin="0,3,0,0"/>
+                                </StackPanel>
+                                <WrapPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                    <Button Content="Abrir BI" Style="{StaticResource SecondaryButtonStyle}"
+                                            Click="OpenSelectedPaymentFinding_Click" Margin="0,0,8,0"/>
+                                    <Button Content="Dar ciência" Style="{StaticResource PrimaryButtonStyle}"
+                                            Click="MarkConsequenceReviewed_Click" Margin="0,0,8,0"/>
+                                    <Button Content="Marcar como pendente" Style="{StaticResource SecondaryButtonStyle}"
+                                            Click="MarkConsequencePending_Click" Margin="0,0,8,0"/>
+                                    <Button Content="Exportar BI" Style="{StaticResource SecondaryButtonStyle}"
+                                            Click="ExportFindingBulletin_Click" Margin="0,0,8,0"/>
+                                    <Button Content="Conferir assuntos" Style="{StaticResource SecondaryButtonStyle}"
+                                            Click="ReconcileFurrielIndex_Click"
+                                            ToolTip="Repara os boletins já salvos usando o Índice por Pessoa local; nenhum BI é baixado novamente."/>
+                                </WrapPanel>
+                            </Grid>
+                             <Border Grid.Row="1" Background="{DynamicResource SurfaceAltBrush}" BorderBrush="{DynamicResource DividerBrush}"
+                                     BorderThickness="1" CornerRadius="10" Padding="12" Margin="0,12,0,10">
+                                 <Grid>
+                                     <Grid.RowDefinitions>
+                                         <RowDefinition Height="Auto"/>
+                                         <RowDefinition Height="Auto"/>
+                                     </Grid.RowDefinitions>
+                                     <Grid.ColumnDefinitions>
+                                         <ColumnDefinition Width="210"/><ColumnDefinition Width="10"/><ColumnDefinition Width="145"/><ColumnDefinition Width="10"/>
+                                         <ColumnDefinition Width="1.5*"/><ColumnDefinition Width="10"/><ColumnDefinition Width="125"/><ColumnDefinition Width="10"/>
+                                         <ColumnDefinition Width="1.1*"/><ColumnDefinition Width="10"/><ColumnDefinition Width="92"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="Palavra / responsável" Style="{StaticResource FilterLabelStyle}"/>
+                                        <ComboBox x:Name="ConsequenceKeywordBox" IsEditable="True" IsTextSearchEnabled="False"
+                                                  SelectionChanged="ConsequenceKeyword_Changed" KeyUp="ConsequenceKeyword_KeyUp"
+                                                  LostKeyboardFocus="ConsequenceKeyword_LostKeyboardFocus"
+                                                  ToolTip="Escolha uma opção ou digite qualquer palavra ou expressão da consequência">
+                                            <ComboBoxItem Content="Furriel" IsSelected="True"/>
+                                            <ComboBoxItem Content="1ª Seção"/>
+                                            <ComboBoxItem Content="2ª Seção"/>
+                                            <ComboBoxItem Content="3ª Seção"/>
+                                            <ComboBoxItem Content="4ª Seção"/>
+                                            <ComboBoxItem Content="Sargenteante"/>
+                                            <ComboBoxItem Content="Fiscal Administrativo"/>
+                                            <ComboBoxItem Content="Almoxarifado"/>
+                                            <ComboBoxItem Content="Todos os responsáveis"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="Leitura" Style="{StaticResource FilterLabelStyle}"/>
+                                        <ComboBox x:Name="ConsequenceReadFilterBox" SelectionChanged="Filter_Changed">
+                                            <ComboBoxItem Content="Pendentes" IsSelected="True"/>
+                                            <ComboBoxItem Content="Todos"/>
+                                            <ComboBoxItem Content="Cientes"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="4">
+                                        <TextBlock Text="Pesquisar" Style="{StaticResource FilterLabelStyle}"/>
+                                        <TextBox x:Name="SearchBox" TextChanged="SearchBox_TextChanged" ToolTip="BI, assunto, número da nota ou texto"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="6">
+                                        <TextBlock Text="Filtrar por" Style="{StaticResource FilterLabelStyle}"/>
+                                        <ComboBox x:Name="PeriodModeBox" SelectionChanged="PeriodModeBox_SelectionChanged">
+                                            <ComboBoxItem Content="Mês/Ano"/><ComboBoxItem Content="Intervalo de datas"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <Grid Grid.Column="8">
+                                        <StackPanel x:Name="MonthPeriodPanel">
+                                            <TextBlock Text="Período" Style="{StaticResource FilterLabelStyle}"/>
+                                            <ComboBox x:Name="PeriodBox" SelectionChanged="Filter_Changed"/>
+                                        </StackPanel>
+                                        <Grid x:Name="DatePeriodPanel" Visibility="Collapsed">
+                                            <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="8"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                                            <StackPanel><TextBlock Text="Data inicial" Style="{StaticResource FilterLabelStyle}"/><DatePicker x:Name="StartDatePicker" SelectedDateChanged="DateFilter_Changed"/></StackPanel>
+                                            <StackPanel Grid.Column="2"><TextBlock Text="Data final" Style="{StaticResource FilterLabelStyle}"/><DatePicker x:Name="EndDatePicker" SelectedDateChanged="DateFilter_Changed"/></StackPanel>
+                                        </Grid>
+                                    </Grid>
+                                     <StackPanel Grid.Column="10">
+                                         <TextBlock Text="Ano" Style="{StaticResource FilterLabelStyle}"/>
+                                         <ComboBox x:Name="YearBox" SelectionChanged="Filter_Changed"/>
+                                     </StackPanel>
+                                     <Grid Grid.Row="1" Grid.ColumnSpan="11" Margin="0,10,0,0">
+                                         <Grid.ColumnDefinitions>
+                                             <ColumnDefinition Width="*"/>
+                                             <ColumnDefinition Width="10"/>
+                                             <ColumnDefinition Width="Auto"/>
+                                         </Grid.ColumnDefinitions>
+                                         <StackPanel>
+                                             <TextBlock Text="Militar para pesquisar ao abrir o BI" Style="{StaticResource FilterLabelStyle}"/>
+                                             <ComboBox x:Name="MilitaryBox" IsEditable="True" IsTextSearchEnabled="False" StaysOpenOnEdit="True"
+                                                       MaxDropDownHeight="340" SelectionChanged="MilitaryBox_SelectionChanged" KeyUp="MilitaryBox_KeyUp"
+                                                       ToolTip="Escolha o militar; ao abrir o BI, o PDF pesquisará o nome completo, como no Furriel">
+                                                 <ComboBox.ItemTemplate>
+                                                     <DataTemplate>
+                                                         <Grid Margin="3,3">
+                                                             <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                                                             <TextBlock Text="{Binding Rank}" FontWeight="SemiBold" Margin="0,0,7,0"/>
+                                                             <controls:HighlightedNameTextBlock Grid.Column="1" FullName="{Binding FullName}" WarName="{Binding WarName}"/>
+                                                             <TextBlock Grid.Column="2" Text="{Binding Source}" Foreground="{DynamicResource SubtleTextBrush}" Margin="10,0,0,0"/>
+                                                         </Grid>
+                                                     </DataTemplate>
+                                                 </ComboBox.ItemTemplate>
+                                             </ComboBox>
+                                         </StackPanel>
+                                         <Button Grid.Column="2" Content="Limpar militar" Style="{StaticResource SecondaryButtonStyle}"
+                                                 Click="ClearMilitaryFilter_Click" VerticalAlignment="Bottom" MinWidth="112"/>
+                                     </Grid>
+                                 </Grid>
+                             </Border>
+                            <DataGrid Grid.Row="2" x:Name="PaymentGrid" Style="{StaticResource ProfessionalGridStyle}"
+                                      SelectionMode="Extended"
+                                      MouseDoubleClick="FindingGrid_MouseDoubleClick"
+                                      PreviewMouseRightButtonDown="SearchGrid_PreviewMouseRightButtonDown">
+                                <DataGrid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Abrir BI" Click="OpenSelectedPaymentFinding_Click"/>
+                                        <Separator/>
+                                        <MenuItem Header="Dar ciência" Click="MarkConsequenceReviewed_Click"/>
+                                        <MenuItem Header="Marcar como pendente" Click="MarkConsequencePending_Click"/>
+                                        <Separator/>
+                                        <MenuItem Header="Exportar boletim escolhido" Click="ExportFindingBulletin_Click"/>
+                                    </ContextMenu>
+                                </DataGrid.ContextMenu>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Leitura" Binding="{Binding ReviewedText}" Width="88"/>
+                                    <DataGridTextColumn Header="Data" Binding="{Binding BulletinDate}" Width="90"/>
+                                    <DataGridTextColumn Header="BI" Binding="{Binding Bulletin}" Width="78"/>
+                                    <DataGridTextColumn Header="Nº nota" Binding="{Binding NoteReferenceDisplay}" Width="82"/>
+                                    <DataGridTextColumn Header="Assunto / nota" Binding="{Binding DisplaySubject}" Width="1.15*"/>
+                                    <DataGridTextColumn Header="Texto da nota" Binding="{Binding NoteText}" Width="1.65*"/>
+                                    <DataGridTextColumn Header="Consequência" Binding="{Binding ConsequenceText}" Width="1.25*"/>
+                                    <DataGridTextColumn Header="Pág." Binding="{Binding Page}" Width="58"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Border Grid.Row="3" Background="{DynamicResource SurfaceAltBrush}" BorderBrush="{DynamicResource DividerBrush}"
+                                    BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,10,0,0" MaxHeight="175">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding SelectedItem.DisplaySubject, ElementName=PaymentGrid}" FontWeight="SemiBold"/>
+                                        <TextBlock Text="{Binding SelectedItem.NoteText, ElementName=PaymentGrid}" TextWrapping="Wrap" Margin="0,6,0,0"/>
+                                        <TextBlock Text="CONSEQUÊNCIA" FontWeight="Bold" Margin="0,9,0,2"/>
+                                        <TextBlock Text="{Binding SelectedItem.ConsequenceText, ElementName=PaymentGrid}" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Border>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="2" Background="{DynamicResource SurfaceElevatedBrush}" BorderBrush="{DynamicResource DividerBrush}" BorderThickness="0,1,0,0" Padding="16,0">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <TextBlock x:Name="StatusText" VerticalAlignment="Center" Text="Pronto."/>
+                <TextBlock Grid.Column="1" VerticalAlignment="Center" Foreground="{DynamicResource SubtleTextBrush}"
+                           Text="Duplo clique abre o BI  •  F5 atualiza  •  Esc limpa a pesquisa"/>
+            </Grid>
+        </Border>
+
+        <!-- Controles de compatibilidade dos painéis antigos. Permanecem fora da interface para
+             preservar o fluxo de importação/revisão sem manter filtros duplicados na tela. -->
+        <Grid Visibility="Collapsed">
+            <ComboBox x:Name="PersonnelSourceBox"><ComboBoxItem Content="Ativos"/><ComboBoxItem Content="Ativos + licenciados/transferidos"/><ComboBoxItem Content="Só licenciados/transferidos"/></ComboBox>
+            <ComboBox x:Name="SubjectFilterBox"/>
+            <CheckBox x:Name="PendingOnlyCheckBox"/>
+            <DataGrid x:Name="ReviewGrid" SelectionMode="Extended"/>
+            <DataGrid x:Name="ServiceGrid"/><DataGrid x:Name="VacationGrid"/><DataGrid x:Name="ConvalescenceGrid"/>
+            <DataGrid x:Name="AdminGrid"/><DataGrid x:Name="OtherGrid"/>
+            <TextBlock x:Name="SummaryText"/><TextBlock x:Name="ServiceCountText"/><TextBlock x:Name="VacationCountText"/>
+            <TextBlock x:Name="ConvalescenceCountText"/><TextBlock x:Name="PaymentCountText"/><TextBlock x:Name="AdminCountText"/><TextBlock x:Name="OtherCountText"/>
+             <DataGrid x:Name="MilitaryResultsGrid"/>
+            <TextBox x:Name="PersonIndexSearchBox"/><TextBox x:Name="PersonIndexSubjectSearchBox"/>
+            <ComboBox x:Name="PersonIndexSubjectBox"/><ComboBox x:Name="PersonIndexNoteBox"/><ComboBox x:Name="PersonIndexUserBox"/>
+            <TextBlock x:Name="PersonIndexLinkedText"/><TextBlock x:Name="PersonIndexUnlinkedText"/>
+        </Grid>
+
+        <controls:SigfurLoadingOverlay x:Name="LoadingOverlay" Grid.RowSpan="3" Panel.ZIndex="50"
+                                       Visibility="Collapsed" Title="Carregando boletins" Message="Aguarde..."/>
+    </Grid>
+</Window>

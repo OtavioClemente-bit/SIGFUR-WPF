@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\GlobalUsings.cs" Link="GlobalUsings.cs" />
+    <Compile Include="..\..\Services\LegislationService.cs" Link="LegislationService.cs" />
+    <Compile Include="..\..\Services\AssistantKnowledgeContextService.cs" Link="AssistantKnowledgeContextService.cs" />
+    <Compile Include="..\..\Models\AssistantKnowledgeModels.cs" Link="AssistantKnowledgeModels.cs" />
+    <Compile Include="..\..\Models\LegislationModels.cs" Link="LegislationModels.cs" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.9" />
+    <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="2.1.13" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.5.1" />
+    <PackageReference Include="UglyToad.PdfPig" Version="1.7.0-custom-5" />
+  </ItemGroup>
+</Project>

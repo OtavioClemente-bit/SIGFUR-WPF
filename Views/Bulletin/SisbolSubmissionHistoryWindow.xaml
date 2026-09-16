@@ -1,0 +1,90 @@
+<Window x:Class="SIGFUR.Wpf.Views.Bulletin.SisbolSubmissionHistoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="SIGFUR — Enviados ao SISBOL" Width="1260" Height="790"
+        MinWidth="960" MinHeight="620" WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource AppBackgroundBrush}" Icon="/Assets/sigfur.ico">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Style="{StaticResource CardStyle}" Padding="18" Margin="0,0,0,12">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="ENVIADOS AO SISBOL" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource PrimaryDarkBrush}"/>
+                    <TextBlock Text="Histórico automático das matérias confirmadas pelo SISBOL." Foreground="{DynamicResource MutedBrush}" Margin="0,4,0,0"/>
+                </StackPanel>
+                <Border Grid.Column="1" Background="{DynamicResource PrimarySurfaceBrush}" CornerRadius="10" Padding="12,7" VerticalAlignment="Center">
+                    <TextBlock x:Name="CountText" Text="0 lançamento(s)" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryDarkBrush}"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Padding="12" Margin="0,0,0,12">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="12"/><ColumnDefinition Width="250"/><ColumnDefinition Width="12"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock Text="Pesquisar" Style="{StaticResource CaptionTextStyle}"/>
+                    <TextBox x:Name="SearchBox" TextChanged="Filter_Changed" ToolTip="Nome do militar, título, assunto ou qualquer trecho lançado"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Tipo" Style="{StaticResource CaptionTextStyle}"/>
+                    <ComboBox x:Name="CategoryBox" SelectionChanged="Filter_Changed"/>
+                </StackPanel>
+                <Button Grid.Column="4" Content="Atualizar" Style="{StaticResource SecondaryButtonStyle}" Click="Refresh_Click" VerticalAlignment="Bottom" MinWidth="100"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions><ColumnDefinition Width="1.05*"/><ColumnDefinition Width="10"/><ColumnDefinition Width="1.2*"/></Grid.ColumnDefinitions>
+            <Border Style="{StaticResource CardStyle}" Padding="8">
+                <DataGrid x:Name="HistoryGrid" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                          SelectionMode="Single" SelectionChanged="HistoryGrid_SelectionChanged" MouseDoubleClick="HistoryGrid_MouseDoubleClick">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Data" Binding="{Binding SentAtText}" Width="125"/>
+                        <DataGridTextColumn Header="Tipo" Binding="{Binding Category}" Width="155"/>
+                        <DataGridTextColumn Header="Título / assunto" Binding="{Binding Subject}" Width="*" MinWidth="190"/>
+                        <DataGridTextColumn Header="Militares" Binding="{Binding MilitaryText}" Width="210"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+            <GridSplitter Grid.Column="1" Width="6" HorizontalAlignment="Center" Background="{DynamicResource BorderBrush}"/>
+
+            <Border Grid.Column="2" Style="{StaticResource CardStyle}" Padding="14">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/><RowDefinition Height="Auto"/><RowDefinition Height="0.42*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock x:Name="DetailTitleText" Text="Selecione um lançamento" FontSize="17" FontWeight="Bold" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryDarkBrush}"/>
+                    <TextBlock x:Name="DetailMetaText" Grid.Row="1" Margin="0,5,0,0" Foreground="{DynamicResource MutedBrush}" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="DetailMilitaryText" Grid.Row="2" Margin="0,7,0,8" TextWrapping="Wrap"/>
+                    <TextBox x:Name="OpeningTextBox" Grid.Row="3" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" FontFamily="Consolas" FontSize="12"/>
+                    <TextBlock Grid.Row="4" Text="Texto de fechamento / consequências" Style="{StaticResource CaptionTextStyle}" Margin="0,9,0,4"/>
+                    <TextBox x:Name="ClosingTextBox" Grid.Row="5" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" FontFamily="Consolas" FontSize="12"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="3" Style="{StaticResource CardStyle}" Padding="11" Margin="0,12,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <TextBlock x:Name="StatusText" Text="Carregando histórico…" VerticalAlignment="Center" Foreground="{DynamicResource MutedBrush}"/>
+                <WrapPanel Grid.Column="1">
+                    <Button Content="Copiar assunto" Style="{StaticResource SecondaryButtonStyle}" Click="CopySubject_Click" Margin="0,0,8,0"/>
+                    <Button Content="Copiar abertura" Style="{StaticResource SecondaryButtonStyle}" Click="CopyOpening_Click" Margin="0,0,8,0"/>
+                    <Button Content="Copiar tudo" Style="{StaticResource PrimaryButtonStyle}" Click="CopyAll_Click" Margin="0,0,8,0"/>
+                    <Button Content="Fechar" Style="{StaticResource GhostButtonStyle}" Click="Close_Click"/>
+                </WrapPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

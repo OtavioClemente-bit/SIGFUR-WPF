@@ -1,0 +1,46 @@
+<Window x:Class="SIGFUR.Wpf.Views.Finance.AdjustmentFinalReviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Conferência final — Ajuste de Contas" Width="1080" Height="760"
+        MinWidth="900" MinHeight="620" WindowStartupLocation="CenterOwner">
+    <Grid Margin="18">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="Conferência final" Style="{StaticResource PageTitleStyle}"/>
+            <TextBlock Text="Esta etapa não recalcula valores. Ela apresenta o resultado validado que será entregue ao gerador do boletim."
+                       Style="{StaticResource PageSubtitleStyle}" Margin="0,3,0,12"/>
+        </StackPanel>
+        <TabControl Grid.Row="1">
+            <TabItem Header="Resumo">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel Margin="0,12,6,0">
+                    <Border Style="{StaticResource CardStyle}" Padding="16" Margin="0,0,0,12">
+                        <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="180"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/></Grid.RowDefinitions>
+                            <TextBlock Text="Militar" FontWeight="SemiBold"/><TextBlock x:Name="MilitaryText" Grid.Column="1"/>
+                            <TextBlock Grid.Row="1" Text="P/Grad atual" FontWeight="SemiBold"/><TextBlock x:Name="CurrentRankText" Grid.Row="1" Grid.Column="1"/>
+                            <TextBlock Grid.Row="2" Text="P/Grad real" FontWeight="SemiBold"/><TextBlock x:Name="HistoricalRankText" Grid.Row="2" Grid.Column="1"/>
+                            <TextBlock Grid.Row="3" Text="Período" FontWeight="SemiBold"/><TextBlock x:Name="PeriodText" Grid.Row="3" Grid.Column="1"/>
+                            <TextBlock Grid.Row="4" Text="Motivo" FontWeight="SemiBold"/><TextBlock x:Name="ReasonText" Grid.Row="4" Grid.Column="1" TextWrapping="Wrap"/>
+                            <TextBlock Grid.Row="5" Text="Tabela" FontWeight="SemiBold"/><TextBlock x:Name="TableText" Grid.Row="5" Grid.Column="1" TextWrapping="Wrap"/>
+                        </Grid>
+                    </Border>
+                    <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/><ColumnDefinition Width="12"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource SoftCardStyle}" Padding="14"><StackPanel><TextBlock Text="Cotas de férias" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="QuotaText" FontSize="22" FontWeight="Bold"/></StackPanel></Border>
+                        <Border Grid.Column="2" Style="{StaticResource SoftCardStyle}" Padding="14"><StackPanel><TextBlock Text="Rendimentos" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="EarningsText" FontSize="22" FontWeight="Bold"/></StackPanel></Border>
+                        <Border Grid.Column="4" Style="{StaticResource SoftCardStyle}" Padding="14"><StackPanel><TextBlock Text="Total estimado" Style="{StaticResource CaptionTextStyle}"/><TextBlock x:Name="NetText" FontSize="22" FontWeight="Bold"/></StackPanel></Border>
+                    </Grid>
+                </StackPanel></ScrollViewer>
+            </TabItem>
+            <TabItem Header="Rendimentos e descontos"><DataGrid x:Name="ComponentsGrid" Margin="0,12,0,0" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False"><DataGrid.Columns><DataGridTextColumn Header="Rubrica" Binding="{Binding RubricCode}" Width="90"/><DataGridTextColumn Header="Componente" Binding="{Binding Description}" Width="230"/><DataGridTextColumn Header="Regra" Binding="{Binding EligibilityReason}" Width="*"/><DataGridTextColumn Header="Quantidade" Binding="{Binding QuantityText}" Width="90"/><DataGridTextColumn Header="Valor" Binding="{Binding MonetaryValueText}" Width="130"/></DataGrid.Columns></DataGrid></TabItem>
+            <TabItem Header="Parâmetros SIPPES"><DataGrid x:Name="SippesGrid" Margin="0,12,0,0" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False"><DataGrid.Columns><DataGridTextColumn Header="Rubrica" Binding="{Binding RubricCode}" Width="100"/><DataGridTextColumn Header="Descrição" Binding="{Binding Description}" Width="240"/><DataGridTextColumn Header="Tipo" Binding="{Binding ParameterTypeText}" Width="190"/><DataGridTextColumn Header="Quantidade" Binding="{Binding Quantity}" Width="100"/><DataGridTextColumn Header="Explicação" Binding="{Binding Explanation}" Width="*"/></DataGrid.Columns></DataGrid></TabItem>
+            <TabItem Header="Alertas"><DataGrid x:Name="ValidationGrid" Margin="0,12,0,0" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False"><DataGrid.Columns><DataGridTextColumn Header="Nível" Binding="{Binding SeverityText}" Width="90"/><DataGridTextColumn Header="Mensagem" Binding="{Binding Message}" Width="*"/></DataGrid.Columns></DataGrid></TabItem>
+        </TabControl>
+        <Grid Grid.Row="2" Margin="0,14,0,0">
+            <CheckBox x:Name="ConfirmedCheck" Content="Conferi os dados e parâmetros do ajuste" FontWeight="SemiBold" Checked="ConfirmedCheck_Changed" Unchecked="ConfirmedCheck_Changed" VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancelar" IsCancel="True" Style="{StaticResource GhostButtonStyle}" Margin="0,0,8,0"/>
+                <Button x:Name="ContinueButton" Content="Continuar para o boletim" Style="{StaticResource PrimaryButtonStyle}" IsEnabled="False" Click="Continue_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

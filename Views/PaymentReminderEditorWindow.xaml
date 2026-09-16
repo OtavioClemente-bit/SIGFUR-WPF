@@ -1,0 +1,24 @@
+<Window x:Class="SIGFUR.Wpf.Views.PaymentReminderEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Controle de Pagamento" Width="700" Height="570" MinWidth="620" MinHeight="520" ResizeMode="CanResize"
+        WindowStartupLocation="CenterOwner" Background="{DynamicResource AppBackgroundBrush}" Icon="/Assets/sigfur.ico">
+    <Grid Margin="18">
+        <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+        <StackPanel><TextBlock Text="Controle de pagamento" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource PrimaryDarkBrush}"/><TextBlock Text="Use especialmente para Férias e Auxílio-Transporte. O item pode ser permanente e continuar disponível para os próximos controles." Foreground="{DynamicResource MutedBrush}" Margin="0,4,0,14" TextWrapping="Wrap"/></StackPanel>
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}">
+            <Grid>
+                <Grid.ColumnDefinitions><ColumnDefinition Width="145"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+                <TextBlock Text="Categoria:" VerticalAlignment="Center" Margin="0,0,10,10"/><ComboBox x:Name="CategoryBox" Grid.Column="1" Margin="0,0,0,10" IsEditable="True"><ComboBoxItem Content="Férias"/><ComboBoxItem Content="Auxílio-Transporte"/><ComboBoxItem Content="Ajuste de Contas"/><ComboBoxItem Content="Inconsistência Bancária"/><ComboBoxItem Content="Outro"/></ComboBox>
+                <TextBlock Grid.Row="1" Text="O que conferir/pagar:" VerticalAlignment="Center" Margin="0,0,10,10"/><TextBox x:Name="DescriptionBox" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="2" Text="Competência:" VerticalAlignment="Center" Margin="0,0,10,10"/><TextBox x:Name="CompetenceBox" Grid.Row="2" Grid.Column="1" Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="3" Text="Data de referência:" VerticalAlignment="Center" Margin="0,0,10,10"/><DatePicker x:Name="DeadlinePicker" Grid.Row="3" Grid.Column="1" Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="4" Text="Prioridade:" VerticalAlignment="Center" Margin="0,0,10,10"/><ComboBox x:Name="PriorityBox" Grid.Row="4" Grid.Column="1" Margin="0,0,0,10" SelectedIndex="1"><ComboBoxItem Content="Alta"/><ComboBoxItem Content="Normal"/><ComboBoxItem Content="Baixa"/></ComboBox>
+                <TextBlock Grid.Row="5" Text="Tipo de controle:" VerticalAlignment="Center" Margin="0,0,10,10"/><CheckBox x:Name="PermanentBox" Grid.Row="5" Grid.Column="1" Content="Permanente — pode ser editado, removido, marcado OK e reaberto" VerticalAlignment="Center" Margin="0,0,0,10"/>
+                <TextBlock Grid.Row="6" Text="Observação:" VerticalAlignment="Top" Margin="0,8,10,0"/><TextBox x:Name="ObservationBox" Grid.Row="6" Grid.Column="1" MinHeight="95" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+            </Grid>
+        </Border>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0"><Button Content="Cancelar" IsCancel="True" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,0"/><Button Content="Salvar controle" IsDefault="True" Style="{StaticResource PrimaryButtonStyle}" Click="Save_Click"/></StackPanel>
+    </Grid>
+</Window>

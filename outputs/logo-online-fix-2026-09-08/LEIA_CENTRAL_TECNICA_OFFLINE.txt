@@ -1,0 +1,33 @@
+SIGFUR 6.1.52 - CENTRAL TECNICA OFFLINE
+
+COMO LEVAR PARA O COMPUTADOR SEM INTERNET
+
+1. Copie a pasta PUBLICADO inteira para o outro computador.
+2. Abra SIGFUR.exe dentro dessa pasta.
+3. No menu do SIGFUR, abra Legislacao.
+4. Na primeira abertura, aguarde a indexacao da biblioteca. Nas proximas
+   aberturas o indice sera reaproveitado.
+
+O QUE JA VAI INSTALADO
+
+- Manual Tecnico do SIPPES v1.2.1, de 17 JUL 2026;
+- portarias, decretos e leis sobre habilitacao, ferias, auxilio-transporte,
+  pre-escolar, exercicios anteriores, remuneracao, pensao e outros assuntos;
+- pesquisa por palavra, pergunta, rubrica, artigo ou numero de norma;
+- leitura interna, pagina por pagina;
+- resumo offline com indicacao das fontes e paginas.
+
+ATALHOS DENTRO DO PROGRAMA
+
+- Boletim: cada modelo mostra botoes para o Manual SIPPES e para o resumo
+  offline do assunto selecionado.
+- Auxilio-Transporte: os botoes de manual e normas ficam no proprio modulo.
+- Plano de Ferias: os botoes de manual e normas ficam no cabecalho.
+
+IMPORTANTE
+
+Nao copie somente o arquivo SIGFUR.exe. A pasta PUBLICADO inteira e necessaria,
+pois ela contem a biblioteca oficial e os componentes do programa.
+
+Para decisao de pagamento ou lancamento, confira a pagina citada, a vigencia da
+norma e a publicacao do caso concreto.
