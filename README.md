@@ -174,9 +174,8 @@ Foram removidos ou devem permanecer fora do GitHub:
 
 ## Status
 
-🚧 Em evolução contínua  
-⭐ Projeto principal do meu portfólio  
-🔒 Versão pública preparada com cuidado para não expor dados sensíveis
+Em evolução contínua e mantido como principal case de portfólio. A versão
+pública é preparada sem dados reais, documentos internos ou credenciais.
 
 ---
 
