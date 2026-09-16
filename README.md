@@ -10,15 +10,19 @@ O projeto nasceu de uma necessidade real: reduzir planilhas soltas, retrabalho m
 
 ## Apresentação visual
 
-![Capa institucional do SIGFUR WPF](docs/media/sigfur-cover.png)
-
 ### Programa em execução com dados demonstrativos
 
-![Dashboard do SIGFUR WPF com dados fictícios](docs/media/sigfur-demo-dashboard.png)
+![Lista de militares do SIGFUR WPF](docs/media/sigfur-demo-militares.png)
 
-A captura foi feita a partir do executável WPF em modo demonstração. Os seis
-registros exibidos são sintéticos e ficam em uma base separada, sem tocar nos
-dados oficiais do usuário.
+| Boletim e publicação | Auxílio-transporte |
+| --- | --- |
+| ![Módulo de boletim do SIGFUR WPF](docs/media/sigfur-demo-boletim.png) | ![Módulo de auxílio-transporte do SIGFUR WPF](docs/media/sigfur-demo-auxilio-transporte.png) |
+
+![Assistente SIGFUR](docs/media/sigfur-demo-assistente.png)
+
+As capturas foram enviadas a partir do executável WPF em modo demonstração.
+Os registros exibidos são sintéticos e ficam em uma base separada, sem tocar
+nos dados oficiais do usuário.
 
 Para abrir a apresentação localmente:
 
